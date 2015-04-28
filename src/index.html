@@ -1,0 +1,66 @@
+<!doctype html>
+<html ng-app="eeAdmin" lang="en">
+
+<head>
+  <title ng-bind="$state.current.data.pageTitle"></title>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!--enable crawling w/ googlebot, per:-->
+  <!--https://developers.google.com/webmasters/ajax-crawling/docs/getting-started-->
+  <meta name="fragment" content="!">
+  <meta name="description" content="Choose inventory from a catalog of products and let eeosk manage overhead and shipping." ng-bind="$state.current.data.pageDescription">
+
+  <base href="/">
+  <link rel="shortcut icon" href="img/eeosk_e_128x128.png" type="image/x-icon">
+
+  <!-- Do not edit inside of build block; it is auto-generated -->
+  <!-- build:css -->
+  <link rel="stylesheet" href="stylesheets/ee.admin.css">
+  <!-- endbuild -->
+</head>
+
+<body id="body-top" style="padding-top: {{ $state.current.data.padTop }}">
+  <h1 class="position-fixed overflow-hidden height-0" style="top: -5000px;">eeosk admin | Helping people create online stores in minutes!</h1>
+
+  <div ui-view="header" id="ee-header" class="position-fixed" style="top: 0; z-index: 2000;"></div>
+  <div ui-view="top"    id="ee-top-view" class="position-relative"></div>
+  <div ui-view="middle" id="ee-middle-view" class="position-relative"></div>
+  <div ui-view="bottom" id="ee-bottom-view" class="position-relative"></div>
+  <div ui-view="footer" id="ee-footer" class="position-relative"></div>
+
+  <!-- Do not edit inside of build block; it is auto-generated -->
+  <!-- build:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="js/app/core/core.module.js"></script>
+  <script src="js/app/core/constants.js"></script>
+  <script src="js/app/core/filters.js"></script>
+  <script src="js/app/core/config.js"></script>
+  <script src="js/app/core/run.js"></script>
+  <script src="js/app/core/svc.back.js"></script>
+  <script src="js/app/core/svc.auth.js"></script>
+  <script src="js/app/admin.index.js"></script>
+  <script src="js/app/auth/auth.module.js"></script>
+  <script src="js/app/auth.login/auth.login.route.js"></script>
+  <script src="js/app/auth.login/auth.login.controller.js"></script>
+  <script src="js/app/admin/admin.module.js"></script>
+  <script src="js/app/admin/admin.route.js"></script>
+  <script src="js/app/admin/admin.controller.js"></script>
+  <!-- endbuild -->
+
+  <!--GA-->
+<!--   <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-', 'auto');
+  ga('require', 'displayfeatures');
+  ga('require', 'linkid', 'linkid.js');
+</script> -->
+
+</body>
+</html>

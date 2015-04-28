@@ -1,0 +1,69 @@
+_       = require 'lodash'
+sources = {}
+
+stripSrc  = (arr) -> _.map arr, (str) -> str.replace('./src/', '')
+toJs      = (arr) -> _.map arr, (str) -> str.replace('.coffee', '.js').replace('./src/', 'js/')
+unmin     = (arr) ->
+  _.map arr, (str) -> str.replace('dist/angulartics', 'src/angulartics').replace('.min.js', '.js')
+
+sources.adminJs = () ->
+  [].concat stripSrc(unmin(sources.adminVendorMin))
+    .concat stripSrc(sources.adminVendorUnmin)
+    .concat toJs(sources.appModule)
+    .concat toJs(sources.adminModule)
+    .concat toJs(sources.adminDirective)
+
+sources.adminModules = () ->
+  [].concat sources.appModule
+    .concat sources.adminModule
+    .concat sources.adminDirective
+
+### VENDOR ###
+sources.adminVendorMin = [
+  './src/bower_components/angular/angular.min.js'
+  './src/bower_components/angular-ui-router/release/angular-ui-router.min.js'
+  './src/bower_components/angular-cookies/angular-cookies.min.js'
+  './src/bower_components/angular-bootstrap/ui-bootstrap.min.js'
+  './src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+]
+sources.adminVendorUnmin = [
+
+]
+
+### MODULE ###
+sources.appModule = [
+  # Definitions
+  './src/app/core/core.module.coffee'
+  './src/app/core/constants.coffee'
+  './src/app/core/filters.coffee'
+  './src/app/core/config.coffee'
+  './src/app/core/run.coffee'
+  # Services
+  './src/app/core/svc.back.coffee'
+  './src/app/core/svc.auth.coffee'
+  # Product modal
+  # './src/app/product/product.modal.controller.coffee'
+]
+sources.adminModule = [
+  # Definitions
+  './src/app/admin.index.coffee'
+  # Services
+
+  # Module - auth
+  './src/app/auth/auth.module.coffee'
+  # auth.login
+  './src/app/auth.login/auth.login.route.coffee'
+  './src/app/auth.login/auth.login.controller.coffee'
+
+  # Module - admin
+  './src/app/admin/admin.module.coffee'
+  './src/app/admin/admin.route.coffee'
+  './src/app/admin/admin.controller.coffee'
+]
+
+### DIRECTIVES ###
+sources.adminDirective = [
+
+]
+
+module.exports = sources
