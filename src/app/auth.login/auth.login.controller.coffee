@@ -8,19 +8,16 @@ angular.module('admin.auth').controller 'loginCtrl', ($state, eeAuth) ->
   resetBtnText  = ()    -> setBtnText 'Sign in'
   resetBtnText()
 
-  # this.login = () ->
-  #   that.alert = ''
-  #   setBtnText 'Sending...'
-  #   eeAuth.fns.setUserFromCredentials that.email, that.password
-  #   .then () ->
-  #     eeModal.fns.closeLoginModal()
-  #     $state.go 'storefront'
-  #   .catch (err) ->
-  #     resetBtnText()
-  #     alert = err.message || err || 'Problem logging in'
-  #     if typeof alert is 'object' then alert = 'Problem logging in'
-  #     that.alert = alert
-  #
-  # this.signup = () -> eeModal.fns.open 'signup'
+  this.login = () ->
+    that.alert = ''
+    setBtnText 'Sending...'
+    eeAuth.fns.setAdminFromCredentials that.email, that.password
+    .then () ->
+      $state.go 'products'
+    .catch (err) ->
+      resetBtnText()
+      alert = err.message || err || 'Problem logging in'
+      if typeof alert is 'object' then alert = 'Problem logging in'
+      that.alert = alert
 
   return

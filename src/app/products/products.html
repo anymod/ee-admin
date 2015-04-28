@@ -1,0 +1,48 @@
+<!-- CATALOG products -->
+<div id="catalog-products" class="inline-block pad-20 position-relative" ng-hide="products.ee.loading">
+
+  <div class="full-width inline-block vert-20 margin-top-0">
+    <div ng-repeat="category in products.data.inputs.categoryArray"
+         ng-click="products.fns.setCategory(category)"
+         class="btn btn-xs btn-default margin-2"
+         ng-class="{ 'btn-primary': category == products.data.inputs.category }">
+      <span ng-show="category == products.data.inputs.category"><i class="fa fa-fw fa-times"></i></span>{{ category }}
+    </div>
+    <br>
+    <div ng-repeat="range in products.data.inputs.rangeArray"
+         ng-click="products.fns.setRange(range)"
+         class="btn btn-xs btn-default margin-2"
+         ng-class="{ 'btn-primary': range.min == products.data.inputs.range.min && range.max == products.data.inputs.range.max }">
+      <span ng-show="range.min == products.data.inputs.range.min && range.max == products.data.inputs.range.max"><i class="fa fa-fw fa-times"></i></span>{{ range | rangeToText }}
+    </div>
+  </div>
+
+  <div ng-show="products.data.searching" class="position-absolute top-left-bottom-right-0" style="z-index: 100;">
+    <div class="position-absolute full-width full-height white-background opacity-08" style="z-index: 0;"></div>
+    <h2 class="position-relative margin-0 pad-10">
+      <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>&nbsp;Loading
+    </h2>
+  </div>
+
+  <div ng-class="inline-block vert-20 { 'opacity-08': products.data.searching }">
+    <div ng-repeat="product in products.data.products" class="inline-block gray-border vertical-align-top pad-5 " style="width: 24%; height: 100px;">
+      <div class="media">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" ng-src="{{ product.image_meta.main_image.url | thumbnail }}">
+          </a>
+        </div>
+        <div class="media-body">
+          <p class="media-heading line-height-1 overflow-hidden" style="max-height: 50px;" ng-bind="product.title"></p>
+          <div class="btn btn-xs btn-default">Hide</div>&nbsp;
+          <small>id: {{ product.id }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="!products.data.searching && products.data.products.length <= 0">
+    <div class="pad-20">No results found</div>
+  </div>
+</div>
+<!-- /CATALOG products -->

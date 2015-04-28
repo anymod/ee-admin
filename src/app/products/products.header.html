@@ -1,0 +1,31 @@
+<ee-navbar-main></ee-navbar-main>
+
+<!-- CATALOG navbar -->
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-subheader margin-0 round-0 no-side-border"
+     id="catalog-top">
+
+  <div ng-show="products.ee.loading" class="container-fluid">
+    <h2 class="inline-block pull-left" style="margin: 7px 7px 0 0">
+      <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>
+    </h2>
+    <a href class="navbar-brand">Loading</a>
+  </div>
+
+  <div ng-hide="products.ee.loading" class="container-fluid pad-10">
+    <div class="btn btn-default" ng-click="products.fns.decrementPage()" name="left-btn" ng-class="{ disabled: products.data.inputs.page < 2 }">
+      <i class="fa fa-fw fa-long-arrow-left"></i>
+    </div>
+    <div class="btn btn-default" ng-click="products.fns.incrementPage()" name="right-btn" ng-class="{ disabled: products.data.inputs.products.length < products.data.inputs.productsPerPage }">
+      <i class="fa fa-fw fa-long-arrow-right"></i>
+    </div>
+    <form class="navbar-form navbar-right margin-0" ng-submit="products.fns.search()">
+      <div class="input-group">
+        <input type="text" ng-model="products.data.inputs.search" class="form-control" placeholder="Search">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit" name="search-btn"><i class="fa fa-fw fa-search"></i></button>
+        </span>
+      </div>
+    </form>
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- /CATALOG navbar -->

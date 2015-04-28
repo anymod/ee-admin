@@ -10,10 +10,10 @@ angular.module 'eeAdmin', [
   'app.core'
 
   # admin
-  'admin'
+  'products'
   'admin.auth'
 
   # custom
-
+  'ee-navbar-main'
   # 'ee.templates' # commented out during build step for inline templates
 ]

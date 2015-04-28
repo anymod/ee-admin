@@ -10,6 +10,6 @@ angular.module('admin.auth').config ($stateProvider) ->
           controller: 'loginCtrl as login'
           templateUrl: 'app/auth.login/auth.login.html'
       data:
-        pageTitle: 'Login | eeosk'
+        pageTitle: 'Login'
 
   return

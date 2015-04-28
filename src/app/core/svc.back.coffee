@@ -36,111 +36,24 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       headers: authorization: 'Basic ' + email + ':' + password
     }
 
-  passwordResetEmailPOST: (email) ->
-    _makeRequest {
-      method: 'POST'
-      url: eeBackUrl + 'password_reset_email'
-      headers: {}
-      data: { email: email }
-    }
-
-  usersPUT: (user, token) ->
-    _makeRequest {
-      method: 'PUT'
-      url: eeBackUrl + 'users'
-      headers: authorization: token
-      data: user
-    }
-
-  usersPOST: (email, password, storefront_meta, signup) ->
-    _makeRequest {
-      method: 'POST'
-      url: eeBackUrl + 'users'
-      headers: {}
-      data:
-        email:            email
-        password:         password
-        storefront_meta:  storefront_meta
-        signup:           signup
-    }
-
-  usersUpdatePasswordPUT: (password, token) ->
-    _makeRequest {
-      method: 'PUT'
-      url: eeBackUrl + 'users_update_password'
-      headers: authorization: token
-      data: { password: password }
-    }
-
-  usersUpdateEmailPUT: (email, token) ->
-    _makeRequest {
-      method: 'PUT'
-      url: eeBackUrl + 'users_update_email'
-      headers: authorization: token
-      data: { email: email }
-    }
-
-  usersStorefrontGET: (token) ->
-    _makeRequest {
-      method: 'GET'
-      url: eeBackUrl + 'users/storefront'
-      headers: authorization: token
-    }
-
   productsGET: (token, query) ->
     _makeRequest {
       method: 'GET'
-      url: eeBackUrl + 'products' + _formQueryString(query)
+      url: eeBackUrl + 'admin/products' + _formQueryString(query)
       headers: authorization: token
     }
 
   productGET: (id, token) ->
     _makeRequest {
       method: 'GET'
-      url: eeBackUrl + 'products/' + id
+      url: eeBackUrl + 'admin/products/' + id
       headers: authorization: token
     }
 
-  selectionsPOST: (token, attrs) ->
-    _makeRequest {
-      method: 'POST'
-      url: eeBackUrl + 'selections'
-      headers: authorization: token
-      data: attrs
-    }
-
-  selectionsPUT: (token, id, attrs) ->
+  productPUT: (product, token) ->
     _makeRequest {
       method: 'PUT'
-      url: eeBackUrl + 'selections/' + id
+      url: eeBackUrl + 'admin/products/' + product.id
       headers: authorization: token
-      data: attrs
-    }
-
-  selectionsDELETE: (token, id) ->
-    _makeRequest {
-      method: 'DELETE'
-      url: eeBackUrl + 'selections/' + id
-      headers: authorization: token
-    }
-
-  storefrontGET: (username) ->
-    _makeRequest {
-      method: 'GET'
-      url: eeBackUrl + 'store/' + username + '/all'
-      headers: authorization: {}
-    }
-
-  ordersGET: (token) ->
-    _makeRequest {
-      method: 'GET'
-      url: eeBackUrl + 'orders'
-      headers: authorization: token
-    }
-
-  contactPOST: (name, email, message) ->
-    _makeRequest {
-      method: 'POST'
-      url: eeBackUrl + 'contact'
-      data: { name: name, email: email, message: message }
+      data: product
     }

@@ -10,6 +10,15 @@ angular.module('app.core').config ($locationProvider, $stateProvider, $urlRouter
   $httpProvider.defaults.headers.common["Accept"] = "application/json"
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json"
 
+  $stateProvider
+    .state 'landing',
+      url: '/'
+      views:
+        top:
+          templateUrl: 'app/landing/landing.html'
+      data:
+        pageTitle: 'Hello'
+
   otherwise = '/'
 
   $urlRouterProvider.otherwise otherwise

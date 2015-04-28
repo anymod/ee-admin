@@ -41,6 +41,8 @@ sources.appModule = [
   # Services
   './src/app/core/svc.back.coffee'
   './src/app/core/svc.auth.coffee'
+  './src/app/core/svc.definer.coffee'
+  './src/app/core/svc.catalog.coffee'
   # Product modal
   # './src/app/product/product.modal.controller.coffee'
 ]
@@ -54,16 +56,19 @@ sources.adminModule = [
   # auth.login
   './src/app/auth.login/auth.login.route.coffee'
   './src/app/auth.login/auth.login.controller.coffee'
+  # auth.logout
+  './src/app/auth.logout/auth.logout.route.coffee'
+  './src/app/auth.logout/auth.logout.controller.coffee'
 
-  # Module - admin
-  './src/app/admin/admin.module.coffee'
-  './src/app/admin/admin.route.coffee'
-  './src/app/admin/admin.controller.coffee'
+  # Module - products
+  './src/app/products/products.module.coffee'
+  './src/app/products/products.route.coffee'
+  './src/app/products/products.controller.coffee'
 ]
 
 ### DIRECTIVES ###
 sources.adminDirective = [
-
+  './src/components/ee-navbar-main.coffee'
 ]
 
 module.exports = sources
