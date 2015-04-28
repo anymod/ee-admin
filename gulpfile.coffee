@@ -171,13 +171,13 @@ gulp.task 'protractor-live', () ->
 gulp.task 'server-test', () ->
   gulp.src('./src').pipe gp.webserver(
     fallback: 'index.html' # for angular html5mode
-    port: 3333
+    port: 9999
   )
 
 gulp.task 'server-dev', () ->
   gulp.src('./src').pipe gp.webserver(
     fallback: 'index.html' # for angular html5mode
-    port: 3000
+    port: 9000
   )
 
 gulp.task 'server-prod', () -> spawn 'foreman', ['start'], stdio: 'inherit'

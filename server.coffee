@@ -2,10 +2,10 @@ switch process.env.NODE_ENV
   when 'production'
     require 'newrelic'
   when 'test'
-    process.env.PORT = 3333
+    process.env.PORT = 9999
   else
     process.env.NODE_ENV = 'development'
-    process.env.PORT = 3000
+    process.env.PORT = 9000
 
 express         = require 'express'
 vhost           = require 'vhost'
@@ -40,7 +40,7 @@ app.use bodyParser.json()
 app.use serveStatic(path.join __dirname, 'dist')
 app.all '/*', (req, res, next) ->
   # Send builder.html to support HTML5Mode
-  res.sendfile 'index.html', root: path.join __dirname, 'dist'
+  res.sendFile 'index.html', root: path.join __dirname, 'dist'
   return
 
 app.use vhost('ee-admin.herokuapp.com', app)

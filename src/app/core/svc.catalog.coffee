@@ -66,7 +66,9 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
   ## EXPORTS
   data: _data
   fns:
-    search: () -> _runQuery()
+    search: () ->
+      _data.inputs.page = 1
+      _runQuery()
     incrementPage: () ->
       _data.inputs.page = if _data.inputs.page < 1 then 2 else _data.inputs.page + 1
       _runQuery()
@@ -86,8 +88,4 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
       else
         _data.inputs.range.min = range.min
         _data.inputs.range.max = range.max
-      _runQuery()
-    setSearchTerm: (search_term) ->
-      _data.inputs.page = 1
-      _data.inputs.search = search_term
       _runQuery()
