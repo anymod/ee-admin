@@ -29,7 +29,7 @@ forceSsl = (req, res, next) ->
   return
 
 if process.env.NODE_ENV is 'production'
-  builder.use forceSsl
+  app.use forceSsl
   app.use morgan 'common'
 else
   app.use morgan 'dev'
@@ -39,7 +39,7 @@ app.use bodyParser.json()
 
 app.use serveStatic(path.join __dirname, 'dist')
 app.all '/*', (req, res, next) ->
-  # Send builder.html to support HTML5Mode
+  # Send index.html to support HTML5Mode
   res.sendFile 'index.html', root: path.join __dirname, 'dist'
   return
 
