@@ -1,15 +1,32 @@
 <div class="pad-20">
-  <div class="full-width text-center">
+
+  <div ng-show="leads.data.searching" class="position-absolute top-left-bottom-right-0" style="z-index: 100;">
+    <div class="position-absolute full-width full-height white-background opacity-08" style="z-index: 0;"></div>
+    <h2 class="position-relative margin-20 pad-10">
+      <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>&nbsp;Loading
+    </h2>
+  </div>
+
+  <div class="full-width text-center vert-20 margin-top-0">
     <pagination total-items="leads.data.inputs.count"
                 items-per-page="leads.data.inputs.perPage"
                 ng-model="leads.data.inputs.page"
                 max-size="5"
-                class="pagination-sm margin-top-0"
+                class="pagination-sm margin-0 vertical-align-top"
                 previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
                 boundary-links="true"
                 rotate="false"
                 ng-change="leads.fns.update()">
     </pagination>
+    &nbsp;&nbsp;
+    <div class="inline-block" style="width: 80px;">
+      <div class="input-group input-group-sm margin-0">
+        <input type="text" class="form-control inline-block" ng-model="leads.data.inputs.page">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="leads.fns.update()">Go</button>
+        </span>
+      </div>
+    </div>
   </div>
   <div ng-repeat="lead in leads.data.leads" class="inline-block full-width vert-2">
     <a href="https://etsy.com/shop/{{ lead.etsy_meta.shop_name }}" target="_blank">
@@ -53,5 +70,18 @@
         </table>
       </div>
     </div>
+  </div>
+
+  <div class="full-width text-center" ng-hide="leads.data.searching">
+    <pagination total-items="leads.data.inputs.count"
+                items-per-page="leads.data.inputs.perPage"
+                ng-model="leads.data.inputs.page"
+                max-size="5"
+                class="pagination-sm"
+                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                boundary-links="true"
+                rotate="false"
+                ng-change="leads.fns.update()">
+    </pagination>
   </div>
 </div>
