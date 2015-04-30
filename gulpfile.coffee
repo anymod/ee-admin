@@ -75,6 +75,7 @@ gulp.task 'css-prod', () ->
 gulp.task 'js-test', () ->
   gulp.src './src/**/*.coffee' # ** glob forces dest to same subdir
     .pipe gp.replace /@@eeBackUrl/g, 'http://localhost:5555'
+    .pipe gp.replace /@@eeTidyUrl/g, 'http://localhost:7777'
     .pipe gp.plumber()
     .pipe gp.sourcemaps.init()
     .pipe gp.coffee()
@@ -84,6 +85,7 @@ gulp.task 'js-test', () ->
 gulp.task 'js-dev', () ->
   gulp.src './src/**/*.coffee' # ** glob forces dest to same subdir
     .pipe gp.replace /@@eeBackUrl/g, 'http://localhost:5000'
+    .pipe gp.replace /@@eeTidyUrl/g, 'http://localhost:7000'
     .pipe gp.plumber()
     .pipe gp.sourcemaps.init()
     .pipe gp.coffee()
@@ -107,6 +109,7 @@ gulp.task 'js-prod', () ->
     .pipe gp.replace "# 'ee.templates'", "'ee.templates'" # for builder.index.coffee $templateCache
     .pipe gp.replace "'env', 'development'", "'env', 'production'" # TODO use gulp-ng-constant
     .pipe gp.replace /@@eeBackUrl/g, 'https://api.eeosk.com'
+    .pipe gp.replace /@@eeTidyUrl/g, 'https://ee-tidy.herokuapp.com'
     .pipe gp.coffee()
     .pipe gp.ngAnnotate()
   # minified and uglify vendorUnmin, templates, and modules

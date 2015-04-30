@@ -11,6 +11,7 @@ angular.module 'eeAdmin', [
 
   # admin
   'products'
+  'leads'
   'admin.auth'
 
   # custom

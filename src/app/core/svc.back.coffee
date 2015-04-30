@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
+angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) ->
 
   _handleError = (deferred, data, status) ->
     if status is 0 then deferred.reject 'Connection error' else deferred.reject data
@@ -56,4 +56,26 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       url: eeBackUrl + 'admin/products/' + product.id
       headers: authorization: token
       data: product
+    }
+
+  leadsGET: (token, query) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeTidyUrl + 'leads'
+      headers: authorization: token
+    }
+
+  leadGET: (id, token) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeTidyUrl + 'leads/' + id
+      headers: authorization: token
+    }
+
+  leadPUT: (lead, token) ->
+    _makeRequest {
+      method: 'PUT'
+      url: eeTidyUrl + 'leads/' + lead.id
+      headers: authorization: token
+      data: lead
     }

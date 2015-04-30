@@ -4,6 +4,9 @@
     <a ui-sref="products" class="btn btn-sm btn-default" ng-class="{ active: state.indexOf('products') > -1 }">
       Products
     </a>
+    <a ui-sref="leads" class="btn btn-sm btn-default" ng-class="{ active: state.indexOf('leads') > -1 }">
+      Leads
+    </a>
     <div class="pull-right">
       <div ui-sref="login" ng-hide="ee.logged_in" class="btn btn-sm btn-default">Login</div>
       <div ui-sref="logout" ng-show="ee.logged_in" class="btn btn-sm btn-default">Logout</div>
