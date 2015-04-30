@@ -4,16 +4,17 @@ angular.module('app.core').factory 'eeLeads', ($q, eeBack, eeAuth) ->
 
   ## SETUP
   _inputDefaults =
-    perPage:    100
-    page:       null
-    search:     null
-    count:      null
+    perPage:        100
+    page:           null
+    search:         null
+    count:          null
 
   ## PRIVATE EXPORT DEFAULTS
   _data =
-    leads:      []
-    inputs:     _inputDefaults
-    searching:  false
+    leads:          []
+    inputs:         _inputDefaults
+    showDetailsFor: null
+    searching:      false
 
   ## PRIVATE FUNCTIONS
   _formQuery = () ->
@@ -54,3 +55,5 @@ angular.module('app.core').factory 'eeLeads', ($q, eeBack, eeAuth) ->
     decrementPage: () ->
       _data.inputs.page = if _data.inputs.page < 2 then 1 else _data.inputs.page - 1
       _runQuery()
+    showDetailsFor: (id) ->
+      _data.showDetailsFor = if _data.showDetailsFor is id then null else id
