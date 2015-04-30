@@ -11,7 +11,6 @@
                 ng-change="leads.fns.update()">
     </pagination>
   </div>
-  <!-- <pre>{{ leads.data.inputs | json }}</pre> -->
   <div ng-repeat="lead in leads.data.leads" class="inline-block full-width vert-2">
     <a href="https://etsy.com/shop/{{ lead.etsy_meta.shop_name }}" target="_blank">
       <img ng-src="{{ lead.etsy_meta.profile_image_url_75x75 }}" class="img-circle pull-left" style="width: 40px;">
@@ -22,6 +21,8 @@
           <a href="https://etsy.com/shop/{{ lead.etsy_meta.shop_name }}" target="_blank">{{ lead.etsy_meta.shop_name }}</a>
           <br>
           <em>{{ lead.etsy_meta.profile_first_name }}&nbsp;{{ lead.etsy_meta.profile_last_name }}</em>
+          <br>
+          <div ng-show="lead.etsy_meta.about_story_headline || lead.etsy_meta.about_story || lead.etsy_meta.about_related_links || lead.etsy_meta.profile_bio" class="btn btn-xs btn-default" ng-click="leads.fns.showDetailsFor(lead.id)">details</div>
         </div>
         <div class="col-sm-4">
           <div ng-repeat="url in lead.contact_urls.split(', ')">
@@ -43,7 +44,7 @@
           </div>
         </div>
       </div>
-      <div class="row" ng-show="show[lead.id]">
+      <div class="row" ng-show="leads.data.showDetailsFor == lead.id">
         <table class="table table-bordered table-rounded table-striped table-hover table-condensed">
           <tr><td><small>headline</small></td><td ng-bind="lead.etsy_meta.about_story_headline"></td></tr>
           <tr><td><small>story</small></td><td ng-bind="lead.etsy_meta.about_story"></td></tr>
