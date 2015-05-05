@@ -41,6 +41,26 @@ angular.module('app.core').factory 'eeLeads', ($q, eeBack, eeAuth) ->
       _data.searching = false
     deferred.promise
 
+  _updateLead = (newLead) ->
+    assignKey = (key, newLead, oldLead) -> if !!key and !!newLead[key] then oldLead[key] = newLead[key]
+    updateIfMatch = (n) ->
+      oldLead = _data.leads[n]
+      if !!oldLead and oldLead.id is newLead.id
+        console.log 'updating', n, oldLead
+        assignKey(key, newLead, oldLead) for key in Object.keys(oldLead)
+        return true
+    updateIfMatch n for n in [0.._data.leads.length]
+    return false
+
+  _alterLead = (lead) ->
+    lead.updating = true
+    eeBack.leadPUT lead, eeAuth.fns.getToken()
+    .then (res) ->
+      _updateLead res
+      lead.error = null
+    .catch (err) -> lead.error = err
+    .finally () -> lead.updating = false
+
   ## EXPORTS
   data: _data
   fns:
@@ -57,3 +77,10 @@ angular.module('app.core').factory 'eeLeads', ($q, eeBack, eeAuth) ->
       _runQuery()
     showDetailsFor: (id) ->
       _data.showDetailsFor = if _data.showDetailsFor is id then null else id
+    alterLead: _alterLead
+    toggleIgnoreLead: (lead) ->
+      lead.ignored = !lead.ignored
+      _alterLead lead
+    toggleSentLead: (lead) ->
+      if !lead.sent_at then lead.sent_at = new Date() else lead.sent_at = null
+      _alterLead lead
