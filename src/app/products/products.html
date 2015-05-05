@@ -24,8 +24,17 @@
     </h2>
   </div>
 
-  <div class="inline-block vert-20" ng-class="{ 'opacity-08': products.data.searching }">
-    <div ng-repeat="product in products.data.products" class="inline-block text-left gray-border vertical-align-top pad-5 margin-2" style="width: 22%; height: 75px;">
+  <div class="inline-block" ng-class="{ 'opacity-08': products.data.searching }">
+    <div class="btn btn-link" ng-click="hideHidden = !hideHidden">
+      <span ng-hide="hideHidden">hide </span>
+      <span ng-show="hideHidden">show </span>
+      hidden products on this page
+    </div>
+    <br>
+    <div ng-repeat="product in products.data.products"
+        ng-hide="product.hide_from_catalog && hideHidden"
+        class="inline-block text-left gray-border vertical-align-top pad-5 margin-2"
+        style="width: 22%; height: 75px;">
       <div class="media">
         <div class="media-left">
           <a href ng-click="products.open(product)">
