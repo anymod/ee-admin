@@ -28,12 +28,12 @@
     <div ng-repeat="product in products.data.products" class="inline-block text-left gray-border vertical-align-top pad-5 margin-2" style="width: 22%; height: 75px;">
       <div class="media">
         <div class="media-left">
-          <a href="#">
+          <a href ng-click="products.open(product)">
             <img class="media-object" ng-src="{{ product.image_meta.main_image.url | thumbnail }}">
           </a>
         </div>
         <div class="media-body">
-          <p class="media-heading line-height-1 overflow-hidden" style="max-height: 37px;" ng-bind="product.title"></p>
+          <p href ng-click="products.open(product)" class="media-heading line-height-1 text-info hover-pointer hover-underline overflow-hidden" style="max-height: 37px;" ng-bind="product.title"></p>
           <div ng-click="products.hide(product)" class="btn btn-xs btn-default" ng-hide="product.hide_from_catalog" ng-disabled="product.loading">Hide</div>
           <div ng-click="products.unhide(product)" class="btn btn-xs btn-danger" ng-show="product.hide_from_catalog" ng-disabled="product.loading">Show</div>&nbsp;
           <small>id: {{ product.id }}</small>

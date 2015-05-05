@@ -42,10 +42,11 @@ sources.appModule = [
   './src/app/core/svc.back.coffee'
   './src/app/core/svc.auth.coffee'
   './src/app/core/svc.definer.coffee'
+  './src/app/core/svc.modal.coffee'
   './src/app/core/svc.catalog.coffee'
   './src/app/core/svc.leads.coffee'
   # Product modal
-  # './src/app/product/product.modal.controller.coffee'
+  './src/app/products/product.modal.controller.coffee'
 ]
 sources.adminModule = [
   # Definitions

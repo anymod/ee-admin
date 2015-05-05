@@ -7,6 +7,7 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
     productsPerPage:  24
     page:             null
     search:           null
+    order:            null
     range:
       min:            null
       max:            null
@@ -47,6 +48,7 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
     if _data.inputs.range.max then query.max        = _data.inputs.range.max
     if _data.inputs.search    then query.search     = _data.inputs.search
     if _data.inputs.category  then query.categories = [ _data.inputs.category ] else query.categories = []
+    if _data.inputs.order     then query.order      = _data.inputs.order
     query
 
   _runQuery = () ->
@@ -62,6 +64,17 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
     .finally () ->
       _data.searching = false
     deferred.promise
+
+  _updateProduct = (newProduct) ->
+    assignKey = (key, newProduct, oldProduct) -> if !!key and !!newProduct[key] then oldProduct[key] = newProduct[key]
+    updateIfMatch = (n) ->
+      oldProduct = _data.products[n]
+      if !!oldProduct and oldProduct.id is newProduct.id
+        console.log 'updating', n, oldProduct
+        assignKey(key, newProduct, oldProduct) for key in Object.keys(oldProduct)
+        return true
+    updateIfMatch n for n in [0.._data.products.length]
+    return false
 
   ## EXPORTS
   data: _data
@@ -89,3 +102,10 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
         _data.inputs.range.min = range.min
         _data.inputs.range.max = range.max
       _runQuery()
+    setOrder: (order) ->
+      _data.inputs.page = 1
+      _data.inputs.order = if _data.inputs.order is order then null else order
+      _runQuery()
+    updateProduct: (product) ->
+      console.log 'new', product
+      _updateProduct product
