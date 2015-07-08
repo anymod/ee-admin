@@ -4,10 +4,10 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
 
   ## SETUP
   _inputDefaults =
-    productsPerPage:  24
+    perPage:  96
     page:             null
     search:           null
-    order:            null
+    searchLabel:      null
     range:
       min:            null
       max:            null
@@ -30,9 +30,11 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
 
   ## PRIVATE EXPORT DEFAULTS
   _data =
-    products:   []
-    inputs:     _inputDefaults
-    searching:  false
+    count:          null
+    products:       []
+    inputs:         _inputDefaults
+    searching:      false
+    hideFilterBtns: false
 
   ## PRIVATE FUNCTIONS
   _formQuery = () ->
@@ -50,14 +52,33 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
     # if searching then avoid simultaneous calls to API
     if !!_data.searching then return _data.searching
     _data.searching = deferred.promise
-    eeBack.productsGET $cookies.loginToken, _formQuery()
-    .then (products) ->
-      _data.products = products
+    eeBack.productsGET eeAuth.fns.getToken(), _formQuery()
+    .then (res) ->
+      { count, rows }   = res
+      _data.count       = count
+      _data.products    = rows
+      _data.inputs.searchLabel = _data.inputs.search
       deferred.resolve _data.products
-    .catch (err) -> deferred.reject err
+    .catch (err) ->
+      _data.count = null
+      deferred.reject err
     .finally () ->
       _data.searching = false
     deferred.promise
+    # deferred = $q.defer()
+    # # if searching then avoid simultaneous calls to API
+    # if !!_data.searching then return _data.searching
+    # _data.searching = deferred.promise
+    # eeBack.productsGET $cookies.loginToken, _formQuery()
+    # .then (data) ->
+    #   { count, rows } = data
+    #   _data.count     = count
+    #   _data.products  = rows
+    #   deferred.resolve _data.products
+    # .catch (err) -> deferred.reject err
+    # .finally () ->
+    #   _data.searching = false
+    # deferred.promise
 
   _updateProduct = (newProduct) ->
     assignKey = (key, newProduct, oldProduct) -> if !!key and !!newProduct[key] then oldProduct[key] = newProduct[key]
@@ -73,7 +94,12 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
   ## EXPORTS
   data: _data
   fns:
+    update: () -> _runQuery()
     search: () ->
+      _data.inputs.page = 1
+      _runQuery()
+    clearSearch: () ->
+      _data.inputs.search = ''
       _data.inputs.page = 1
       _runQuery()
     incrementPage: () ->
