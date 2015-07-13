@@ -6,10 +6,10 @@
 
   <div class="container-fluid pad-10 text-center">
     <div class="btn-group">
-      <div ng-class="{ 'active btn-primary': !users.data.inputs.order }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder()">Created <i class="fa fa-fw fa-sort-numeric-desc"></i></div>
-      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'created_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('created_at_asc')">Created <i class="fa fa-fw fa-sort-numeric-asc"></i></div>
-      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_desc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_desc')">Updated <i class="fa fa-fw fa-sort-numeric-desc"></i></div>
-      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_asc')">Updated <i class="fa fa-fw fa-sort-numeric-asc"></i></div>
+      <div ng-class="{ 'active btn-primary': !users.data.inputs.order }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder()">Newest</div>
+      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'created_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('created_at_asc')">Oldest</div>
+      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_desc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_desc')">Recently Edited</div>
+      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_asc')">Longest Dormant</div>
     </div>
   </div><!-- /.container-fluid -->
 
