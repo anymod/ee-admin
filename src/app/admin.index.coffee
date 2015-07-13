@@ -10,6 +10,7 @@ angular.module 'eeAdmin', [
   'app.core'
 
   # admin
+  'users'
   'products'
   'leads'
   'admin.auth'

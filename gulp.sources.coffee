@@ -45,6 +45,7 @@ sources.appModule = [
   './src/app/core/svc.modal.coffee'
   './src/app/core/svc.catalog.coffee'
   './src/app/core/svc.leads.coffee'
+  './src/app/core/svc.users.coffee'
   # Product modal
   './src/app/products/product.modal.controller.coffee'
 ]
@@ -61,7 +62,10 @@ sources.adminModule = [
   # auth.logout
   './src/app/auth.logout/auth.logout.route.coffee'
   './src/app/auth.logout/auth.logout.controller.coffee'
-
+  # Module - users
+  './src/app/users/users.module.coffee'
+  './src/app/users/users.route.coffee'
+  './src/app/users/users.controller.coffee'
   # Module - products
   './src/app/products/products.module.coffee'
   './src/app/products/products.route.coffee'

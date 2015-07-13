@@ -1,15 +1,17 @@
-<nav class="navbar navbar-default main-navbar navbar-fixed-top margin-0 round-0 no-side-border"
-     style="min-height: 30px;">
+<nav class="navbar navbar-default main-navbar navbar-fixed-top margin-0 round-0 no-side-border box-shadow">
   <div class="container-fluid pad-5">
-    <a ui-sref="products" class="btn btn-sm btn-default" ng-class="{ active: state.indexOf('products') > -1 }">
+    <a ui-sref="products" class="btn btn-default" ng-class="{ active: state.indexOf('products') > -1 }">
       Products
     </a>
-    <a ui-sref="leads" class="btn btn-sm btn-default" ng-class="{ active: state.indexOf('leads') > -1 }">
+    <a ui-sref="users" class="btn btn-default" ng-class="{ active: state.indexOf('users') > -1 }">
+      Users
+    </a>
+    <a ui-sref="leads" class="btn btn-default" ng-class="{ active: state.indexOf('leads') > -1 }">
       Leads
     </a>
     <div class="pull-right">
-      <div ui-sref="login" ng-hide="ee.logged_in" class="btn btn-sm btn-default">Login</div>
-      <div ui-sref="logout" ng-show="ee.logged_in" class="btn btn-sm btn-default">Logout</div>
+      <div ui-sref="login" ng-hide="ee.logged_in" class="btn btn-default">Login</div>
+      <div ui-sref="logout" ng-show="ee.logged_in" class="btn btn-danger">Logout</div>
     </div>
   </div>
 </nav>

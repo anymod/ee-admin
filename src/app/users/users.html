@@ -1,0 +1,75 @@
+<div ng-if="users.data.searching" class="pad-20 full-width text-center">
+  <h2><i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>&nbsp;Loading</h2>
+</div>
+
+<div class="pad-20" ng-hide="users.data.searching">
+
+  <div class="container-fluid pad-10 text-center">
+    <div class="btn-group">
+      <div ng-class="{ 'active btn-primary': !users.data.inputs.order }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder()">Created <i class="fa fa-fw fa-sort-numeric-desc"></i></div>
+      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'created_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('created_at_asc')">Created <i class="fa fa-fw fa-sort-numeric-asc"></i></div>
+      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_desc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_desc')">Updated <i class="fa fa-fw fa-sort-numeric-desc"></i></div>
+      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_asc')">Updated <i class="fa fa-fw fa-sort-numeric-asc"></i></div>
+    </div>
+  </div><!-- /.container-fluid -->
+
+  <div class="full-width text-center margin-0">
+    <pagination total-items="users.data.inputs.count"
+                items-per-page="users.data.inputs.perPage"
+                ng-model="users.data.inputs.page"
+                max-size="5"
+                class="pagination-sm margin-0 vertical-align-top"
+                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                boundary-links="true"
+                rotate="false"
+                ng-change="users.fns.update()">
+    </pagination>
+  </div>
+
+  <div class="container vert-20">
+    <div ng-repeat="user in users.data.users" class="row vert-10">
+      <div class="col col-xs-2 col-sm-1 text-center">
+        <h2 class="margin-0">
+          <a ng-if="user.username" href="http://{{ user.username }}.eeosk.com" target="_blank"><i class="fa fa-fw fa-external-link"></i></a>
+          <i ng-if="!user.username" class="fa fa-fw fa-times text-danger"></i>
+        </h2>
+        <small>{{ user.username || 'null' }}</small>
+      </div>
+      <div class="col col-sm-4 col-xs-10">
+        <div ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }" class="pad-10">
+          &nbsp;
+          <img ng-if="user.storefront_meta.logo" ng-src="{{ user.storefront_meta.logo }}" class="small-thumb img-circle margin-right-4" />
+          <div class="inline-block pad-5 height-50 font-weight-200"
+              style="height: 50px; padding-top: 5px; font-size: 24px; vertical-align: middle;"
+              ng-style="{ color: user.storefront_meta.home.topBarColor }">
+            {{ user.storefront_meta.home.name }}
+          </div>
+        </div>
+
+      </div>
+      <div class="col col-xs-offset-2 col-xs-10 col-sm-offset-0 col-sm-7">
+        <img ng-src="{{ user.storefront_meta.home.carousel[0].imgUrl | tinyBackground }}" class="vert-2 vertical-align-top">
+        <img ng-src="{{ user.storefront_meta.about.imgUrl | tinyBackground }}" class="vert-2 vertical-align-top">
+        &nbsp;
+        <div class="inline-block">
+          <span class="badge">{{ user.id }}</span>&nbsp;{{ user.email }}<br>
+          Created: {{ user.created_at | timeago }}<br>
+          Updated: {{ user.updated_at | timeago }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-width text-center" ng-hide="users.data.searching">
+    <pagination total-items="users.data.inputs.count"
+                items-per-page="users.data.inputs.perPage"
+                ng-model="users.data.inputs.page"
+                max-size="5"
+                class="pagination-sm"
+                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                boundary-links="true"
+                rotate="false"
+                ng-change="users.fns.update()">
+    </pagination>
+  </div>
+</div>

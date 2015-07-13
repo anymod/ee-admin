@@ -12,7 +12,7 @@ angular.module('leads').config ($stateProvider) ->
 
   data =
     pageTitle:        'Leads'
-    padTop:           '88px'
+    padTop:           '100px'
 
   $stateProvider
     .state 'leads',
