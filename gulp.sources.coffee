@@ -74,6 +74,10 @@ sources.adminModule = [
   './src/app/leads/leads.module.coffee'
   './src/app/leads/leads.route.coffee'
   './src/app/leads/leads.controller.coffee'
+  # Module - demo
+  './src/app/demo/demo.module.coffee'
+  './src/app/demo/demo.route.coffee'
+  './src/app/demo/demo.controller.coffee'
 ]
 
 ### DIRECTIVES ###

@@ -1,14 +1,9 @@
 <nav class="navbar navbar-default main-navbar navbar-fixed-top margin-0 round-0 no-side-border box-shadow">
   <div class="container-fluid pad-5">
-    <a ui-sref="products" class="btn btn-default" ng-class="{ active: state.indexOf('products') > -1 }">
-      Products
-    </a>
-    <a ui-sref="users" class="btn btn-default" ng-class="{ active: state.indexOf('users') > -1 }">
-      Users
-    </a>
-    <a ui-sref="leads" class="btn btn-default" ng-class="{ active: state.indexOf('leads') > -1 }">
-      Leads
-    </a>
+    <a ui-sref="users" ui-sref-active="active" class="btn btn-default">Users</a>
+    <a ui-sref="products" ui-sref-active="active" class="btn btn-default">Products</a>
+    <a ui-sref="leads" ui-sref-active="active" class="btn btn-default">Leads</a>
+    <a ui-sref="demo" ui-sref-active="active" class="btn btn-default">Demo</a>
     <div class="pull-right">
       <div ui-sref="login" ng-hide="ee.logged_in" class="btn btn-default">Login</div>
       <div ui-sref="logout" ng-show="ee.logged_in" class="btn btn-danger">Logout</div>

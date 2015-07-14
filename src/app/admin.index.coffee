@@ -13,6 +13,7 @@ angular.module 'eeAdmin', [
   'users'
   'products'
   'leads'
+  'demo'
   'admin.auth'
 
   # custom
