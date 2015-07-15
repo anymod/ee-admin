@@ -83,6 +83,7 @@ sources.adminModule = [
 ### DIRECTIVES ###
 sources.adminDirective = [
   './src/components/ee-navbar-main.coffee'
+  './src/components/ee-storefront-header.coffee'
 ]
 
 module.exports = sources
