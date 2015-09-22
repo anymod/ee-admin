@@ -2,12 +2,6 @@
 <div id="catalog-products" class="inline-block full-width pad-20 position-relative text-center" ng-hide="products.ee.loading">
 
   <div class="margin-5 text-center">
-    <!-- <div class="inline-block">
-      <div class="btn btn-xs btn-default margin-2" ng-click="products.data.hideFilterBtns = !products.data.hideFilterBtns">
-        <i class="fa fa-caret-down" ng-hide="products.data.hideFilterBtns"></i>
-        <i class="fa fa-caret-right" ng-show="products.data.hideFilterBtns"></i>
-      </div>
-    </div> -->
 
     <form class="margin-0-auto max-width-600" ng-submit="products.fns.search()">
       <div class="input-group">
@@ -79,7 +73,7 @@
       <div class="media">
         <div class="media-left">
           <a href ng-click="products.open(product)">
-            <img class="media-object" ng-src="{{ product.image_meta.main_image.url | thumbnail }}">
+            <img class="media-object" ng-src="{{ product.image | thumbnail }}">
           </a>
         </div>
         <div class="media-body">
