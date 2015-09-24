@@ -21,7 +21,7 @@ angular.module('products').config ($stateProvider) ->
       data:     data
 
     .state 'taxonomy',
-      url:      '/products/taxonomy'
+      url: '/products/taxonomy'
       views:
         header: views.header
         top:

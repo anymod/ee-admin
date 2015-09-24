@@ -19,5 +19,6 @@ angular.module 'eeAdmin', [
   # custom
   'ee-navbar-main'
   'ee-storefront-header'
+  'ee-product-taxonomy'
   # 'ee.templates' # commented out during build step for inline templates
 ]

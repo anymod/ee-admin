@@ -7,5 +7,4 @@ angular.module('ee-navbar-main').directive "eeNavbarMain", ($state, eeDefiner) -
   link: (scope, ele, attrs) ->
     scope.ee          = eeDefiner.exports
     scope.state       = $state.current.name
-    # scope.login       = eeModal.fns.openLoginModal
     return
