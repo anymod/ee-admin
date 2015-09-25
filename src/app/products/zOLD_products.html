@@ -1,5 +1,5 @@
-<!-- TAXONOMY products -->
-<div id="taxonomy-products" class="inline-block full-width pad-20 position-relative text-center" ng-hide="products.ee.loading">
+<!-- CATALOG products -->
+<div id="catalog-products" class="inline-block full-width pad-20 position-relative text-center" ng-hide="products.ee.loading">
 
   <div class="margin-5 text-center">
 
@@ -60,22 +60,30 @@
   </div>
 
   <div class="inline-block" ng-class="{ 'opacity-08': products.data.searching }">
-    <div class="btn btn-xs btn-default" ng-class="{ active: products.compact }" ng-click="products.compact = !products.compact">
-      <i class="fa fa-times" ng-show="products.compact"></i> compact view
+    <div class="btn btn-xs btn-default" ng-class="{ active: products.compact }" ng-click="products.compact = !products.compact">compact</div>
+    <div class="btn btn-link" ng-click="hideHidden = !hideHidden">
+      <span ng-hide="hideHidden">hide </span>
+      <span ng-show="hideHidden">show </span>
+      hidden products on this page
     </div>
-    <div class="btn btn-xs btn-default" ng-class="{ active: products.hideHidden }" ng-click="products.hideHidden = !products.hideHidden">
-      <i class="fa fa-times" ng-show="products.hideHidden"></i> hide hidden
-    </div>
-    <div class="vert-20">
-      <ee-product-admin
-        ng-repeat="product in products.data.products"
-        ng-hide="product.hide_from_catalog && products.hideHidden"
-        product="product"
-        styles="products.taxonomyData.taxonomies.styles"
-        colors="products.taxonomyData.taxonomies.colors"
-        materials="products.taxonomyData.taxonomies.materials"
-        compact="products.compact">
-      </ee-product-admin>
+    <br>
+    <div ng-repeat="product in products.data.products"
+        ng-hide="product.hide_from_catalog && hideHidden"
+        class="inline-block text-left gray-border vertical-align-top pad-5 margin-2"
+        style="width: 22%; height: 75px;">
+      <div class="media">
+        <div class="media-left">
+          <a href ng-click="products.open(product)">
+            <img class="media-object" ng-src="{{ product.image | thumbnail }}">
+          </a>
+        </div>
+        <div class="media-body">
+          <p href ng-click="products.open(product)" class="media-heading line-height-1 text-info hover-pointer hover-underline overflow-hidden" style="max-height: 37px;" ng-bind="product.title"></p>
+          <div ng-click="products.hide(product)" class="btn btn-xs btn-default" ng-hide="product.hide_from_catalog" ng-disabled="product.loading">Hide</div>
+          <div ng-click="products.unhide(product)" class="btn btn-xs btn-danger" ng-show="product.hide_from_catalog" ng-disabled="product.loading">Show</div>&nbsp;
+          <small>id: {{ product.id }}</small>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -96,4 +104,4 @@
     <div class="pad-20">No results found</div>
   </div>
 </div>
-<!-- /TAXONOMY products -->
+<!-- /CATALOG products -->

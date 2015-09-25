@@ -20,13 +20,4 @@ angular.module('products').config ($stateProvider) ->
       views:    views
       data:     data
 
-    .state 'taxonomy',
-      url: '/products/taxonomy'
-      views:
-        header: views.header
-        top:
-          controller: 'productsCtrl as products'
-          templateUrl: 'app/products/products.taxonomy.html'
-      data: data
-
   return

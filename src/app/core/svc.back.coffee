@@ -86,3 +86,25 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
       headers: authorization: token
       data: lead
     }
+
+  taxonomiesGET: (token) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'admin/taxonomies'
+      headers: authorization: token
+    }
+
+  taxonomyPOST: (data, token) ->
+    _makeRequest {
+      method: 'POST'
+      url: eeBackUrl + 'admin/taxonomies'
+      headers: authorization: token
+      data: data
+    }
+
+  taxonomyDELETE: (id, token) ->
+    _makeRequest {
+      method: 'DELETE'
+      url: eeBackUrl + 'admin/taxonomies/' + id
+      headers: authorization: token
+    }

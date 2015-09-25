@@ -46,6 +46,7 @@ sources.appModule = [
   './src/app/core/svc.catalog.coffee'
   './src/app/core/svc.leads.coffee'
   './src/app/core/svc.users.coffee'
+  './src/app/core/svc.taxonomies.coffee'
   # Product modal
   './src/app/products/product.modal.controller.coffee'
 ]
@@ -70,6 +71,10 @@ sources.adminModule = [
   './src/app/products/products.module.coffee'
   './src/app/products/products.route.coffee'
   './src/app/products/products.controller.coffee'
+  # Module - taxonomies
+  './src/app/taxonomies/taxonomies.module.coffee'
+  './src/app/taxonomies/taxonomies.route.coffee'
+  './src/app/taxonomies/taxonomies.controller.coffee'
   # Module - leads
   './src/app/leads/leads.module.coffee'
   './src/app/leads/leads.route.coffee'
@@ -84,7 +89,8 @@ sources.adminModule = [
 sources.adminDirective = [
   './src/components/ee-navbar-main.coffee'
   './src/components/ee-storefront-header.coffee'
-  './src/components/ee-product-taxonomy.coffee'
+  './src/components/ee-product-admin.coffee'
+  './src/components/ee-loading.coffee'
 ]
 
 module.exports = sources
