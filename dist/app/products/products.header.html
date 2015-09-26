@@ -4,13 +4,6 @@
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-subheader margin-0 round-0 no-side-border"
      id="catalog-top">
 
-  <div ng-show="products.ee.loading" class="container-fluid">
-    <h2 class="inline-block pull-left" style="margin: 7px 7px 0 0">
-      <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>
-    </h2>
-    <a href class="navbar-brand">Loading</a>
-  </div>
-
   <div ng-hide="products.ee.loading" class="container-fluid pad-10">
     <div class="btn-group">
       <div ng-class="{ 'active btn-primary': products.data.inputs.order == 'updated_at_desc' }" class="btn btn-sm btn-default" ng-click="products.fns.setOrder('updated_at_desc')"><i class="fa fa-clock-o"></i></div>

@@ -1,7 +1,3 @@
-<div ng-if="users.data.searching" class="pad-20 full-width text-center">
-  <h2><i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>&nbsp;Loading</h2>
-</div>
-
 <div class="pad-20" ng-hide="users.data.searching">
 
   <div class="container-fluid pad-10 text-center">
@@ -9,7 +5,6 @@
       <div ng-class="{ 'active btn-primary': !users.data.inputs.order }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder()">Newest</div>
       <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'created_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('created_at_asc')">Oldest</div>
       <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_desc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_desc')">Recently Edited</div>
-      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_asc')">Longest Dormant</div>
     </div>
   </div><!-- /.container-fluid -->
 
@@ -35,7 +30,7 @@
         </h2>
         <small>{{ user.username || 'null' }}</small>
       </div>
-      <div class="col col-sm-4 col-xs-10">
+      <div class="col col-sm-5 col-xs-10">
         <div ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }" class="pad-10">
           &nbsp;
           <img ng-if="user.storefront_meta.logo" ng-src="{{ user.storefront_meta.logo }}" class="small-thumb img-circle margin-right-4" />
@@ -47,8 +42,7 @@
         </div>
 
       </div>
-      <div class="col col-xs-offset-2 col-xs-10 col-sm-offset-0 col-sm-7">
-        <img ng-src="{{ user.storefront_meta.home.carousel[0].imgUrl | tinyBackground }}" class="vert-2 vertical-align-top">
+      <div class="col col-xs-offset-2 col-xs-10 col-sm-offset-0 col-sm-6">
         <img ng-src="{{ user.storefront_meta.about.imgUrl | tinyBackground }}" class="vert-2 vertical-align-top">
         &nbsp;
         <div class="inline-block">
@@ -73,3 +67,5 @@
     </pagination>
   </div>
 </div>
+
+<ee-loading loading="users.data.searching"></ee-loading>

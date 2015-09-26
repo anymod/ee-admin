@@ -53,11 +53,21 @@
   </div>
 
   <div class="inline-block" ng-hide="products.data.searching">
-    <div class="btn btn-xs btn-default" ng-class="{ active: products.compact }" ng-click="products.compact = !products.compact">
-      <i class="fa fa-times" ng-show="products.compact"></i> compact view
+    <div class="vert-10">
+      <div class="btn-group btn-group-xs">
+        <div class="btn btn-default" ng-class="{ active: products.compact }" ng-click="products.compact = !products.compact">
+          compact view
+        </div>
+        <div class="btn btn-default" ng-class="{ active: !products.compact }" ng-click="products.compact = !products.compact">
+          edit view
+        </div>
+      </div>
+      <div class="btn btn-xs btn-default" ng-class="{ active: products.hideHidden }" ng-click="products.hideHidden = !products.hideHidden">
+        <i class="fa fa-times" ng-show="products.hideHidden"></i> hide hidden
+      </div>
     </div>
-    <div class="btn btn-xs btn-default" ng-class="{ active: products.hideHidden }" ng-click="products.hideHidden = !products.hideHidden">
-      <i class="fa fa-times" ng-show="products.hideHidden"></i> hide hidden
+    <div class="alert alert-info max-width-600 margin-0-auto" ng-hide="products.compact">
+      Warning: Edits you make will immediately be reflected in all stores
     </div>
     <div class="vert-20">
       <ee-product-admin
