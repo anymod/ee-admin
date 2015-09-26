@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeTaxonomies', ($q, eeBack, eeAuth) ->
+angular.module('app.core').factory 'eeTaxonomies', ($q, $filter, eeBack, eeAuth) ->
 
   _data =
     taxonomies:
@@ -19,6 +19,9 @@ angular.module('app.core').factory 'eeTaxonomies', ($q, eeBack, eeAuth) ->
     _data.taxonomies.colors = []
     _data.taxonomies.materials = []
     _sortTaxonomy t for t in _data.taxonomies.all
+    _data.taxonomies.styles = $filter('orderBy')(_data.taxonomies.styles, 'value')
+    _data.taxonomies.colors = $filter('orderBy')(_data.taxonomies.colors, 'value')
+    _data.taxonomies.materials = $filter('orderBy')(_data.taxonomies.materials, 'value')
 
   _removeTaxonomy = (id) ->
     taxonomies = []
