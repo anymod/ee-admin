@@ -90,6 +90,7 @@ sources.adminDirective = [
   './src/components/ee-navbar-main.coffee'
   './src/components/ee-storefront-header.coffee'
   './src/components/ee-product-admin.coffee'
+  './src/components/ee-user-admin.coffee'
   './src/components/ee-loading.coffee'
 ]
 

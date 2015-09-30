@@ -9,61 +9,44 @@
   </div><!-- /.container-fluid -->
 
   <div class="full-width text-center margin-0">
-    <pagination total-items="users.data.inputs.count"
-                items-per-page="users.data.inputs.perPage"
-                ng-model="users.data.inputs.page"
-                max-size="5"
-                class="pagination-sm margin-0 vertical-align-top"
-                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                boundary-links="true"
-                rotate="false"
-                ng-change="users.fns.update()">
+    <pagination
+      total-items="users.data.inputs.count"
+      items-per-page="users.data.inputs.perPage"
+      ng-model="users.data.inputs.page"
+      max-size="5"
+      class="pagination-sm margin-0 vertical-align-top"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="users.fns.update()">
     </pagination>
   </div>
 
-  <div class="container vert-20">
-    <div ng-repeat="user in users.data.users" class="row vert-10">
-      <div class="col col-xs-2 col-sm-1 text-center">
-        <h2 class="margin-0">
-          <a ng-if="user.username" href="http://{{ user.username }}.eeosk.com" target="_blank"><i class="fa fa-fw fa-external-link"></i></a>
-          <i ng-if="!user.username" class="fa fa-fw fa-times text-danger"></i>
-        </h2>
-        <small>{{ user.username || 'null' }}</small>
-      </div>
-      <div class="col col-sm-5 col-xs-10">
-        <div ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }" class="pad-10">
-          &nbsp;
-          <img ng-if="user.storefront_meta.logo" ng-src="{{ user.storefront_meta.logo }}" class="small-thumb img-circle margin-right-4" />
-          <div class="inline-block pad-5 height-50 font-weight-200"
-              style="height: 50px; padding-top: 5px; font-size: 24px; vertical-align: middle;"
-              ng-style="{ color: user.storefront_meta.home.topBarColor }">
-            {{ user.storefront_meta.home.name }}
-          </div>
-        </div>
-
-      </div>
-      <div class="col col-xs-offset-2 col-xs-10 col-sm-offset-0 col-sm-6">
-        <img ng-src="{{ user.storefront_meta.about.imgUrl | tinyBackground }}" class="vert-2 vertical-align-top">
-        &nbsp;
-        <div class="inline-block">
-          <span class="badge">{{ user.id }}</span>&nbsp;{{ user.email }}<br>
-          Created: {{ user.created_at | timeago }}<br>
-          Updated: {{ user.updated_at | timeago }}
-        </div>
-      </div>
+  <div class="container vert-20 text-center">
+    <div class="btn btn-default btn-xs" ng-active="showEmail" ng-click="showEmail = !showEmail">Show email form</div>
+    <div ng-show="showEmail" class="max-width-900 margin-0-auto pad-10">
+      <input type="text" ng-model="users.mailto.subject" class="form-control">
+      <textarea ng-model="users.mailto.body" class="form-control" rows=15></textarea>
     </div>
+
+    <ee-user-admin ng-repeat="user in users.data.users"
+      user="user"
+      subject="users.mailto.subject"
+      body="users.mailto.body">
+    </ee-user-admin>
   </div>
 
   <div class="full-width text-center" ng-hide="users.data.searching">
-    <pagination total-items="users.data.inputs.count"
-                items-per-page="users.data.inputs.perPage"
-                ng-model="users.data.inputs.page"
-                max-size="5"
-                class="pagination-sm"
-                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                boundary-links="true"
-                rotate="false"
-                ng-change="users.fns.update()">
+    <pagination
+      total-items="users.data.inputs.count"
+      items-per-page="users.data.inputs.perPage"
+      ng-model="users.data.inputs.page"
+      max-size="5"
+      class="pagination-sm"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="users.fns.update()">
     </pagination>
   </div>
 </div>

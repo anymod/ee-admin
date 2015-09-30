@@ -100,7 +100,7 @@ angular.module('app.core').filter 'timeago', () ->
     DECADE = 315569260
 
     if offset <= MINUTE
-      span = [ '', raw ? 'now' : 'less than a minute' ]
+      span = [ '', '< 1 min' ]
     else if (offset < (MINUTE * 60))
       span = [ Math.round(Math.abs(offset / MINUTE)), 'min' ]
     else if (offset < (HOUR * 24))
