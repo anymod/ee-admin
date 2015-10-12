@@ -47,8 +47,8 @@ sources.appModule = [
   './src/app/core/svc.leads.coffee'
   './src/app/core/svc.users.coffee'
   './src/app/core/svc.taxonomies.coffee'
-  # Product modal
-  './src/app/products/product.modal.controller.coffee'
+  # Template modal
+  './src/app/templates/template.modal.controller.coffee'
 ]
 sources.adminModule = [
   # Definitions
@@ -67,10 +67,10 @@ sources.adminModule = [
   './src/app/users/users.module.coffee'
   './src/app/users/users.route.coffee'
   './src/app/users/users.controller.coffee'
-  # Module - products
-  './src/app/products/products.module.coffee'
-  './src/app/products/products.route.coffee'
-  './src/app/products/products.controller.coffee'
+  # Module - templates
+  './src/app/templates/templates.module.coffee'
+  './src/app/templates/templates.route.coffee'
+  './src/app/templates/templates.controller.coffee'
   # Module - taxonomies
   './src/app/taxonomies/taxonomies.module.coffee'
   './src/app/taxonomies/taxonomies.route.coffee'
@@ -89,7 +89,7 @@ sources.adminModule = [
 sources.adminDirective = [
   './src/components/ee-navbar-main.coffee'
   './src/components/ee-storefront-header.coffee'
-  './src/components/ee-product-admin.coffee'
+  './src/components/ee-template-admin.coffee'
   './src/components/ee-user-admin.coffee'
   './src/components/ee-loading.coffee'
 ]

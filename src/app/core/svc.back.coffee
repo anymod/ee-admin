@@ -50,26 +50,26 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
       headers: authorization: token
     }
 
-  productsGET: (token, query) ->
+  templatesGET: (token, query) ->
     _makeRequest {
       method: 'GET'
-      url: eeBackUrl + 'admin/products' + _formQueryString(query)
+      url: eeBackUrl + 'admin/templates' + _formQueryString(query)
       headers: authorization: token
     }
 
-  productGET: (id, token) ->
+  templateGET: (id, token) ->
     _makeRequest {
       method: 'GET'
-      url: eeBackUrl + 'admin/products/' + id
+      url: eeBackUrl + 'admin/templates/' + id
       headers: authorization: token
     }
 
-  productPUT: (product, token) ->
+  templatePUT: (template, token) ->
     _makeRequest {
       method: 'PUT'
-      url: eeBackUrl + 'admin/products/' + product.id
+      url: eeBackUrl + 'admin/templates/' + template.id
       headers: authorization: token
-      data: product
+      data: template
     }
 
   leadsGET: (token, query) ->

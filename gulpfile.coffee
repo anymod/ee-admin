@@ -41,7 +41,7 @@ gulp.task 'html-dev', () ->
 gulp.task 'html-prod', () ->
   gulp.src './src/index.html'
     .pipe gp.plumber()
-    # TODO Replace localhost tracking code with product tracking code
+    # TODO Replace localhost tracking code with production tracking code
     # .pipe gp.replace /UA-55625421-2/g, 'UA-55625421-1'
     .pipe gp.htmlReplace
       css: 'ee.admin.css'

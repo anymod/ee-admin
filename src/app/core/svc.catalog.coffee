@@ -31,7 +31,7 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
   ## PRIVATE EXPORT DEFAULTS
   _data =
     count:          null
-    products:       []
+    templates:      []
     inputs:         _inputDefaults
     searching:      false
     hideFilterBtns: false
@@ -52,13 +52,13 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
     # if searching then avoid simultaneous calls to API
     if !!_data.searching then return _data.searching
     _data.searching = deferred.promise
-    eeBack.productsGET eeAuth.fns.getToken(), _formQuery()
+    eeBack.templatesGET eeAuth.fns.getToken(), _formQuery()
     .then (res) ->
       { count, rows }   = res
       _data.count       = count
-      _data.products    = rows
+      _data.templates   = rows
       _data.inputs.searchLabel = _data.inputs.search
-      deferred.resolve _data.products
+      deferred.resolve _data.templates
     .catch (err) ->
       _data.count = null
       deferred.reject err
@@ -69,26 +69,26 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
     # # if searching then avoid simultaneous calls to API
     # if !!_data.searching then return _data.searching
     # _data.searching = deferred.promise
-    # eeBack.productsGET $cookies.loginToken, _formQuery()
+    # eeBack.templatesGET $cookies.loginToken, _formQuery()
     # .then (data) ->
     #   { count, rows } = data
     #   _data.count     = count
-    #   _data.products  = rows
-    #   deferred.resolve _data.products
+    #   _data.templates  = rows
+    #   deferred.resolve _data.templates
     # .catch (err) -> deferred.reject err
     # .finally () ->
     #   _data.searching = false
     # deferred.promise
 
-  _updateProduct = (newProduct) ->
-    assignKey = (key, newProduct, oldProduct) -> if !!key and !!newProduct[key] then oldProduct[key] = newProduct[key]
+  _updateTemplate = (newTemplate) ->
+    assignKey = (key, newTemplate, oldTemplate) -> if !!key and !!newTemplate[key] then oldTemplate[key] = newTemplate[key]
     updateIfMatch = (n) ->
-      oldProduct = _data.products[n]
-      if !!oldProduct and oldProduct.id is newProduct.id
-        console.log 'updating', n, oldProduct
-        assignKey(key, newProduct, oldProduct) for key in Object.keys(oldProduct)
+      oldTemplate = _data.templates[n]
+      if !!oldTemplate and oldTemplate.id is newTemplate.id
+        console.log 'updating', n, oldTemplate
+        assignKey(key, newTemplate, oldTemplate) for key in Object.keys(oldTemplate)
         return true
-    updateIfMatch n for n in [0.._data.products.length]
+    updateIfMatch n for n in [0.._data.templates.length]
     return false
 
   ## EXPORTS
@@ -126,6 +126,6 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
       _data.inputs.page = 1
       _data.inputs.order = if _data.inputs.order is order then null else order
       _runQuery()
-    updateProduct: (product) ->
-      console.log 'new', product
-      _updateProduct product
+    updateTemplate: (template) ->
+      console.log 'new', template
+      _updateTemplate template

@@ -11,7 +11,7 @@ angular.module 'eeAdmin', [
 
   # admin
   'users'
-  'products'
+  'templates'
   'taxonomies'
   'leads'
   'demo'
@@ -20,7 +20,7 @@ angular.module 'eeAdmin', [
   # custom
   'ee-navbar-main'
   'ee-storefront-header'
-  'ee-product-admin'
+  'ee-template-admin'
   'ee-user-admin'
   'ee-loading'
   # 'ee.templates' # commented out during build step for inline templates
