@@ -7,15 +7,17 @@ switch process.env.NODE_ENV
     process.env.NODE_ENV = 'development'
     process.env.PORT = 9000
 
-express         = require 'express'
-vhost           = require 'vhost'
-morgan          = require 'morgan'
-path            = require 'path'
-serveStatic     = require 'serve-static'
-bodyParser      = require 'body-parser'
+express     = require 'express'
+vhost       = require 'vhost'
+morgan      = require 'morgan'
+path        = require 'path'
+serveStatic = require 'serve-static'
+bodyParser  = require 'body-parser'
+compression = require 'compression'
 
 # Parent app
-app             = express()
+app = express()
+app.use compression()
 
 forceSsl = (req, res, next) ->
   if req.headers['x-forwarded-proto'] isnt 'https'

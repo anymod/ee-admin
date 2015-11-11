@@ -10,6 +10,7 @@ angular.module('ee-product-admin').directive "eeProductAdmin", (eeAuth, eeBack, 
     materials:  '='
     compact:    '='
   link: (scope, ele, attrs) ->
+    scope.compact = false
     scope.product.updating = false
 
     scope.taxonomy =

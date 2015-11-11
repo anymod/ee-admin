@@ -1,0 +1,17 @@
+<ee-navbar-main></ee-navbar-main>
+
+<!-- Product navbar -->
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-subheader margin-0 round-0 no-side-border"
+     id="catalog-top">
+
+  <div ng-hide="products.ee.loading" class="container-fluid pad-10">
+    <div class="btn-group">
+      <div ng-class="{ 'active btn-primary': products.data.inputs.order == 'updated_at_desc' }" class="btn btn-sm btn-default" ng-click="products.fns.setOrder('updated_at_desc')"><i class="fa fa-clock-o"></i></div>
+      <div ng-class="{ 'active btn-primary': products.data.inputs.order == 'id_asc' }" class="btn btn-sm btn-default" ng-click="products.fns.setOrder('id_asc')"><i class="fa fa-sort-numeric-asc"></i></div>
+      <div ng-class="{ 'active btn-primary': products.data.inputs.order == 'id_desc' }" class="btn btn-sm btn-default" ng-click="products.fns.setOrder('id_desc')"><i class="fa fa-sort-numeric-desc"></i></div>
+      <div ng-class="{ 'active btn-primary': products.data.inputs.order == 'title_asc' }" class="btn btn-sm btn-default" ng-click="products.fns.setOrder('title_asc')"><i class="fa fa-sort-alpha-asc"></i></div>
+      <div ng-class="{ 'active btn-primary': products.data.inputs.order == 'title_desc' }" class="btn btn-sm btn-default" ng-click="products.fns.setOrder('title_desc')"><i class="fa fa-sort-alpha-desc"></i></div>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- /Product navbar -->

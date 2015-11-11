@@ -19,73 +19,22 @@
         <small>id: {{ product.id }}</small>
       </div>
 
+      <!-- EXPANDED -->
       <form class="form-inline" ng-submit="updateTaxonomy()" ng-hide="compact">
-        <div class="input-group input-group-sm max-width-140">
-          <input type="text" ng-model="product.style" class="form-control" placeholder="Style">
-          <div class="input-group-btn" dropdown>
-            <ul class="dropdown-menu dropdown-menu-right">
-              <li ng-repeat="attr in styles">
-                <a href ng-click="addVal('style', attr.value)" ng-bind="attr.value"></a>
-              </li>
-            </ul>
-            <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
-          </div>
-        </div>&nbsp;
-        <div class="input-group input-group-sm max-width-140">
-          <input type="text" ng-model="product.color" class="form-control" placeholder="Color">
-          <div class="input-group-btn" dropdown>
-            <ul class="dropdown-menu dropdown-menu-right">
-              <li ng-repeat="attr in colors">
-                <a href ng-click="addVal('color', attr.value)" ng-bind="attr.value"></a>
-              </li>
-            </ul>
-            <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
-          </div>
-        </div>&nbsp;
-        <div class="input-group input-group-sm max-width-140">
-          <input type="text" ng-model="product.material" class="form-control" placeholder="Material">
-          <div class="input-group-btn" dropdown>
-            <ul class="dropdown-menu dropdown-menu-right">
-              <li ng-repeat="attr in materials">
-                <a href ng-click="addVal('material', attr.value)" ng-bind="attr.value"></a>
-              </li>
-            </ul>
-            <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
-          </div>
-        </div>&nbsp;
-        <div class="input-group input-group-sm" style="max-width: 165px;">
-          <input type="text" ng-model="product.length" class="form-control" style="width: 33%;" placeholder="L">
-          <input type="text" ng-model="product.width" class="form-control" style="width: 33%;" placeholder="W">
-          <input type="text" ng-model="product.height" class="form-control" style="width: 34%;" placeholder="H">
-          <div class="input-group-btn" dropdown>
-            <ul class="dropdown-menu">
-              <li ng-repeat="option in taxonomy.options.lwh">
-                <a href ng-click="setTaxonomyDropdownLWH(option)" ng-bind="option"></a>
-              </li>
-            </ul>
-            <div class="btn btn-default" dropdown-toggle>{{ taxonomy.current.lwh }} <span class="caret"></span></div>
-          </div>
-        </div>&nbsp;
-        <div class="input-group input-group-sm max-width-100">
-          <input type="text" ng-model="product.weight" class="form-control" placeholder="Weight">
-          <div class="input-group-btn" dropdown>
-            <ul class="dropdown-menu">
-              <li ng-repeat="option in taxonomy.options.weight">
-                <a href ng-click="setTaxonomyDropdownWeight(option)" ng-bind="option"></a>
-              </li>
-            </ul>
-            <div class="btn btn-default" dropdown-toggle>{{ taxonomy.current.weight }} <span class="caret"></span></div>
-          </div>
-        </div>&nbsp;
+        <input type="text" ng-model="product.title" class="form-control input-sm" style="width: 80%;" />
         <button type="submit" class="btn btn-sm btn-default" ng-disabled="product.updating">Submit</button>
         <i class="fa fa-fw fa-check text-success" ng-show="product.succeeded"></i>
-
-        <input type="text" ng-model="product.title" class="form-control input-sm" style="width: 80%;" />
-        <br>
-        <textarea ng-model="product.content" class="form-control input-sm" style="width: 80%;" rows=3></textarea>
-
       </form>
+      <!-- /EXPANDED -->
 
     </div> <!-- /media-body -->
+
+
+    <table>
+      <tr ng-repeat="sku in product.skus">
+        <td><ee-sku-admin sku="sku"></ee-sku-admin></td>
+      </tr>
+    </table>
+
   </div>
 </div>
