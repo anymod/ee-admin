@@ -4,23 +4,23 @@
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top navbar-subheader margin-0 round-0 no-side-border"
      id="catalog-top">
 
-  <div ng-show="templates.ee.loading" class="container-fluid">
+  <div ng-show="products.ee.loading" class="container-fluid">
     <h2 class="inline-block pull-left" style="margin: 7px 7px 0 0">
       <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>
     </h2>
     <a href class="navbar-brand">Loading</a>
   </div>
 
-  <div ng-hide="templates.ee.loading" class="container-fluid pad-10">
+  <div ng-hide="products.ee.loading" class="container-fluid pad-10">
     <div class="inline-block full-width max-width-300">
       <input type="text" class="form-control" placeholder="Email address to send to" ng-model="navUrl" disabled>
     </div>
     <div class="btn btn-default" disabled>1</div>
     <div class="btn btn-default" disabled>2</div>
     <div class="btn btn-default" disabled>3</div>
-    <form class="navbar-form navbar-right margin-0" ng-submit="templates.fns.search()">
+    <form class="navbar-form navbar-right margin-0" ng-submit="products.fns.search()">
       <div class="input-group">
-        <input type="text" ng-model="templates.data.inputs.search" class="form-control" placeholder="Search">
+        <input type="text" ng-model="products.data.inputs.search" class="form-control" placeholder="Search">
         <span class="input-group-btn">
           <button class="btn btn-default" type="submit" name="search-btn"><i class="fa fa-fw fa-search"></i></button>
         </span>

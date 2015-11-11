@@ -2,13 +2,13 @@
 <div class="container-fluid vert-10" ng-if="isAdmin">
   <div class="row">
     <div class="col col-sm-7">
-      <img ng-src="{{ modal.mainImage.url }}" class="full-width" name="mainImage">
+      <img ng-src="{{ modal.mainImage }}" class="full-width" name="mainImage">
       <!-- images -->
-      <div ng-show="modal.product.image_meta.additional_images.length > 0" class="vert-5">
-        <img ng-src="{{ modal.product.image_meta.main_image.url | thumbnail }}"
+      <div ng-show="modal.product.additional_images.length > 0" class="vert-5">
+        <img ng-src="{{ modal.product.image | thumbnail }}"
              class="inline-block width-62 gray-border hover-pointer margin-2"
-             ng-click="modal.setMainImage(modal.product.image_meta.main_image)" />
-        <img ng-repeat="img in modal.product.image_meta.additional_images"
+             ng-click="modal.setMainImage(modal.product.image)" />
+        <img ng-repeat="img in modal.product.additional_images"
              ng-src="{{ img.url | thumbnail }}"
              class="inline-block width-62 gray-border hover-pointer margin-2"
              ng-click="modal.setMainImage(img)" />

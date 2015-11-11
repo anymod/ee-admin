@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').controller 'templateModalCtrl', ($rootScope, template, eeBack, eeAuth, eeDefiner, eeCatalog, eeModal) ->
+angular.module('app.core').controller 'templateModalCtrl', ($rootScope, template, eeBack, eeAuth, eeDefiner, eeProducts, eeModal) ->
 
   that            = this
   this.ee         = eeDefiner.exports
@@ -12,7 +12,7 @@ angular.module('app.core').controller 'templateModalCtrl', ($rootScope, template
     template.saving = true
     eeBack.templatePUT { id: template.id, title: template.title, content: template.content }, eeAuth.fns.getToken()
     .then (prod) ->
-      eeCatalog.fns.updateTemplate prod
+      eeProducts.fns.updateProduct prod
       eeModal.fns.close 'template'
     .catch (err) -> console.error err
     .finally () ->  template.saving = false

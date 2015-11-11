@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').controller 'templatesCtrl', (eeDefiner, eeCatalog, eeTaxonomies) ->
+angular.module('app.core').controller 'templatesCtrl', (eeDefiner, eeProducts, eeTaxonomies) ->
 
   templates = this
 
@@ -8,11 +8,11 @@ angular.module('app.core').controller 'templatesCtrl', (eeDefiner, eeCatalog, ee
   templates.hideHidden = true
 
   templates.ee   = eeDefiner.exports
-  templates.data = eeCatalog.data
-  templates.fns  = eeCatalog.fns
+  templates.data = eeProducts.data
+  templates.fns  = eeProducts.fns
   templates.taxonomyData = eeTaxonomies.data
 
-  eeCatalog.fns.search()
+  eeProducts.fns.search()
   eeTaxonomies.fns.search()
 
   return

@@ -59,13 +59,13 @@ angular.module('app.core').factory 'eeModal', ($modal) ->
     openPrivacyPolicyModal: () -> _open 'privacyPolicy'
     openFAQModal:           () -> _open 'faq'
 
-    openTemplateModal: (template) ->
-      _modals.template = $modal.open({
-        templateUrl: 'app/templates/template.modal.html'
+    openProductModal: (product) ->
+      _modals.product = $modal.open({
+        templateUrl: 'app/products/product.modal.html'
         backdropClass: 'white-background opacity-08'
         resolve:
-          template: () -> template
-        controller: 'templateModalCtrl as modal'
+          product: () -> product
+        controller: 'productModalCtrl as modal'
       })
 
     closeLoginModal:        () -> _close 'login'

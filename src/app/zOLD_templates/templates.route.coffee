@@ -11,7 +11,7 @@ angular.module('templates').config ($stateProvider) ->
       templateUrl: 'app/templates/templates.html'
 
   data =
-    pageTitle:        'Templates'
+    pageTitle:        'Products'
     padTop:           '100px'
 
   $stateProvider

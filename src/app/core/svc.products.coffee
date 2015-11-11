@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $location, $modal, eeBack, eeAuth) ->
+angular.module('app.core').factory 'eeProducts', ($rootScope, $cookies, $q, $location, $modal, eeBack, eeAuth) ->
 
   ## SETUP
   _inputDefaults =
@@ -31,7 +31,7 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
   ## PRIVATE EXPORT DEFAULTS
   _data =
     count:          null
-    templates:      []
+    products:      []
     inputs:         _inputDefaults
     searching:      false
     hideFilterBtns: false
@@ -52,13 +52,13 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
     # if searching then avoid simultaneous calls to API
     if !!_data.searching then return _data.searching
     _data.searching = deferred.promise
-    eeBack.templatesGET eeAuth.fns.getToken(), _formQuery()
+    eeBack.productsGET eeAuth.fns.getToken(), _formQuery()
     .then (res) ->
-      { count, rows }   = res
-      _data.count       = count
-      _data.templates   = rows
+      { count, rows } = res
+      _data.count     = count
+      _data.products  = rows
       _data.inputs.searchLabel = _data.inputs.search
-      deferred.resolve _data.templates
+      deferred.resolve _data.products
     .catch (err) ->
       _data.count = null
       deferred.reject err
@@ -69,26 +69,26 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
     # # if searching then avoid simultaneous calls to API
     # if !!_data.searching then return _data.searching
     # _data.searching = deferred.promise
-    # eeBack.templatesGET $cookies.loginToken, _formQuery()
+    # eeBack.productsGET $cookies.loginToken, _formQuery()
     # .then (data) ->
     #   { count, rows } = data
     #   _data.count     = count
-    #   _data.templates  = rows
-    #   deferred.resolve _data.templates
+    #   _data.products  = rows
+    #   deferred.resolve _data.products
     # .catch (err) -> deferred.reject err
     # .finally () ->
     #   _data.searching = false
     # deferred.promise
 
-  _updateTemplate = (newTemplate) ->
-    assignKey = (key, newTemplate, oldTemplate) -> if !!key and !!newTemplate[key] then oldTemplate[key] = newTemplate[key]
+  _updateProduct = (newProduct) ->
+    assignKey = (key, newProduct, oldProduct) -> if !!key and !!newProduct[key] then oldProduct[key] = newProduct[key]
     updateIfMatch = (n) ->
-      oldTemplate = _data.templates[n]
-      if !!oldTemplate and oldTemplate.id is newTemplate.id
-        console.log 'updating', n, oldTemplate
-        assignKey(key, newTemplate, oldTemplate) for key in Object.keys(oldTemplate)
+      oldProduct = _data.products[n]
+      if !!oldProduct and oldProduct.id is newProduct.id
+        console.log 'updating', n, oldProduct
+        assignKey(key, newProduct, oldProduct) for key in Object.keys(oldProduct)
         return true
-    updateIfMatch n for n in [0.._data.templates.length]
+    updateIfMatch n for n in [0.._data.products.length]
     return false
 
   ## EXPORTS
@@ -126,6 +126,6 @@ angular.module('app.core').factory 'eeCatalog', ($rootScope, $cookies, $q, $loca
       _data.inputs.page = 1
       _data.inputs.order = if _data.inputs.order is order then null else order
       _runQuery()
-    updateTemplate: (template) ->
-      console.log 'new', template
-      _updateTemplate template
+    updateProduct: (product) ->
+      console.log 'new', product
+      _updateProduct product

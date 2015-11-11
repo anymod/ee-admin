@@ -70,7 +70,7 @@
       Warning: Edits are immediately reflected on builder and in all stores
     </div>
     <div class="vert-20">
-      <ee-template-admin
+      <ee-product-admin
         ng-repeat="template in templates.data.templates"
         ng-hide="template.hide_from_catalog && templates.hideHidden"
         template="template"
@@ -78,7 +78,7 @@
         colors="templates.taxonomyData.taxonomies.colors"
         materials="templates.taxonomyData.taxonomies.materials"
         compact="templates.compact">
-      </ee-template-admin>
+      </ee-product-admin>
     </div>
   </div>
 
