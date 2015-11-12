@@ -1,5 +1,5 @@
 <div class="well inline-block text-left border-none vertical-align-top pad-5 vert-5"
-    ng-class="product.hide_from_catalog ? 'light-dark-background' : 'white-background'"
+    ng-class="{ 'opacity-05': product.updating }"
     ng-style="compact && { 'max-width':'22%' }">
   <div class="media overflow-visible">
     <div class="media-left overflow-visible">
@@ -28,14 +28,14 @@
           <th colspan=2>
             <small class="font-weight-200 hover-pointer" ng-click="details = !details"><span class="caret"></span> details</small>
             <i class="fa fa-fw fa-check text-success" ng-show="product.succeeded"></i>
-            <button type="submit" class="btn btn-sm btn-default pull-right" ng-disabled="product.updating">Submit</button>
+            <div class="btn btn-sm btn-default pull-right" ng-click="update(product)">Submit</div>
           </th>
           <tr ng-if="details">
             <td colspan=5>
-              <textarea ng-bind="product.content" class="full-width gray-border" rows="5"></textarea>
+              <textarea ng-model="product.content" class="full-width gray-border" rows="5"></textarea>
             </td>
           </tr>
-          <tr ee-sku-admin ng-repeat="sku in product.skus" sku="sku" materials="materials"></tr>
+          <tr ee-sku-for-admin ng-repeat="sku in product.skus" sku="sku" materials="materials"></tr>
         </table>
       </div>
       <!-- /EXPANDED -->

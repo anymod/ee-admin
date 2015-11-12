@@ -20,8 +20,8 @@ angular.module 'eeAdmin', [
   # custom
   'ee-navbar-main'
   'ee-storefront-header'
-  'ee-product-admin'
-  'ee-sku-admin'
+  'ee-product-for-admin'
+  'ee-sku-for-admin'
   'ee-user-admin'
   'ee-loading'
   # 'ee.templates' # commented out during build step for inline templates

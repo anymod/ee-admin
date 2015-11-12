@@ -65,7 +65,7 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
         url: eeBackUrl + 'admin/products/' + id
         headers: authorization: token
       }
-
+      
     productPUT: (product, token) ->
       _makeRequest {
         method: 'PUT'

@@ -1,7 +1,6 @@
 <!-- PRODUCTS -->
 <div id="products" class="inline-block full-width pad-20 position-relative text-center">
 
-
   <div ng-hide="products.ee.loading" class="margin-5 text-center">
     <!-- Search -->
     <form class="margin-0-auto max-width-600" ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
@@ -111,7 +110,7 @@
       Edits are immediately reflected on builder and in all stores
     </div>
     <!-- Results -->
-    <ee-product-admin
+    <ee-product-for-admin
       ng-repeat="product in products.ee.Products.search.products"
       ng-hide="product.hide_from_catalog && products.hideHidden"
       product="product"
@@ -119,8 +118,7 @@
       colors="products.taxonomyData.taxonomies.colors"
       materials="products.taxonomyData.taxonomies.materials"
       compact="products.compact">
-    </ee-product-admin>
-    <ee-product-for-builder ng-repeat="product in products.ee.Products.search.products" product="product"></ee-product-for-builder>
+    </ee-product-for-admin>
     <div ng-show="!products.ee.Products.search.reading && products.ee.Products.search.products.length <= 0">
       <div class="pad-20">No results found</div>
     </div>

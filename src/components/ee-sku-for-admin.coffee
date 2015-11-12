@@ -1,7 +1,7 @@
-angular.module 'ee-sku-admin', []
+angular.module 'ee-sku-for-admin', []
 
-angular.module('ee-sku-admin').directive "eeSkuAdmin", (eeAuth, eeBack, eeModal) ->
-  templateUrl: 'components/ee-sku-admin.html'
+angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", (eeAuth, eeBack, eeModal) ->
+  templateUrl: 'components/ee-sku-for-admin.html'
   restrict: 'EA'
   replace: true
   scope:

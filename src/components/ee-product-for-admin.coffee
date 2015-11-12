@@ -1,7 +1,7 @@
-angular.module 'ee-product-admin', []
+angular.module 'ee-product-for-admin', []
 
-angular.module('ee-product-admin').directive "eeProductAdmin", (eeAuth, eeBack, eeModal) ->
-  templateUrl: 'components/ee-product-admin.html'
+angular.module('ee-product-for-admin').directive "eeProductForAdmin", (eeAuth, eeBack, eeModal, eeProduct) ->
+  templateUrl: 'components/ee-product-for-admin.html'
   restrict: 'E'
   scope:
     product:    '='
@@ -87,5 +87,8 @@ angular.module('ee-product-admin').directive "eeProductAdmin", (eeAuth, eeBack, 
       if !scope.product[attr] then scope.product[attr] = ''
       if scope.product[attr] isnt '' then scope.product[attr] += ', '
       scope.product[attr] += val
+
+    scope.update = (product) ->
+      eeProduct.fns.update product
 
     return

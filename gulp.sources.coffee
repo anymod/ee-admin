@@ -43,6 +43,7 @@ sources.appModule = [
   './src/app/core/svc.auth.coffee'
   './src/app/core/svc.definer.coffee'
   './src/app/core/svc.modal.coffee'
+  './src/app/core/svc.product.coffee'
   './src/app/core/svc.products.coffee'
   './src/app/core/svc.leads.coffee'
   './src/app/core/svc.users.coffee'
@@ -93,8 +94,8 @@ sources.adminModule = [
 sources.adminDirective = [
   './src/components/ee-navbar-main.coffee'
   './src/components/ee-storefront-header.coffee'
-  './src/components/ee-product-admin.coffee'
-  './src/components/ee-sku-admin.coffee'
+  './src/components/ee-product-for-admin.coffee'
+  './src/components/ee-sku-for-admin.coffee'
   './src/components/ee-user-admin.coffee'
   './src/components/ee-loading.coffee'
 ]
