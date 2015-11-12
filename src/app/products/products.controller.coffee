@@ -12,7 +12,7 @@ angular.module('app.core').controller 'productsCtrl', (eeDefiner, eeProducts, ee
   products.fns  = eeProducts.fns
   products.taxonomyData = eeTaxonomies.data
 
-  eeProducts.fns.search()
+  eeProducts.fns.runSection 'search'
   eeTaxonomies.fns.search()
 
   return

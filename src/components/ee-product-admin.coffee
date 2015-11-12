@@ -49,14 +49,14 @@ angular.module('ee-product-admin').directive "eeProductAdmin", (eeAuth, eeBack, 
 
     scope.open = () ->
       scope.product.reading = true
-      eeBack.productGET scope.product.id, eeAuth.fns.getToken()
+      eeBack.fns.productGET scope.product.id, eeAuth.fns.getToken()
       .then (prod) -> eeModal.fns.openProductModal prod
       .catch (err) -> console.error err
       .finally () ->  scope.product.reading = false
 
     scope.setHidden = (bool) ->
       scope.product.reading = true
-      eeBack.productPUT { id: scope.product.id, hide_from_catalog: bool }, eeAuth.fns.getToken()
+      eeBack.fns.productPUT { id: scope.product.id, hide_from_catalog: bool }, eeAuth.fns.getToken()
       .then (prod) -> scope.product.hide_from_catalog = bool
       .catch (err) ->
         console.error err
@@ -76,7 +76,7 @@ angular.module('ee-product-admin').directive "eeProductAdmin", (eeAuth, eeBack, 
       if !!scope.product.width    then product.width    = scope.product.width
       if !!scope.product.height   then product.height   = scope.product.height
       console.log 'product', product
-      eeBack.productPUT product, eeAuth.fns.getToken()
+      eeBack.fns.productPUT product, eeAuth.fns.getToken()
       .then (prod) ->
         scope.product = prod
         scope.product.succeeded = true

@@ -10,7 +10,7 @@ angular.module('app.core').controller 'templateModalCtrl', ($rootScope, template
   this.setMainImage = (img) -> that.mainImage = img
   this.save = (template) ->
     template.saving = true
-    eeBack.templatePUT { id: template.id, title: template.title, content: template.content }, eeAuth.fns.getToken()
+    eeBack.fns.templatePUT { id: template.id, title: template.title, content: template.content }, eeAuth.fns.getToken()
     .then (prod) ->
       eeProducts.fns.updateProduct prod
       eeModal.fns.close 'template'

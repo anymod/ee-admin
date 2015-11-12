@@ -1,24 +1,26 @@
 'use strict'
 
-angular.module('app.core').factory 'eeProducts', ($rootScope, $cookies, $q, $location, $modal, eeBack, eeAuth) ->
+angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth, eeModal) ->
 
   ## SETUP
   _inputDefaults =
-    perPage:  96
-    page:             null
-    search:           null
-    searchLabel:      null
+    perPage:      48
+    page:         null
+    search:       null
+    searchLabel:  null
     range:
-      min:            null
-      max:            null
-    category:         null
+      min:        null
+      max:        null
+    category:     null
+    order:        { order: null, title: 'Most relevant' }
+    featured:     false
     categoryArray: [
-      'Artwork'
-      'Bed & Bath'
-      'Furniture'
-      'Home Accents'
-      'Kitchen'
-      'Outdoor'
+      { id: 1, title: 'Artwork' },
+      { id: 2, title: 'Bed & Bath' },
+      { id: 3, title: 'Furniture' },
+      { id: 4, title: 'Home Accents' },
+      { id: 5, title: 'Kitchen' },
+      { id: 6, title: 'Outdoor' }
     ]
     rangeArray: [
       { min: 0,     max: 2500   },
@@ -27,105 +29,119 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $cookies, $q, $loc
       { min: 10000, max: 20000  },
       { min: 20000, max: null   }
     ]
+    orderArray: [
+      { order: null,          title: 'Most relevant' },
+      { order: 'price ASC',   title: 'Price, low to high',  use: true },
+      { order: 'price DESC',  title: 'Price, high to low',  use: true },
+      { order: 'title ASC',   title: 'A to Z',              use: true },
+      { order: 'title DESC',  title: 'Z to A',              use: true }
+    ]
 
   ## PRIVATE EXPORT DEFAULTS
   _data =
-    count:          null
-    products:      []
-    inputs:         _inputDefaults
-    searching:      false
-    hideFilterBtns: false
+    storefront:
+      count:    null
+      products: []
+      inputs:   angular.copy _inputDefaults
+      reading:  false
+      lastCollectionAddedTo: null
+    search:
+      count:    null
+      products: []
+      inputs:   angular.copy _inputDefaults
+      reading:  false
+      lastCollectionAddedTo: null
 
   ## PRIVATE FUNCTIONS
-  _formQuery = () ->
+  _clearSection = (section) ->
+    _data.products = []
+    _data[section].count    = 0
+
+  _formQuery = (section) ->
     query = {}
-    if _data.inputs.page      then query.page       = _data.inputs.page
-    if _data.inputs.range.min then query.min        = _data.inputs.range.min
-    if _data.inputs.range.max then query.max        = _data.inputs.range.max
-    if _data.inputs.search    then query.search     = _data.inputs.search
-    if _data.inputs.category  then query.categories = [ _data.inputs.category ] else query.categories = []
-    if _data.inputs.order     then query.order      = _data.inputs.order
+    query.size = _data[section].inputs.perPage
+    # if section is 'featured'            then query.feat         = 'true'
+    if _data[section].inputs.featured   then query.feat         = 'true'
+    if _data[section].inputs.page       then query.page         = _data[section].inputs.page
+    if _data[section].inputs.search     then query.search       = _data[section].inputs.search
+    if _data[section].inputs.range.min  then query.min_price    = _data[section].inputs.range.min
+    if _data[section].inputs.range.max  then query.max_price    = _data[section].inputs.range.max
+    if _data[section].inputs.order.use  then query.order        = _data[section].inputs.order.order
+    if _data[section].inputs.category   then query.category_ids = [_data[section].inputs.category.id]
     query
 
-  _runQuery = () ->
-    deferred = $q.defer()
-    # if searching then avoid simultaneous calls to API
-    if !!_data.searching then return _data.searching
-    _data.searching = deferred.promise
-    eeBack.productsGET eeAuth.fns.getToken(), _formQuery()
+  _runQuery = (section, queryPromise) ->
+    if _data[section].reading then return
+    _data[section].reading = true
+    queryPromise
     .then (res) ->
-      { count, rows } = res
-      _data.count     = count
-      _data.products  = rows
-      _data.inputs.searchLabel = _data.inputs.search
-      deferred.resolve _data.products
-    .catch (err) ->
-      _data.count = null
-      deferred.reject err
-    .finally () ->
-      _data.searching = false
-    deferred.promise
-    # deferred = $q.defer()
-    # # if searching then avoid simultaneous calls to API
-    # if !!_data.searching then return _data.searching
-    # _data.searching = deferred.promise
-    # eeBack.productsGET $cookies.loginToken, _formQuery()
-    # .then (data) ->
-    #   { count, rows } = data
-    #   _data.count     = count
-    #   _data.products  = rows
-    #   deferred.resolve _data.products
-    # .catch (err) -> deferred.reject err
-    # .finally () ->
-    #   _data.searching = false
-    # deferred.promise
+      { rows, count, took } = res
+      _data[section].products      = rows
+      _data[section].count         = count
+      _data[section].took = took
+      _data[section].inputs.searchLabel = _data[section].inputs.search
+    .catch (err) -> _data[section].count = null
+    .finally () -> _data[section].reading = false
 
-  _updateProduct = (newProduct) ->
-    assignKey = (key, newProduct, oldProduct) -> if !!key and !!newProduct[key] then oldProduct[key] = newProduct[key]
-    updateIfMatch = (n) ->
-      oldProduct = _data.products[n]
-      if !!oldProduct and oldProduct.id is newProduct.id
-        console.log 'updating', n, oldProduct
-        assignKey(key, newProduct, oldProduct) for key in Object.keys(oldProduct)
-        return true
-    updateIfMatch n for n in [0.._data.products.length]
-    return false
+  _runSection = (section) ->
+    if _data[section].reading then return
+    switch section
+      when 'storefront' then promise = eeBack.fns.productsGET(eeAuth.fns.getToken(), _formQuery('storefront'))
+      when 'search'     then promise = eeBack.fns.productsGET(eeAuth.fns.getToken(), _formQuery('search'))
+    _runQuery section, promise
+
+  _searchWithTerm = (term) ->
+    _data.search.inputs.order = _data.search.inputs.orderArray[0]
+    _data.search.inputs.search = term
+    _data.search.inputs.page = 1
+    _runSection 'search'
+
+  _addProductModal = (product, type) ->
+    product.err = null
+    eeModal.fns.openProductModal product, type
+    return
+
+  ## MESSAGING
+  # $rootScope.$on 'reset:products', () -> _data.search.products = []
+  #
+  $rootScope.$on 'added:product', (e, product, collection) ->
+    _data.search.lastCollectionAddedTo = collection.id
+    # (if product.id is prod.id then prod.productId = product.productId) for prod in _data.search.products
+    # eeModal.fns.close('addProduct')
 
   ## EXPORTS
   data: _data
   fns:
-    update: () -> _runQuery()
-    search: () ->
-      _data.inputs.page = 1
-      _runQuery()
-    clearSearch: () ->
-      _data.inputs.search = ''
-      _data.inputs.page = 1
-      _runQuery()
-    incrementPage: () ->
-      _data.inputs.page = if _data.inputs.page < 1 then 2 else _data.inputs.page + 1
-      _runQuery()
-    decrementPage: () ->
-      _data.inputs.page = if _data.inputs.page < 2 then 1 else _data.inputs.page - 1
-      _runQuery()
-    setCategory: (category) ->
-      _data.inputs.page = 1
-      _data.inputs.category = if _data.inputs.category is category then null else category
-      _runQuery()
-    setRange: (range) ->
+    runSection: _runSection
+    search: _searchWithTerm
+    featured: () ->
+      section = 'storefront'
+      _clearSection section
+      _data[section].inputs.page      = 1
+      _data[section].inputs.featured  = true
+      _runSection section
+    clearSearch: () -> _searchWithTerm ''
+    setCategory: (category, section) ->
+      _data[section].inputs.page      = 1
+      _data[section].inputs.category  = category
+      _runSection section
+    setOrder: (order, section) ->
+      _data[section].inputs.search  = if !order?.order then _data[section].inputs.searchLabel else null
+      _data[section].inputs.page    = 1
+      _data[section].inputs.order   = order
+      _runSection section
+    setRange: (range, section) ->
       range = range || {}
-      _data.inputs.page = 1
-      if _data.inputs.range.min is range.min and _data.inputs.range.max is range.max
-        _data.inputs.range.min = null
-        _data.inputs.range.max = null
+      _data[section].inputs.page = 1
+      if _data[section].inputs.range.min is range.min and _data[section].inputs.range.max is range.max
+        _data[section].inputs.range.min = null
+        _data[section].inputs.range.max = null
       else
-        _data.inputs.range.min = range.min
-        _data.inputs.range.max = range.max
-      _runQuery()
-    setOrder: (order) ->
-      _data.inputs.page = 1
-      _data.inputs.order = if _data.inputs.order is order then null else order
-      _runQuery()
-    updateProduct: (product) ->
-      console.log 'new', product
-      _updateProduct product
+        _data[section].inputs.range.min = range.min
+        _data[section].inputs.range.max = range.max
+      _runSection section
+    toggleFeatured: (section) ->
+      _data[section].inputs.page      = 1
+      _data[section].inputs.featured  = !_data[section].inputs.featured
+      _runSection section
+    addProductModal: _addProductModal

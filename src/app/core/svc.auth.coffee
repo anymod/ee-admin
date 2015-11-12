@@ -32,7 +32,7 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $cookieStore
     if !$cookies.loginToken then deferred.reject('Missing login credentials'); return deferred.promise
     _status.fetching = deferred.promise
 
-    eeBack.tokenPOST $cookies.loginToken
+    eeBack.fns.tokenPOST $cookies.loginToken
     .then (data) ->
       _setUser data
       if !!data.email then deferred.resolve(data) else deferred.reject(data)
@@ -57,7 +57,7 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $cookieStore
         _reset()
         deferred.reject 'Missing login credentials'
       else
-        eeBack.authPOST(email, password)
+        eeBack.fns.authPOST(email, password)
         .then (data) ->
           if !data.user?.admin
             deferred.reject 'Not an admin'

@@ -27,7 +27,7 @@ angular.module('app.core').factory 'eeUsers', ($q, eeBack, eeAuth) ->
     # if searching then avoid simultaneous calls to API
     if !!_data.searching then return _data.searching
     _data.searching = deferred.promise
-    eeBack.usersGET eeAuth.fns.getToken(), _formQuery()
+    eeBack.fns.usersGET eeAuth.fns.getToken(), _formQuery()
     .then (res) ->
       _data.inputs.count = res.count
       _data.users        = res.rows
@@ -52,7 +52,7 @@ angular.module('app.core').factory 'eeUsers', ($q, eeBack, eeAuth) ->
 
   # _alterLead = (lead) ->
   #   lead.updating = true
-  #   eeBack.leadPUT lead, eeAuth.fns.getToken()
+  #   eeBack.fns.leadPUT lead, eeAuth.fns.getToken()
   #   .then (res) ->
   #     _updateLead res
   #     lead.error = null

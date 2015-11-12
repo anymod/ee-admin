@@ -33,7 +33,7 @@ angular.module('app.core').factory 'eeTaxonomies', ($q, $filter, eeBack, eeAuth)
     deferred = $q.defer()
     if !!_data.reading then return _data.reading
     _data.reading = deferred.promise
-    eeBack.taxonomiesGET eeAuth.fns.getToken()
+    eeBack.fns.taxonomiesGET eeAuth.fns.getToken()
     .then (res) ->
       _data.taxonomies.all = res
       _sortTaxonomies()
@@ -49,7 +49,7 @@ angular.module('app.core').factory 'eeTaxonomies', ($q, $filter, eeBack, eeAuth)
     deferred = $q.defer()
     if !!_data.creating then return _data.creating
     _data.creating = deferred.promise
-    eeBack.taxonomyPOST { attribute: attribute, value: value }, eeAuth.fns.getToken()
+    eeBack.fns.taxonomyPOST { attribute: attribute, value: value }, eeAuth.fns.getToken()
     .then (res) ->
       _data.taxonomies.all.push res
       _sortTaxonomies()
@@ -66,7 +66,7 @@ angular.module('app.core').factory 'eeTaxonomies', ($q, $filter, eeBack, eeAuth)
     deferred = $q.defer()
     if !!_data.destroying then return _data.destroying
     _data.destroying = deferred.promise
-    eeBack.taxonomyDELETE taxonomy.id, eeAuth.fns.getToken()
+    eeBack.fns.taxonomyDELETE taxonomy.id, eeAuth.fns.getToken()
     .then (res) ->
       _removeTaxonomy taxonomy.id
       deferred.resolve res

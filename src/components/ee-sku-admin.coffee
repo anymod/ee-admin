@@ -2,7 +2,7 @@ angular.module 'ee-sku-admin', []
 
 angular.module('ee-sku-admin').directive "eeSkuAdmin", (eeAuth, eeBack, eeModal) ->
   templateUrl: 'components/ee-sku-admin.html'
-  restrict: 'E'
+  restrict: 'EA'
   replace: true
   scope:
     sku:        '='
@@ -48,14 +48,14 @@ angular.module('ee-sku-admin').directive "eeSkuAdmin", (eeAuth, eeBack, eeModal)
 
     scope.open = () ->
       scope.sku.reading = true
-      eeBack.skuGET scope.sku.id, eeAuth.fns.getToken()
+      eeBack.fns.skuGET scope.sku.id, eeAuth.fns.getToken()
       .then (prod) -> eeModal.fns.openSkuModal prod
       .catch (err) -> console.error err
       .finally () ->  scope.sku.reading = false
 
     scope.setHidden = (bool) ->
       scope.sku.reading = true
-      eeBack.skuPUT { id: scope.sku.id, hide_from_catalog: bool }, eeAuth.fns.getToken()
+      eeBack.fns.skuPUT { id: scope.sku.id, hide_from_catalog: bool }, eeAuth.fns.getToken()
       .then (prod) -> scope.sku.hide_from_catalog = bool
       .catch (err) ->
         console.error err
@@ -75,7 +75,7 @@ angular.module('ee-sku-admin').directive "eeSkuAdmin", (eeAuth, eeBack, eeModal)
       if !!scope.sku.width    then sku.width    = scope.sku.width
       if !!scope.sku.height   then sku.height   = scope.sku.height
       console.log 'sku', sku
-      eeBack.skuPUT sku, eeAuth.fns.getToken()
+      eeBack.fns.skuPUT sku, eeAuth.fns.getToken()
       .then (prod) ->
         scope.sku = prod
         scope.sku.succeeded = true

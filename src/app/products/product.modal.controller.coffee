@@ -10,7 +10,7 @@ angular.module('app.core').controller 'productModalCtrl', ($rootScope, product, 
   this.setMainImage = (img) -> that.mainImage = img
   this.save = (product) ->
     product.saving = true
-    eeBack.productPUT { id: product.id, title: product.title, content: product.content }, eeAuth.fns.getToken()
+    eeBack.fns.productPUT { id: product.id, title: product.title, content: product.content }, eeAuth.fns.getToken()
     .then (prod) ->
       eeProducts.fns.updateProduct prod
       eeModal.fns.close 'product'

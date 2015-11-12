@@ -16,7 +16,7 @@ angular.module('ee-user-admin').directive "eeUserAdmin", ($window, eeAuth, eeBac
       if scope.mailto
         $window.open scope.mailto, '_blank'
       else
-        eeBack.userEmailGET scope.user.id, eeAuth.fns.getToken()
+        eeBack.fns.userEmailGET scope.user.id, eeAuth.fns.getToken()
         .then (res) ->
           scope.mailto = 'mailto:' + res.email + '?Subject=' + encodeURI(scope.subject) + '&body=' + encodeURI(scope.body).replace(/\&/g, '%26')
           $window.open scope.mailto, '_blank'

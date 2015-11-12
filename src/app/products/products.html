@@ -1,104 +1,145 @@
 <!-- PRODUCTS -->
-<div id="taxonomy-products" class="inline-block full-width pad-20 position-relative text-center" ng-hide="products.ee.loading">
+<div id="products" class="inline-block full-width pad-20 position-relative text-center">
 
-  <div class="margin-5 text-center">
 
-    <form class="margin-0-auto max-width-600" ng-submit="products.fns.search()">
-      <div class="input-group">
-        <input type="text" ng-model="products.data.inputs.search" class="form-control" placeholder="Search">
-        <span class="input-group-btn">
-          <button class="btn btn-default" type="submit" name="search-btn">
-            <span class="hidden-xs">Search</span>
-            <span class="visible-xs"><i class="fa fa-search"></i></span>
+  <div ng-hide="products.ee.loading" class="margin-5 text-center">
+    <!-- Search -->
+    <form class="margin-0-auto max-width-600" ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
+      <div ng-class="{ 'input-group input-group-lg': products.ee.Products.search.inputs.searchLabel }">
+        <input type="text" ng-model="products.ee.Products.search.inputs.search" class="form-control input-lg" placeholder="Search your store">
+        <span ng-if="products.ee.Products.search.inputs.searchLabel" class="input-group-btn">
+          <input type="submit" class="hidden"/>
+          <button class="btn btn-default" type="button" ng-click="products.fns.clearSearch()">
+            <i class="fa fa-times text-muted"></i>
           </button>
         </span>
       </div>
     </form>
+    <!-- /Search -->
 
-    <div class="inline-block margin-5">
-      <div ng-repeat="category in products.data.inputs.categoryArray"
-           ng-click="products.fns.setCategory(category)"
-           class="btn btn-xs btn-default margin-2"
-           ng-class="{ 'btn-primary': category == products.data.inputs.category }"
-           ng-hide="products.data.hideFilterBtns && category != products.data.inputs.category">
-        <span ng-show="category == products.data.inputs.category"><i class="fa fa-fw fa-times"></i></span>{{ category }}
-      </div>
-      <br ng-hide="products.data.hideFilterBtns">
-      <div ng-repeat="range in products.data.inputs.rangeArray"
-           ng-click="products.fns.setRange(range)"
-           class="btn btn-xs btn-default margin-2"
-           ng-class="{ 'btn-primary': range.min == products.data.inputs.range.min && range.max == products.data.inputs.range.max }"
-           ng-hide="products.data.hideFilterBtns && range.min != products.data.inputs.range.min">
-        <span ng-show="range.min == products.data.inputs.range.min && range.max == products.data.inputs.range.max"><i class="fa fa-fw fa-times"></i></span>{{ range | rangeToText }}
-      </div>
-      <br ng-hide="products.data.hideFilterBtns">
-      <div class="btn btn-xs btn-primary margin-2" ng-show="products.data.inputs.searchLabel" ng-click="products.fns.clearSearch()">
-        <i class="fa fa-fw fa-times"></i>{{ products.data.inputs.searchLabel }}
+    <!-- Filters -->
+    <div class="margin-0-auto max-width-600 text-left">
+      <div class="vert-10">
+        <!-- category -->
+        <div class="btn-group btn-group-sm" dropdown ng-if="!products.ee.Products.search.inputs.category.id">
+          <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+            Category&nbsp;&nbsp;<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="category in products.ee.Products.search.inputs.categoryArray">
+              <a href
+                ng-if="products.ee.User.user.categorization_ids.indexOf(category.id) > -1"
+                ng-click="products.fns.setCategory(category, 'search')"
+                ng-bind="category.title"></a>
+            </li>
+            <!-- TODO reinstate with categories -->
+            <!-- <li role="separator" class="divider"></li>
+            <li><a ui-sref="categories">Your categories <i class="fa fa-fw fa-long-arrow-right"></i></a></li> -->
+          </ul>
+        </div>
+        <div ng-if="products.ee.Products.search.inputs.category.id"
+            ng-click="products.fns.setCategory(null, 'search')"
+            class="btn btn-info btn-sm">
+          {{ products.ee.Products.search.inputs.category.title }}&nbsp;<i class="fa fa-times"></i>
+        </div>
+        <!-- /category -->
+        <!-- price -->
+        <div class="btn-group btn-group-sm" dropdown ng-if="!products.ee.Products.search.inputs.range.min && !products.ee.Products.search.inputs.range.max">
+          <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+            Price&nbsp;&nbsp;<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="range in products.ee.Products.search.inputs.rangeArray">
+              <a href ng-click="products.fns.setRange(range, 'search')" ng-bind="range | rangeToText"></a>
+            </li>
+          </ul>
+        </div>
+        <div ng-if="products.ee.Products.search.inputs.range.min || products.ee.Products.search.inputs.range.max"
+            ng-click="products.fns.setRange(null, 'search')"
+            class="btn btn-info btn-sm">
+          {{ { min: products.ee.Products.search.inputs.range.min, max: products.ee.Products.search.inputs.range.max } | rangeToText }}&nbsp;<i class="fa fa-times"></i>
+        </div>
+        <!-- /price -->
+        <!-- view -->
+        <div class="btn-group btn-group-sm">
+          <div class="btn btn-default" ng-class="{ active: products.compact }" ng-click="products.compact = !products.compact">
+            compact
+          </div>
+          <div class="btn btn-default" ng-class="{ active: !products.compact }" ng-click="products.compact = !products.compact">
+            edit
+          </div>
+        </div>
+        <!-- <div class="btn btn-xs btn-default" ng-class="{ active: products.hideHidden }" ng-click="products.hideHidden = !products.hideHidden">
+          <i class="fa fa-times" ng-show="products.hideHidden"></i> hide hidden
+        </div> -->
+        <!-- /view -->
+        <div class="pull-right">
+          <!-- sort order -->
+          <div class="btn-group btn-group-sm" dropdown>
+            <button type="button" class="btn btn-default dropdown-toggle" ng-class="{ 'btn-success' : products.ee.Products.search.inputs.order.order }" dropdown-toggle>
+              {{ products.ee.Products.search.inputs.order.title }}&nbsp;&nbsp;<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li ng-repeat="order in products.ee.Products.search.inputs.orderArray">
+                <a href ng-click="products.fns.setOrder(order, 'search')" ng-bind="order.title"></a>
+              </li>
+            </ul>
+          </div>
+          <!-- /sort order -->
+        </div>
+
       </div>
     </div>
+    <!-- /Filters -->
 
-    <div class="margin-10">
-      <pagination total-items="products.data.count"
-        items-per-page="products.data.inputs.perPage"
-        ng-model="products.data.inputs.page"
+    <div class="margin-10" ng-hide="products.ee.Products.search.products.length <= 0">
+      <pagination total-items="products.ee.Products.search.count"
+        items-per-page="products.ee.Products.search.inputs.perPage"
+        ng-model="products.ee.Products.search.inputs.page"
         max-size="5"
         class="pagination-sm margin-0 vertical-align-top"
         previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
         boundary-links="true"
         rotate="false"
-        ng-change="products.fns.update()">
+        ng-change="products.fns.runSection('search')">
       </pagination>
     </div>
-
   </div>
 
-  <div class="inline-block" ng-hide="products.data.searching">
-    <div class="vert-10">
-      <div class="btn-group btn-group-xs">
-        <div class="btn btn-default" ng-class="{ active: products.compact }" ng-click="products.compact = !products.compact">
-          compact view
-        </div>
-        <div class="btn btn-default" ng-class="{ active: !products.compact }" ng-click="products.compact = !products.compact">
-          edit view
-        </div>
-      </div>
-      <div class="btn btn-xs btn-default" ng-class="{ active: products.hideHidden }" ng-click="products.hideHidden = !products.hideHidden">
-        <i class="fa fa-times" ng-show="products.hideHidden"></i> hide hidden
-      </div>
-    </div>
+  <div ng-hide="products.ee.Products.search.reading || products.ee.loading" class="margin-0-auto">
     <div class="alert alert-info max-width-600 margin-0-auto" ng-hide="products.compact">
-      Warning: Edits are immediately reflected on builder and in all stores
+      Edits are immediately reflected on builder and in all stores
     </div>
-    <div class="vert-20">
-      <ee-product-admin
-        ng-repeat="product in products.data.products"
-        ng-hide="product.hide_from_catalog && products.hideHidden"
-        product="product"
-        styles="products.taxonomyData.taxonomies.styles"
-        colors="products.taxonomyData.taxonomies.colors"
-        materials="products.taxonomyData.taxonomies.materials"
-        compact="products.compact">
-      </ee-product-admin>
+    <!-- Results -->
+    <ee-product-admin
+      ng-repeat="product in products.ee.Products.search.products"
+      ng-hide="product.hide_from_catalog && products.hideHidden"
+      product="product"
+      styles="products.taxonomyData.taxonomies.styles"
+      colors="products.taxonomyData.taxonomies.colors"
+      materials="products.taxonomyData.taxonomies.materials"
+      compact="products.compact">
+    </ee-product-admin>
+    <ee-product-for-builder ng-repeat="product in products.ee.Products.search.products" product="product"></ee-product-for-builder>
+    <div ng-show="!products.ee.Products.search.reading && products.ee.Products.search.products.length <= 0">
+      <div class="pad-20">No results found</div>
     </div>
+    <!-- /Results -->
   </div>
 
-  <div class="margin-10" ng-hide="products.data.products.length <= 0 || products.data.searching">
-    <pagination total-items="products.data.count"
-      items-per-page="products.data.inputs.perPage"
-      ng-model="products.data.inputs.page"
+  <div ng-hide="products.ee.Products.search.reading || products.ee.Products.search.count <= products.ee.Products.search.inputs.perPage" class="pad-20 vert-20">
+    <pagination total-items="products.ee.Products.search.count"
+      items-per-page="products.ee.Products.search.inputs.perPage"
+      ng-model="products.ee.Products.search.inputs.page"
       max-size="5"
       class="pagination-sm margin-0 vertical-align-top"
       previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
       boundary-links="true"
       rotate="false"
-      ng-change="products.fns.update()">
+      ng-change="products.fns.runSection('search')">
     </pagination>
-  </div>
-
-  <div ng-show="!products.data.searching && products.data.products.length <= 0">
-    <div class="pad-20">No results found</div>
   </div>
 </div>
 <!-- /PRODUCTS -->
 
-<ee-loading loading="products.data.searching"></ee-loading>
+<ee-loading loading="products.ee.Products.search.reading"></ee-loading>

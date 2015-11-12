@@ -12,7 +12,7 @@ angular.module('products').config ($stateProvider) ->
 
   data =
     pageTitle:        'Products'
-    padTop:           '100px'
+    padTop:           '60px'
 
   $stateProvider
     .state 'products',

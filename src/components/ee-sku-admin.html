@@ -1,134 +1,72 @@
 <tr>
-  <td ng-bind="sku.selection_text"></td>
-  <td ng-bind="sku.regular_price | centToDollar"></td>
-  <!-- <div class="input-group input-group-sm max-width-140">
-    <input type="text" ng-model="sku.style" class="form-control" placeholder="Style">
-    <div class="input-group-btn" dropdown>
-      <ul class="dropdown-menu dropdown-menu-right">
+  <td style="width: 40%; overflow: hidden;"><small ng-bind="sku.selection_text"></small></td>
+  <td><small ng-bind="sku.regular_price | centToDollar"></small></td>
+  <td ng-hide="true">
+    <!-- style -->
+    <div class="dropdown" dropdown>
+      <input type="text" ng-model="sku.style" placeholder="Style" dropdown-toggle>
+      <ul class="dropdown-menu">
         <li ng-repeat="attr in styles">
           <a href ng-click="addVal('style', attr.value)" ng-bind="attr.value"></a>
         </li>
       </ul>
-      <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
     </div>
-  </div>&nbsp;
-  <div class="input-group input-group-sm max-width-140">
-    <input type="text" ng-model="sku.color" class="form-control" placeholder="Color">
-    <div class="input-group-btn" dropdown>
-      <ul class="dropdown-menu dropdown-menu-right">
+    <!-- /style -->
+  </td>
+  <td ng-hide="true">
+    <!-- color -->
+    <div class="dropdown" dropdown>
+      <input type="text" ng-model="sku.color" placeholder="Color" dropdown-toggle>
+      <ul class="dropdown-menu">
         <li ng-repeat="attr in colors">
           <a href ng-click="addVal('color', attr.value)" ng-bind="attr.value"></a>
         </li>
       </ul>
-      <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
     </div>
-  </div>&nbsp;
-  <div class="input-group input-group-sm max-width-140">
-    <input type="text" ng-model="sku.material" class="form-control" placeholder="Material">
-    <div class="input-group-btn" dropdown>
-      <ul class="dropdown-menu dropdown-menu-right">
+    <!-- /color -->
+  </td>
+  <td>
+    <!-- material -->
+    <div class="dropdown" dropdown>
+      <input type="text" ng-model="sku.material" class="full-width" placeholder="Material" dropdown-toggle>
+      <ul class="dropdown-menu">
         <li ng-repeat="attr in materials">
           <a href ng-click="addVal('material', attr.value)" ng-bind="attr.value"></a>
         </li>
       </ul>
-      <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
     </div>
-  </div>&nbsp;
-  <div class="input-group input-group-sm" style="max-width: 165px;">
-    <input type="text" ng-model="sku.length" class="form-control" style="width: 33%;" placeholder="L">
-    <input type="text" ng-model="sku.width" class="form-control" style="width: 33%;" placeholder="W">
-    <input type="text" ng-model="sku.height" class="form-control" style="width: 34%;" placeholder="H">
-    <div class="input-group-btn" dropdown>
-      <ul class="dropdown-menu">
+    <!-- /material -->
+  </td>
+  <td>
+    <!-- lwh -->
+    <input type="text" ng-model="sku.length" style="width: 34px" placeholder="L">
+    <input type="text" ng-model="sku.width" style="width: 34px" placeholder="W">
+    <input type="text" ng-model="sku.height" style="width: 34px" placeholder="H">
+    <div class="dropdown inline-block" dropdown>
+      <div class="hover-pointer" style="width: 37px" dropdown-toggle>
+        <small><span class="caret"></span> {{ taxonomy.current.lwh }}</small>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-right">
         <li ng-repeat="option in taxonomy.options.lwh">
           <a href ng-click="setTaxonomyDropdownLWH(option)" ng-bind="option"></a>
         </li>
       </ul>
-      <div class="btn btn-default" dropdown-toggle>{{ taxonomy.current.lwh }} <span class="caret"></span></div>
     </div>
-  </div>&nbsp;
-  <div class="input-group input-group-sm max-width-100">
-    <input type="text" ng-model="sku.weight" class="form-control" placeholder="Weight">
-    <div class="input-group-btn" dropdown>
-      <ul class="dropdown-menu">
+    <!-- /lwh -->
+  </td>
+  <td>
+    <!-- weight -->
+    <input type="text" ng-model="sku.weight" style="width: 34px" placeholder="Weight">
+    <div class="dropdown inline-block" dropdown>
+      <div class="hover-pointer" style="width: 37px" dropdown-toggle>
+        <small><span class="caret"></span> {{ taxonomy.current.weight }}</small>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-right">
         <li ng-repeat="option in taxonomy.options.weight">
           <a href ng-click="setTaxonomyDropdownWeight(option)" ng-bind="option"></a>
         </li>
       </ul>
-      <div class="btn btn-default" dropdown-toggle>{{ taxonomy.current.weight }} <span class="caret"></span></div>
     </div>
-  </div>&nbsp;
-  <button type="submit" class="btn btn-sm btn-default" ng-disabled="sku.updating">Submit</button>
-  <i class="fa fa-fw fa-check text-success" ng-show="sku.succeeded"></i> -->
-
-
-
-
-
-
-
-
-  <!-- <form class="form-inline" ng-submit="updateTaxonomy()">
-    <div ng-bind="sku.selection_text"></div>
-    <div class="input-group input-group-sm max-width-140">
-      <input type="text" ng-model="sku.style" class="form-control" placeholder="Style">
-      <div class="input-group-btn" dropdown>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li ng-repeat="attr in styles">
-            <a href ng-click="addVal('style', attr.value)" ng-bind="attr.value"></a>
-          </li>
-        </ul>
-        <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
-      </div>
-    </div>&nbsp;
-    <div class="input-group input-group-sm max-width-140">
-      <input type="text" ng-model="sku.color" class="form-control" placeholder="Color">
-      <div class="input-group-btn" dropdown>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li ng-repeat="attr in colors">
-            <a href ng-click="addVal('color', attr.value)" ng-bind="attr.value"></a>
-          </li>
-        </ul>
-        <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
-      </div>
-    </div>&nbsp;
-    <div class="input-group input-group-sm max-width-140">
-      <input type="text" ng-model="sku.material" class="form-control" placeholder="Material">
-      <div class="input-group-btn" dropdown>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li ng-repeat="attr in materials">
-            <a href ng-click="addVal('material', attr.value)" ng-bind="attr.value"></a>
-          </li>
-        </ul>
-        <div class="btn btn-default" dropdown-toggle><span class="caret"></span></div>
-      </div>
-    </div>&nbsp;
-    <div class="input-group input-group-sm" style="max-width: 165px;">
-      <input type="text" ng-model="sku.length" class="form-control" style="width: 33%;" placeholder="L">
-      <input type="text" ng-model="sku.width" class="form-control" style="width: 33%;" placeholder="W">
-      <input type="text" ng-model="sku.height" class="form-control" style="width: 34%;" placeholder="H">
-      <div class="input-group-btn" dropdown>
-        <ul class="dropdown-menu">
-          <li ng-repeat="option in taxonomy.options.lwh">
-            <a href ng-click="setTaxonomyDropdownLWH(option)" ng-bind="option"></a>
-          </li>
-        </ul>
-        <div class="btn btn-default" dropdown-toggle>{{ taxonomy.current.lwh }} <span class="caret"></span></div>
-      </div>
-    </div>&nbsp;
-    <div class="input-group input-group-sm max-width-100">
-      <input type="text" ng-model="sku.weight" class="form-control" placeholder="Weight">
-      <div class="input-group-btn" dropdown>
-        <ul class="dropdown-menu">
-          <li ng-repeat="option in taxonomy.options.weight">
-            <a href ng-click="setTaxonomyDropdownWeight(option)" ng-bind="option"></a>
-          </li>
-        </ul>
-        <div class="btn btn-default" dropdown-toggle>{{ taxonomy.current.weight }} <span class="caret"></span></div>
-      </div>
-    </div>&nbsp;
-    <button type="submit" class="btn btn-sm btn-default" ng-disabled="sku.updating">Submit</button>
-    <i class="fa fa-fw fa-check text-success" ng-show="sku.succeeded"></i>
-    <br>
-  </form> -->
+    <!-- /weight -->
+  </td>
 </tr>

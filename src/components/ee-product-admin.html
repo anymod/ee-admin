@@ -1,40 +1,46 @@
-<div class="well inline-block text-left gray-border vertical-align-top pad-5 margin-2"
+<div class="well inline-block text-left border-none vertical-align-top pad-5 vert-5"
     ng-class="product.hide_from_catalog ? 'light-dark-background' : 'white-background'"
     ng-style="compact && { 'max-width':'22%' }">
   <div class="media overflow-visible">
     <div class="media-left overflow-visible">
       <a href ng-click="open()">
-        <img class="media-object" ng-src="{{ product.image | thumbnail }}" ng-class="{ 'max-width-120 max-height-120': !compact }">
+        <img class="media-object" ng-src="{{ product.image | thumbnail }}">
       </a>
+      <small class="text-muted">{{ product.id }}</small>
     </div>
     <div class="media-body overflow-visible">
 
-      <div class="media-heading">
+      <div class="media-heading" ng-if="compact">
         <span class="inline-block line-height-1 text-info hover-pointer hover-underline overflow-hidden" style="max-height: 37px;"
           ng-click="open()"
           ng-bind="product.title"
           ng-if="compact"></span>
         <div ng-click="setHidden(true)" class="btn btn-xs btn-default" ng-hide="product.hide_from_catalog" ng-disabled="product.reading">Hide</div>
         <div ng-click="setHidden(false)" class="btn btn-xs btn-danger" ng-show="product.hide_from_catalog" ng-disabled="product.reading">Show</div>&nbsp;
-        <small>id: {{ product.id }}</small>
       </div>
 
       <!-- EXPANDED -->
-      <form class="form-inline" ng-submit="updateTaxonomy()" ng-hide="compact">
-        <input type="text" ng-model="product.title" class="form-control input-sm" style="width: 80%;" />
-        <button type="submit" class="btn btn-sm btn-default" ng-disabled="product.updating">Submit</button>
-        <i class="fa fa-fw fa-check text-success" ng-show="product.succeeded"></i>
-      </form>
+      <div ng-if="!compact">
+        <table class="table table-striped table-condensed table-bordered">
+          <th colspan=3>
+            <input type="text" ng-model="product.title" class="full-width"/>
+          </th>
+          <th colspan=2>
+            <small class="font-weight-200 hover-pointer" ng-click="details = !details"><span class="caret"></span> details</small>
+            <i class="fa fa-fw fa-check text-success" ng-show="product.succeeded"></i>
+            <button type="submit" class="btn btn-sm btn-default pull-right" ng-disabled="product.updating">Submit</button>
+          </th>
+          <tr ng-if="details">
+            <td colspan=5>
+              <textarea ng-bind="product.content" class="full-width gray-border" rows="5"></textarea>
+            </td>
+          </tr>
+          <tr ee-sku-admin ng-repeat="sku in product.skus" sku="sku" materials="materials"></tr>
+        </table>
+      </div>
       <!-- /EXPANDED -->
 
     </div> <!-- /media-body -->
-
-
-    <table>
-      <tr ng-repeat="sku in product.skus">
-        <td><ee-sku-admin sku="sku"></ee-sku-admin></td>
-      </tr>
-    </table>
 
   </div>
 </div>
