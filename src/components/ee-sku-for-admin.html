@@ -1,7 +1,7 @@
-<tr>
+<tr ng-class="{ danger: sku.discontinued }">
   <td style="width: 40%; overflow: hidden;"><small ng-bind="sku.selection_text"></small></td>
   <td><small ng-bind="sku.regular_price | centToDollar"></small></td>
-  <td ng-hide="true">
+  <td ng-if="false">
     <!-- style -->
     <div class="dropdown" dropdown>
       <input type="text" ng-model="sku.style" placeholder="Style" dropdown-toggle>
@@ -13,7 +13,7 @@
     </div>
     <!-- /style -->
   </td>
-  <td ng-hide="true">
+  <td ng-if="false">
     <!-- color -->
     <div class="dropdown" dropdown>
       <input type="text" ng-model="sku.color" placeholder="Color" dropdown-toggle>
@@ -69,4 +69,5 @@
     </div>
     <!-- /weight -->
   </td>
+  <td class="text-muted"><small ng-bind="sku.id"></small></td>
 </tr>

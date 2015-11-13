@@ -27,7 +27,6 @@
           <ul class="dropdown-menu">
             <li ng-repeat="category in products.ee.Products.search.inputs.categoryArray">
               <a href
-                ng-if="products.ee.User.user.categorization_ids.indexOf(category.id) > -1"
                 ng-click="products.fns.setCategory(category, 'search')"
                 ng-bind="category.title"></a>
             </li>
