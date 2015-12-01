@@ -58,6 +58,15 @@
           {{ { min: products.ee.Products.search.inputs.range.min, max: products.ee.Products.search.inputs.range.max } | rangeToText }}&nbsp;<i class="fa fa-times"></i>
         </div>
         <!-- /price -->
+        <!-- supplier -->
+        <form class="inline-block margin-0" ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
+          <input type="text"
+            class="form-control input-sm inline-block"
+            style="max-width: 120px"
+            ng-model="products.ee.Products.search.inputs.supplier_id"
+            placeholder="Supplier ID"/>
+        </form>
+        <!-- /supplier -->
         <!-- view -->
         <div class="btn-group btn-group-sm">
           <div class="btn btn-default" ng-class="{ active: products.compact }" ng-click="products.compact = !products.compact">
@@ -67,6 +76,7 @@
             edit
           </div>
         </div>
+
         <!-- <div class="btn btn-xs btn-default" ng-class="{ active: products.hideHidden }" ng-click="products.hideHidden = !products.hideHidden">
           <i class="fa fa-times" ng-show="products.hideHidden"></i> hide hidden
         </div> -->
