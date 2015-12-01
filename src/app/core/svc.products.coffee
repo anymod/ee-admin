@@ -12,6 +12,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       min:        null
       max:        null
     category:     null
+    supplier_id:  null
     order:        { order: null, title: 'Most relevant' }
     featured:     false
     categoryArray: [
@@ -60,14 +61,15 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
   _formQuery = (section) ->
     query = {}
     query.size = _data[section].inputs.perPage
-    # if section is 'featured'            then query.feat         = 'true'
-    if _data[section].inputs.featured   then query.feat         = 'true'
-    if _data[section].inputs.page       then query.page         = _data[section].inputs.page
-    if _data[section].inputs.search     then query.search       = _data[section].inputs.search
-    if _data[section].inputs.range.min  then query.min_price    = _data[section].inputs.range.min
-    if _data[section].inputs.range.max  then query.max_price    = _data[section].inputs.range.max
-    if _data[section].inputs.order.use  then query.order        = _data[section].inputs.order.order
-    if _data[section].inputs.category   then query.category_ids = [_data[section].inputs.category.id]
+    # if section is 'featured'              then query.feat         = 'true'
+    if _data[section].inputs.featured     then query.feat         = 'true'
+    if _data[section].inputs.page         then query.page         = _data[section].inputs.page
+    if _data[section].inputs.search       then query.search       = _data[section].inputs.search
+    if _data[section].inputs.range.min    then query.min_price    = _data[section].inputs.range.min
+    if _data[section].inputs.range.max    then query.max_price    = _data[section].inputs.range.max
+    if _data[section].inputs.order.use    then query.order        = _data[section].inputs.order.order
+    if _data[section].inputs.supplier_id  then query.supplier_id  = _data[section].inputs.supplier_id
+    if _data[section].inputs.category     then query.category_ids = [_data[section].inputs.category.id]
     query
 
   _runQuery = (section, queryPromise) ->
