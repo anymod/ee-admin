@@ -4,6 +4,7 @@ angular.module('app.core').controller 'usersCtrl', (eeUsers) ->
 
   users = this
   users.data = eeUsers.data
+  # users.data.inputs.order = 'updated_at_desc'
 
   users.fns = eeUsers.fns
 

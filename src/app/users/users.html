@@ -2,9 +2,9 @@
 
   <div class="container-fluid pad-10 text-center">
     <div class="btn-group">
-      <div ng-class="{ 'active btn-primary': !users.data.inputs.order }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder()">Newest</div>
-      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'created_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('created_at_asc')">Oldest</div>
-      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_desc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_desc')">Recently Edited</div>
+      <div ng-class="{ 'active btn-primary': !users.data.inputs.order }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder()">Onboard</div>
+      <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'updated_at_desc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('updated_at_desc')">Activity</div>
+      <!-- <div ng-class="{ 'active btn-primary': users.data.inputs.order == 'created_at_asc' }" class="btn btn-sm btn-default" ng-click="users.fns.setOrder('created_at_asc')">Oldest</div> -->
     </div>
   </div><!-- /.container-fluid -->
 
@@ -23,14 +23,18 @@
   </div>
 
   <div class="container vert-20 text-center">
-    <div class="btn btn-default btn-xs" ng-active="showEmail" ng-click="showEmail = !showEmail">Show email form</div>
-    <div ng-show="showEmail" class="max-width-900 margin-0-auto pad-10">
+    <div ng-if="!users.data.inputs.order" class="btn btn-default btn-xs" ng-active="showEmail" ng-click="showEmail = !showEmail">Show email form</div>
+    <div ng-show="!users.data.inputs.order && showEmail" class="max-width-900 margin-0-auto pad-10">
       <input type="text" ng-model="users.mailto.subject" class="form-control">
       <textarea ng-model="users.mailto.body" class="form-control" rows=15></textarea>
     </div>
 
-    <ee-user-admin ng-repeat="user in users.data.users"
+    <ee-user-admin
+      ng-repeat="user in users.data.users"
       user="user"
+      ng-if="user.id != 1 && user.id != 47"
+      show-activity="{{ users.data.inputs.order == 'updated_at_desc' }}"
+      show-onboard="{{ !users.data.inputs.order }}"
       subject="users.mailto.subject"
       body="users.mailto.body">
     </ee-user-admin>
