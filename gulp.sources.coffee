@@ -92,9 +92,12 @@ sources.adminModule = [
 sources.adminDirective = [
   './src/components/ee-navbar-main.coffee'
   './src/components/ee-storefront-header.coffee'
+  './src/components/ee-storefront-logo.coffee'
   './src/components/ee-product-for-admin.coffee'
   './src/components/ee-sku-for-admin.coffee'
   './src/components/ee-user-admin.coffee'
+  './src/components/ee-admin-live-button.coffee'
+  './src/components/ee-admin-user-navbar.coffee'
   './src/components/ee-loading.coffee'
 ]
 

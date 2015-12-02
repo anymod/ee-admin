@@ -29,9 +29,9 @@ angular.module('app.core').filter 'scaledDownBackground', () ->
 angular.module('app.core').filter 'tinyBackground', () ->
   (url) ->
     if !!url and url.indexOf("h_400,w_1200") > -1
-      url.replace('h_400,w_1200', 'h_60,w_180')
+      url.replace('h_400,w_1200', 'h_50,w_170')
     else if url and url.indexOf('image/upload')
-      url.split('image/upload').join('image/upload/c_limit,h_60,w_180')
+      url.split('image/upload').join('image/upload/c_limit,h_50,w_170')
     else
       url
 

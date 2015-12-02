@@ -1,0 +1,13 @@
+<div ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }"
+  class="position-relative gray-border">
+  <a href="{{ root }}" target="_blank"
+    class="store-title inline-block no-underline font-weight-200 margin-0"
+    ng-style="{ color: user.storefront_meta.home.topBarColor }">
+    &nbsp;
+    <!-- Logo -->
+    <ee-storefront-logo meta="user.storefront_meta" sref="-" blocked="true" class="pad-0 vert-2"></ee-storefront-logo>
+    <!-- /Logo -->
+    <div ng-if="user.storefront_meta.home.name" class="title-text inline-block" ng-bind="user.storefront_meta.home.name"></div>
+  </a>
+  <span class="badge font-weight-200 opacity-05 position-absolute" style="bottom: 2px; right: 2px;" ng-bind="user.id"></span>
+</div>

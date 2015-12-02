@@ -1,44 +1,36 @@
 <div>
-  <div class="chart"></div>
-  <div class="row vert-10 text-left" ng-if="showActivity">
-    {{ user | json }}
+  <!-- Activity -->
+  <div ng-show="showActivity" class="container gray-border vert-5">
+    <div class="row text-left" ng-if="showActivity">
+      <ee-admin-user-navbar user="user"></ee-admin-user-navbar>
+    </div>
+    <div class="chart vert-20 margin-top-0">
   </div>
+  <!-- /Activity -->
+
+  <!-- Onboard -->
   <div class="row vert-10 text-left" ng-if="showOnboard">
-    <div class="col col-xs-2 col-sm-1 text-center">
-      <h2 class="margin-0">
-        <a ng-if="user.username" href="http://{{ user.username }}.eeosk.com" target="_blank"><i class="fa fa-fw fa-external-link"></i></a>
-        <i ng-if="!user.username" class="fa fa-fw fa-times text-danger"></i>
-      </h2>
-      <small>{{ user.username || 'null' }}</small>
+    <div class="col col-sm-4">
+      <ee-admin-user-navbar user="user"></ee-admin-user-navbar>
     </div>
-    <div class="col col-sm-5 col-xs-10">
-      <div ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }" class="pad-10">
-        &nbsp;
-        <img ng-if="user.storefront_meta.logo" ng-src="{{ user.storefront_meta.logo }}" class="small-thumb img-circle margin-right-4" />
-        <div class="inline-block pad-5 height-50 font-weight-200"
-            style="height: 40px; padding-top: 5px; font-size: 18px; vertical-align: middle;"
-            ng-style="{ color: user.storefront_meta.home.topBarColor }">
-          {{ user.storefront_meta.home.name }}
-        </div>
+    <div class="col col-sm-2 col-xs-6">
+      <img ng-src="{{ user.storefront_meta.about.imgUrl | tinyBackground }}" class="vert-2 vertical-align-top full-width">
+    </div>
+    <div class="col col-sm-2 col-xs-3">
+      <div class="inline-block">
+        <div ng-if="mailto" class="btn btn-xs btn-default" ng-click="onboard()">Sent <i class="fa fa-fw fa-check"></i></div>
+        <div><small>Created {{ user.created_at | timeago }}</small></div>
+        <div><small>Active {{ user.last_active_at | timeago }}</small></div>
       </div>
     </div>
-    <div class="col col-xs-offset-2 col-xs-10 col-sm-offset-0 col-sm-6">
-      <img ng-src="{{ user.storefront_meta.about.imgUrl | tinyBackground }}" class="vert-2 vertical-align-top">
-      &nbsp;
-      <div class="inline-block">
-        <span class="badge">{{ user.id }}</span>&nbsp;
-        <span ng-if="user.username">
-          <small ng-if="user.onboarded">Onboarded {{ user.onboarded_at | timeago }}</small>
-          <div ng-if="!user.onboarded && !mailto" class="btn btn-xs btn-success"
-            ng-click="onboard()"
-            ng-disabled="user.reading">
-            Onboard <i class="fa fa-fw fa-external-link"></i>
-          </div>
-          <div ng-if="mailto" class="btn btn-xs btn-default" ng-click="onboard()">Sent <i class="fa fa-fw fa-check"></i></div>
-        </span>
-        <div><small>Created {{ user.created_at | timeago }}</small></div>
-        <div><small>Last active {{ user.last_active_at | timeago }}</small></div>
+    <div class="col col-sm-2 col-xs-3">
+      <small ng-if="user.onboarded">Onboarded {{ user.onboarded_at | timeago }}</small>
+      <div ng-if="!user.onboarded && !mailto" class="btn btn-xs btn-primary"
+        ng-click="onboard()"
+        ng-disabled="user.reading">
+        Onboard <i class="fa fa-fw fa-external-link"></i>
       </div>
     </div>
   </div>
+  <!-- /Onboard -->
 </div>
