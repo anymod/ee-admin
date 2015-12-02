@@ -29,9 +29,6 @@ angular.module('ee-user-admin').directive "eeUserAdmin", ($rootScope, $window, e
           timezone:   'US/Pacific'
         }
         chart_ele = ele[0].querySelector('.chart')
-        console.log 'chart_ele', chart_ele
-
-        # console.log angular.element(ele.children())[0] # .children() # .querySelector('chart')
         $rootScope.keenio.draw query, chart_ele, { chartType: 'columnchart' }
 
     if scope.showOnboard
