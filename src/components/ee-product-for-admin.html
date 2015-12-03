@@ -7,6 +7,14 @@
         <img class="media-object" ng-src="{{ product.image | thumbnail }}">
       </a>
       <small class="text-muted">{{ product.id }}</small>
+      <div ng-if="!compact">
+        <a href="https://www.google.com/search?q={{ product.title | pluses }}" target="_blank">
+          <small>google <i class="fa fa-external-link"></i></small>
+        </a>
+        <a ng-if="product.external_identity.indexOf('DOBA.') > -1" href="https://www.doba.com/members/catalog/product/sort_by/relevance/adv_filter/refurbished::0/details/{{ product.external_identity.split('.')[1] }}" target="_blank">
+          <small>doba <i class="fa fa-external-link"></i></small>
+        </a>
+      </div>
     </div>
     <div class="media-body overflow-visible">
 
