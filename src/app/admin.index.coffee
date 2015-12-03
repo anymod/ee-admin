@@ -10,6 +10,7 @@ angular.module 'eeAdmin', [
   'app.core'
 
   # admin
+  'activity'
   'users'
   'products'
   'taxonomies'

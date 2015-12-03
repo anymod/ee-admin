@@ -66,6 +66,10 @@ sources.adminModule = [
   # auth.logout
   './src/app/auth.logout/auth.logout.route.coffee'
   './src/app/auth.logout/auth.logout.controller.coffee'
+  # Module - activity
+  './src/app/activity/activity.module.coffee'
+  './src/app/activity/activity.route.coffee'
+  './src/app/activity/activity.controller.coffee'
   # Module - users
   './src/app/users/users.module.coffee'
   './src/app/users/users.route.coffee'
