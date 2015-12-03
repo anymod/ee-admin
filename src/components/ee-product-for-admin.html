@@ -27,14 +27,14 @@
               <input type="text" ng-model="product.title" class="full-width"/>
             </th>
             <th colspan=2>
-              <small class="font-weight-200 hover-pointer" ng-click="details = !details"><span class="caret"></span> details</small>
+              <!-- <small class="font-weight-200 hover-pointer" ng-click="details = !details"><span class="caret"></span> details</small> -->
               <div class="pull-right">
                 <i class="fa fa-fw fa-check text-success" ng-show="product.saved"></i>
                 <div class="btn btn-sm btn-default" ng-click="update(product)">Submit</div>
               </div>
             </th>
           </tr>
-          <tr ng-if="details">
+          <tr>
             <td colspan=6>
               <textarea ng-model="product.content" class="full-width gray-border" rows="5"></textarea>
             </td>

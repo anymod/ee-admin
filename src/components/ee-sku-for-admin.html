@@ -42,9 +42,9 @@
     <input type="text" ng-model="sku.length" style="width: 34px" placeholder="L">
     <input type="text" ng-model="sku.width" style="width: 34px" placeholder="W">
     <input type="text" ng-model="sku.height" style="width: 34px" placeholder="H">
-    <div class="dropdown inline-block" dropdown>
-      <div class="hover-pointer" style="width: 37px" dropdown-toggle>
-        <small><span class="caret"></span> {{ taxonomy.current.lwh }}</small>
+    <div class="dropdown inline-block" dropdown-DISABLE>
+      <div class="hover-pointer" style="width: 10px" dropdown-toggle>
+        <small><!-- <span class="caret"></span> --> {{ taxonomy.current.lwh }}</small>
       </div>
       <ul class="dropdown-menu dropdown-menu-right">
         <li ng-repeat="option in taxonomy.options.lwh">
@@ -57,9 +57,9 @@
   <td>
     <!-- weight -->
     <input type="text" ng-model="sku.weight" style="width: 34px" placeholder="Weight">
-    <div class="dropdown inline-block" dropdown>
-      <div class="hover-pointer" style="width: 37px" dropdown-toggle>
-        <small><span class="caret"></span> {{ taxonomy.current.weight }}</small>
+    <div class="dropdown inline-block" dropdown-DISABLE>
+      <div class="hover-pointer" style="width: 14px" dropdown-toggle>
+        <small><!-- <span class="caret"></span> --> {{ taxonomy.current.weight }}</small>
       </div>
       <ul class="dropdown-menu dropdown-menu-right">
         <li ng-repeat="option in taxonomy.options.weight">
