@@ -21,26 +21,28 @@
 
       <!-- EXPANDED -->
       <div ng-if="!compact">
-        <table class="table table-striped table-condensed table-bordered">
-          <tr ng-class="{ success: product.saved }">
-            <th colspan=4>
-              <input type="text" ng-model="product.title" class="full-width"/>
-            </th>
-            <th colspan=2>
-              <!-- <small class="font-weight-200 hover-pointer" ng-click="details = !details"><span class="caret"></span> details</small> -->
-              <div class="pull-right">
-                <i class="fa fa-fw fa-check text-success" ng-show="product.saved"></i>
-                <div class="btn btn-sm btn-default" ng-click="update(product)">Submit</div>
-              </div>
-            </th>
-          </tr>
-          <tr>
-            <td colspan=6>
-              <textarea ng-model="product.content" class="full-width gray-border" rows="5"></textarea>
-            </td>
-          </tr>
-          <tr ee-sku-for-admin ng-repeat="sku in product.skus" sku="sku" materials="materials"></tr>
-        </table>
+        <form ng-submit="update(product)" class="margin-0">
+          <table class="table table-striped table-condensed table-bordered">
+            <tr ng-class="{ success: product.saved }">
+              <th colspan=4>
+                <input type="text" ng-model="product.title" class="full-width"/>
+              </th>
+              <th colspan=2>
+                <!-- <small class="font-weight-200 hover-pointer" ng-click="details = !details"><span class="caret"></span> details</small> -->
+                <div class="pull-right">
+                  <i class="fa fa-fw fa-check text-success" ng-show="product.saved"></i>
+                  <button type="submit" class="btn btn-sm btn-default">Submit</button>
+                </div>
+              </th>
+            </tr>
+            <tr>
+              <td colspan=6>
+                <textarea ng-model="product.content" class="full-width gray-border" rows="5"></textarea>
+              </td>
+            </tr>
+            <tr ee-sku-for-admin ng-repeat="sku in product.skus" sku="sku" materials="materials"></tr>
+          </table>
+        </form>
       </div>
       <!-- /EXPANDED -->
 
