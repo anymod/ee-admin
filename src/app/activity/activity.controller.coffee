@@ -10,8 +10,8 @@ angular.module('app.core').controller 'activityCtrl', ($rootScope) ->
     das = new Keen.Query 'count_unique', {
       eventCollection: 'builder',
       interval: 'daily'
-      targetProperty: 'user',
-      groupBy: 'user',
+      targetProperty: 'username',
+      groupBy: 'username',
       timeframe: 'this_30_days',
       timezone: 'US/Pacific'
     }
@@ -30,7 +30,7 @@ angular.module('app.core').controller 'activityCtrl', ($rootScope) ->
     # MOST ACTIVE SELLERS
     active_sellers = new Keen.Query 'count', {
       eventCollection: 'builder',
-      groupBy: 'user',
+      groupBy: 'username',
       timeframe: 'this_14_days',
       timezone: 'US/Pacific'
     }
@@ -86,8 +86,8 @@ angular.module('app.core').controller 'activityCtrl', ($rootScope) ->
         property_name: 'host',
         property_value: true
       }],
+      targetProperty: '_ee',
       groupBy: 'host',
-      targetProperty: 'user',
       timeframe: 'this_14_days',
       timezone: 'US/Pacific'
     }

@@ -40,7 +40,7 @@ angular.module('app.core').run ($rootScope, $location, $anchorScroll, $state, ee
     # redirect to login if logged out and restricted
     if loggedOut and needsAuth(toState.name) then return stopAndRedirectTo('login')
     # redirect to storefront if logged in and unrestricted
-    if loggedIn and isOpen(toState.name) and toState.name isnt 'logout' then return stopAndRedirectTo('users')
+    if loggedIn and isOpen(toState.name) and toState.name isnt 'logout' then return stopAndRedirectTo('activity')
 
     return
 
