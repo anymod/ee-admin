@@ -8,7 +8,7 @@ angular.module('activity').config ($stateProvider) ->
       url: '/activity'
       views:
         header:
-          controller: 'activityCtrl as activity'
+          # controller: 'activityCtrl as activity'
           templateUrl: 'app/activity/activity.header.html'
         top:
           controller: 'activityCtrl as activity'

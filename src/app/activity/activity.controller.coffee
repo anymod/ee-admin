@@ -91,16 +91,24 @@ angular.module('app.core').controller 'activityCtrl', ($rootScope) ->
       timeframe: 'this_14_days',
       timezone: 'US/Pacific'
     }
-    $rootScope.keenio.draw top_performers, document.getElementById('top_performers'), {
-      title: '14-day Performers',
-      chartType: 'piechart',
-      chartOptions:
+    top_performers_cutoff = 1
+    top_performers_chart = new Keen.Dataviz()
+      .el(document.getElementById('top_performers'))
+      .title '14-day Performers (n > ' + top_performers_cutoff + ')'
+      .chartType 'piechart'
+      .chartOptions {
         legend: position: 'none'
         chartArea: width: '100%'
         titleTextStyle:
           fontSize: 16
           bold: false
-    }
-
+      }
+      .prepare()
+    $rootScope.keenio.run top_performers, (err, res) ->
+      if err then return top_performers_chart.error(err.message)
+      stores = []
+      for store in res.result
+        if store.result > top_performers_cutoff then stores.push store
+      top_performers_chart.parseRawData({ result: stores }).render()
 
   return
