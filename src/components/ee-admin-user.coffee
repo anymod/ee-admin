@@ -1,7 +1,7 @@
-angular.module 'ee-user-admin', []
+angular.module 'ee-admin-user', []
 
-angular.module('ee-user-admin').directive "eeUserAdmin", ($rootScope, $window, eeAuth, eeBack) ->
-  templateUrl: 'components/ee-user-admin.html'
+angular.module('ee-admin-user').directive "eeAdminUser", ($rootScope, $window, eeAuth, eeBack) ->
+  templateUrl: 'components/ee-admin-user.html'
   restrict: 'E'
   scope:
     user:         '='

@@ -18,12 +18,12 @@
     </div>
     <div class="col col-sm-2 col-xs-3">
       <div class="inline-block">
-        <div ng-if="mailto" class="btn btn-xs btn-default" ng-click="onboard()">Sent <i class="fa fa-fw fa-check"></i></div>
         <div><small>Created {{ user.created_at | timeago }}</small></div>
         <div><small>Active {{ user.last_active_at | timeago }}</small></div>
       </div>
     </div>
     <div class="col col-sm-2 col-xs-3">
+      <div ng-if="mailto" class="btn btn-xs btn-default" ng-click="onboard()">Sent <i class="fa fa-fw fa-check"></i></div>
       <small ng-if="user.onboarded">Onboarded {{ user.onboarded_at | timeago }}</small>
       <div ng-if="!user.onboarded && !mailto" class="btn btn-xs btn-primary"
         ng-click="onboard()"

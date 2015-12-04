@@ -24,7 +24,7 @@ angular.module 'eeAdmin', [
   'ee-storefront-logo'
   'ee-product-for-admin'
   'ee-sku-for-admin'
-  'ee-user-admin'
+  'ee-admin-user'
   'ee-admin-live-button'
   'ee-admin-user-navbar'
   'ee-loading'

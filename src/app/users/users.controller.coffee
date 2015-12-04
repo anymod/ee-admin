@@ -3,10 +3,17 @@
 angular.module('app.core').controller 'usersCtrl', (eeUsers) ->
 
   users = this
-  users.data = eeUsers.data
-  # users.data.inputs.order = 'updated_at_desc'
+  users.data  = eeUsers.data
+  users.fns   = eeUsers.fns
 
-  users.fns = eeUsers.fns
+  users.setTab = (tab) ->
+    users.tab = tab
+    switch tab
+      when 'onboard'  then eeUsers.fns.setOrder()
+      when 'info'     then eeUsers.fns.setOrder 'updated_at_desc'
+      when 'activity' then eeUsers.fns.setOrder 'updated_at_desc'
+
+  users.setTab 'onboard'
 
   eeUsers.fns.search()
 

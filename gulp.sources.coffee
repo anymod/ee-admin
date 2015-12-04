@@ -99,7 +99,7 @@ sources.adminDirective = [
   './src/components/ee-storefront-logo.coffee'
   './src/components/ee-product-for-admin.coffee'
   './src/components/ee-sku-for-admin.coffee'
-  './src/components/ee-user-admin.coffee'
+  './src/components/ee-admin-user.coffee'
   './src/components/ee-admin-live-button.coffee'
   './src/components/ee-admin-user-navbar.coffee'
   './src/components/ee-loading.coffee'
