@@ -17,7 +17,7 @@
   <div class="container vert-20 text-center">
 
     <!-- ONBOARD -->
-    <div ng-if="$state.current.name == 'users.onboard'">
+    <!-- <div ng-if="$state.current.name == 'users.onboard'">
       <div class="btn btn-default btn-xs" ng-active="showEmail" ng-click="showEmail = !showEmail">Show email form</div>
       <div ng-show="showEmail" class="max-width-900 margin-0-auto pad-10">
         <input type="text" ng-model="users.mailto.subject" class="form-control">
@@ -32,46 +32,36 @@
         subject="users.mailto.subject"
         body="users.mailto.body">
       </ee-admin-user>
-    </div>
+    </div> -->
     <!-- /ONBOARD -->
 
     <!-- INFO -->
-    <div ng-if="$state.current.name == 'users.info'">
-      <span ng-init="basics = true"></span>
-      <div class="btn-group btn-group-xs vert-10 margin-top-0">
-        <div class="btn btn-default" ng-click="basics = true; about = false; other = false;" ng-class="{ active: basics }">basics</div>
-        <div class="btn btn-default" ng-click="basics = false; about = true; other = false;" ng-class="{ active: about }">about</div>
-        <div class="btn btn-default" ng-click="basics = false; about = false; other = true;" ng-class="{ active: other }">other</div>
-      </div>
+    <table class="table table-condensed table-bordered table-striped table-hover table-responsive text-left">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>username</th>
 
-      <table class="table table-condensed table-bordered table-striped table-hover text-left">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>username</th>
-            <th ng-if="basics">Store Name</th>
-            <th ng-if="basics">Domain</th>
-            <th ng-if="basics">Active</th>
-            <th ng-if="basics">Created</th>
-            <th ng-if="basics">Proposition</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="user in users.data.users">
-            <td ng-bind="user.id"></td>
-            <td ng-bind="user.username"></td>
-            <td ng-if="basics" ng-bind="user.storefront_meta.home.name"></td>
-            <td ng-if="basics" ng-bind="user.domain"></td>
-            <td ng-if="basics"><small ng-bind="user.last_active_at | timeago"></small></td>
-            <td ng-if="basics"><small ng-bind="user.created_at | timeago"></small></td>
-            <td ng-if="basics"><small ng-bind="user.proposition"></small></td>
-            <!-- <td ng-if="basics" ng-bind="user.storefront_meta.blog.url"></td> -->
-            <!-- <td ng-bind="user."></td>
-            <td ng-bind="user."></td> -->
-          </tr>
-        </tbody>
-      </table>
-    </div>
+          <th ng-if="users.state.current.name == 'users.info'">Store Name</th>
+          <th ng-if="users.state.current.name == 'users.info'">Domain</th>
+          <th ng-if="users.state.current.name == 'users.info'">Active</th>
+          <th ng-if="users.state.current.name == 'users.info'">Created</th>
+          <th ng-if="users.state.current.name == 'users.info'">Onboarded</th>
+          <th ng-if="users.state.current.name == 'users.info'">Prop</th>
+          <th ng-if="users.state.current.name == 'users.info'" class="text-center"><i class="fa fa-fw fa-paypal"></i></th>
+
+          <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-facebook"></i></th>
+          <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-pinterest"></i></th>
+          <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-twitter"></i></th>
+          <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-instagram"></i></th>
+          <th ng-if="users.state.current.name == 'users.social'">Blog</th>
+          <th ng-if="users.state.current.name == 'users.social'">Problem(s)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ee-user-for-admin ng-repeat="user in users.data.users" user="user" state="users.state.current.name"></tr>
+      </tbody>
+    </table>
     <!-- /INFO -->
 
     <!-- ACTIVITY -->

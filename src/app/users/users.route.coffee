@@ -19,11 +19,14 @@ angular.module('users').config ($stateProvider) ->
       url:      '/users'
       views:    views
       data:     data
-    .state 'users.onboard',
-      url:    '/onboard'
-      views:  views
     .state 'users.info',
       url:    '/info'
+      views:  views
+    .state 'users.social',
+      url:    '/social'
+      views:  views
+    .state 'users.branding',
+      url:    '/branding'
       views:  views
     .state 'users.activity',
       url:    '/activity'

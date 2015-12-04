@@ -5,7 +5,7 @@
 <nav class="navbar navbar-default main-navbar navbar-fixed-top margin-0 round-0 no-side-border box-shadow">
   <div class="container-fluid pad-5">
     <a ui-sref="activity" ui-sref-active="active" class="btn btn-default">Activity</a>
-    <a ui-sref="users.onboard" ui-sref-active="active" class="btn btn-default">Users</a>
+    <a ui-sref="users.info" ng-class="{ active: state.indexOf('users.') > -1 }" class="btn btn-default">Users</a>
     <a ui-sref="products" ui-sref-active="active" class="btn btn-default">Products</a>
     <a ui-sref="taxonomy" ui-sref-active="active" class="btn btn-default">Taxonomy</a>
     <div class="pull-right">
@@ -17,8 +17,9 @@
 
 <nav ng-if="usersNav == 'true'" class="navbar navbar-fixed-top ee-builder-subnav box-shadow round-0 text-center">
   <div class="max-width-600 margin-0-auto pad-2 position-relative">
-    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.onboard">Onboard<br><small>Users</small></a>
-    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.info">Store<br><small>Info</small></a>
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.info">Seller<br><small>Info</small></a>
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.social">Social<br><small>Accounts</small></a>
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.branding">Store<br><small>Branding</small></a>
     <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.activity">Recent<br><small>Activity</small></a>
   </div>
 </nav>

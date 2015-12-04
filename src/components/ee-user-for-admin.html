@@ -1,0 +1,52 @@
+<tr>
+  <td><small ng-bind="user.id"></small></td>
+  <td><small ng-bind="user.username"></small></td>
+  {{ state }}
+
+  <td ng-if="state == 'users.info'" ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }">
+    <img ng-if="user.storefront_meta.logo" ng-src="{{ user.storefront_meta.logo }}" class="img-circle margin-right-4" style="max-width: 26px; max-height: 26px;" />
+    <span ng-if="!user.storefront_meta.logo" class="fa-stack fa-xxs gray-border white-background" style="border-radius: 50%;">
+      <i class="fa fa-circle fa-stack-2x white-color"></i>
+      <i class="fa fa-home fa-stack-1x text-muted"></i>
+    </span>
+    <span ng-style="{ color: user.storefront_meta.home.topBarColor }">{{ user.storefront_meta.home.name }}</span>
+  </td>
+  <td ng-if="state == 'users.info'"><small ng-bind="user.domain"></small></td>
+  <td ng-if="state == 'users.info'"><small ng-bind="user.last_active_at | timeago"></small></td>
+  <td ng-if="state == 'users.info'"><small ng-bind="user.created_at | timeago"></small></td>
+  <td ng-if="state == 'users.info'">
+    <div ng-if="mailto" class="btn btn-xs btn-default" ng-click="onboard()">Sent <i class="fa fa-fw fa-check"></i></div>
+    <small ng-if="user.onboarded" ng-bind="user.onboarded_at | timeago"></small>
+    <div ng-if="!user.onboarded && !mailto" class="btn btn-xs btn-primary"
+      ng-click="onboard()"
+      ng-disabled="user.reading">
+      Onboard <i class="fa fa-fw fa-external-link"></i>
+    </div>
+  </td>
+  <td ng-if="state == 'users.info'"><small ng-bind="user.proposition"></small></td>
+  <td ng-if="state == 'users.info'" class="text-center text-success">
+    <i class="fa fa-fw fa-check" ng-if="user.storefront_meta.earnings_accounts.paypal"></i>
+  </td>
+
+  <td ng-if="state == 'users.social'" ng-class="{ 'bg-facebook': user.storefront_meta.audience.social.facebook }" class="text-center white-color">
+    <a ng-if="user.storefront_meta.audience.social.facebook" href="https://facebook.com/{{ user.storefront_meta.audience.social.facebook }}" target="_blank"><i class="fa fa-fw fa-facebook white-color"></i></a>
+  </td>
+  <td ng-if="state == 'users.social'" ng-class="{ 'bg-pinterest': user.storefront_meta.audience.social.pinterest }" class="text-center white-color">
+    <a ng-if="user.storefront_meta.audience.social.pinterest" href="https://pinterest.com/{{ user.storefront_meta.audience.social.pinterest }}" target="_blank"><i class="fa fa-fw fa-pinterest white-color"></i></a>
+  </td>
+  <td ng-if="state == 'users.social'" ng-class="{ 'bg-twitter': user.storefront_meta.audience.social.twitter }" class="text-center white-color">
+    <a ng-if="user.storefront_meta.audience.social.twitter" href="https://twitter.com/{{ user.storefront_meta.audience.social.twitter }}" target="_blank"><i class="fa fa-fw fa-twitter white-color"></i></a>
+  </td>
+  <td ng-if="state == 'users.social'" ng-class="{ 'bg-instagram': user.storefront_meta.audience.social.instagram }" class="text-center white-color">
+    <a ng-if="user.storefront_meta.audience.social.instagram" href="https://instagram.com/{{ user.storefront_meta.audience.social.instagram }}" target="_blank"><i class="fa fa-fw fa-instagram white-color"></i></a>
+  </td>
+  <td ng-if="state == 'users.social'">
+    <a ng-if="user.storefront_meta.blog.url" href="{{ user.storefront_meta.blog.url | addHttp }}" target="_blank"><small ng-bind="user.storefront_meta.blog.url"></small></a>
+  </td>
+  <td ng-if="state == 'users.social'">
+    <div ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
+      ng-if="user.storefront_meta.audience.social[site] && (user.storefront_meta.audience.social[site].indexOf('http') > -1 || user.storefront_meta.audience.social[site].indexOf(' ') > -1)">
+      <small><i class="fa fa-fw fa-{{ site }}"></i> {{ user.storefront_meta.audience.social[site] }}</small>
+    </div>
+  </td>
+</tr>
