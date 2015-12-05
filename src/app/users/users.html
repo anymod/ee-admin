@@ -39,15 +39,15 @@
     <table class="table table-condensed table-bordered table-striped table-hover table-responsive text-left">
       <thead>
         <tr>
-          <th>ID</th>
+          <th ng-click="users.fns.setOrder('id')" class="hover-pointer">ID <i class="fa fa-sort"></i></th>
           <th>Store name</th>
 
-          <th ng-if="users.state.current.name == 'users.info'">Username</th>
-          <th ng-if="users.state.current.name == 'users.info'">Domain</th>
-          <th ng-if="users.state.current.name == 'users.info'">Active</th>
-          <th ng-if="users.state.current.name == 'users.info'">Created</th>
-          <th ng-if="users.state.current.name == 'users.info'">Onboarded</th>
-          <th ng-if="users.state.current.name == 'users.info'">Prop</th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('username')" class="hover-pointer">Username <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('domain')" class="hover-pointer">Domain <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('last_active_at')" class="hover-pointer">Active <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('created_at')" class="hover-pointer">Created <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('onboarded_at')" class="hover-pointer">Onboarded <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('proposition')" class="hover-pointer">Prop <i class="fa fa-sort"></i></th>
           <th ng-if="users.state.current.name == 'users.info'" class="text-center"><i class="fa fa-fw fa-paypal"></i></th>
 
           <th ng-if="users.state.current.name == 'users.social'"></th>
@@ -57,6 +57,10 @@
           <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-instagram"></i></th>
           <th ng-if="users.state.current.name == 'users.social'">Blog</th>
           <th ng-if="users.state.current.name == 'users.social'">Problem(s)</th>
+
+          <th ng-if="users.state.current.name == 'users.branding'">Logo</th>
+          <th ng-if="users.state.current.name == 'users.branding'">About image</th>
+          <th ng-if="users.state.current.name == 'users.branding'">About messaging</th>
 
           <th ng-if="users.state.current.name == 'users.activity'">Activity</th>
         </tr>

@@ -39,6 +39,28 @@ angular.module('app.core').factory 'eeUsers', ($q, eeBack, eeAuth) ->
       _data.searching = false
     deferred.promise
 
+  _toggleOrder = () ->
+    return if !_data.inputs.order
+    _data.inputs.order = if _data.inputs.order.indexOf('_asc') > -1 then _data.inputs.order.replace(/_asc/g, '_desc') else _data.inputs.order.replace(/_desc/g, '_asc')
+
+  _setOrder = (metric) ->
+    _data.inputs.page = 1
+    order = if metric.indexOf('_at') > -1 or metric is 'id' then metric + '_desc' else metric + '_asc'
+
+    console.log metric, _data.inputs.order, order
+
+    if order is _data.inputs.order then _toggleOrder() else _data.inputs.order = order
+
+    console.log metric, _data.inputs.order, order
+
+
+    #   if !_data.inputs.order then _data.inputs.order = metric + '_desc' else _toggleOrder()
+    # else
+    #   if !_data.inputs.order then _data.inputs.order = metric + '_asc' else _toggleOrder()
+      # _data.inputs.order = if _data.inputs.order.split('_')[0] is metric.split('_')[0] then metric + '_desc' else metric + '_asc'
+    _runQuery()
+
+
   # _updateLead = (newLead) ->
   #   assignKey = (key, newLead, oldLead) -> if !!key and !!newLead[key] then oldLead[key] = newLead[key]
   #   updateIfMatch = (n) ->
@@ -62,6 +84,7 @@ angular.module('app.core').factory 'eeUsers', ($q, eeBack, eeAuth) ->
   ## EXPORTS
   data: _data
   fns:
+    setOrder: _setOrder
     update: () -> _runQuery()
     search: () ->
       _data.inputs.page = 1
@@ -71,8 +94,4 @@ angular.module('app.core').factory 'eeUsers', ($q, eeBack, eeAuth) ->
       _runQuery()
     decrementPage: () ->
       _data.inputs.page = if _data.inputs.page < 2 then 1 else _data.inputs.page - 1
-      _runQuery()
-    setOrder: (order) ->
-      _data.inputs.page = 1
-      _data.inputs.order = if _data.inputs.order is order then null else order
       _runQuery()
