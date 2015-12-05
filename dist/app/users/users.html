@@ -40,9 +40,9 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>username</th>
+          <th>Store name</th>
 
-          <th ng-if="users.state.current.name == 'users.info'">Store Name</th>
+          <th ng-if="users.state.current.name == 'users.info'">Username</th>
           <th ng-if="users.state.current.name == 'users.info'">Domain</th>
           <th ng-if="users.state.current.name == 'users.info'">Active</th>
           <th ng-if="users.state.current.name == 'users.info'">Created</th>
@@ -50,12 +50,15 @@
           <th ng-if="users.state.current.name == 'users.info'">Prop</th>
           <th ng-if="users.state.current.name == 'users.info'" class="text-center"><i class="fa fa-fw fa-paypal"></i></th>
 
+          <th ng-if="users.state.current.name == 'users.social'"></th>
           <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-facebook"></i></th>
           <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-pinterest"></i></th>
           <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-twitter"></i></th>
           <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-instagram"></i></th>
           <th ng-if="users.state.current.name == 'users.social'">Blog</th>
           <th ng-if="users.state.current.name == 'users.social'">Problem(s)</th>
+
+          <th ng-if="users.state.current.name == 'users.activity'">Activity</th>
         </tr>
       </thead>
       <tbody>
@@ -65,14 +68,14 @@
     <!-- /INFO -->
 
     <!-- ACTIVITY -->
-    <div ng-if="$state.current.name == 'users.activity'">
-      <ee-admin-user
+    <!-- <div ng-if="$state.current.name == 'users.activity'">
+      <ee-adminz-user
         ng-repeat="user in users.data.users"
         user="user"
         ng-if="user.id != 1 && user.id != 47"
         show-activity="true">
-      </ee-admin-user>
-    </div>
+      </ee-adminz-user>
+    </div> -->
     <!-- /ACTIVITY -->
 
   </div>

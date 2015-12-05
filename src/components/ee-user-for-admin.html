@@ -1,9 +1,6 @@
 <tr>
   <td><small ng-bind="user.id"></small></td>
-  <td><small ng-bind="user.username"></small></td>
-  {{ state }}
-
-  <td ng-if="state == 'users.info'" ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }">
+  <td style="padding: 3px" ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }">
     <img ng-if="user.storefront_meta.logo" ng-src="{{ user.storefront_meta.logo }}" class="img-circle margin-right-4" style="max-width: 26px; max-height: 26px;" />
     <span ng-if="!user.storefront_meta.logo" class="fa-stack fa-xxs gray-border white-background" style="border-radius: 50%;">
       <i class="fa fa-circle fa-stack-2x white-color"></i>
@@ -11,6 +8,8 @@
     </span>
     <span ng-style="{ color: user.storefront_meta.home.topBarColor }">{{ user.storefront_meta.home.name }}</span>
   </td>
+
+  <td ng-if="state == 'users.info'"><small ng-bind="user.username"></small></td>
   <td ng-if="state == 'users.info'"><small ng-bind="user.domain"></small></td>
   <td ng-if="state == 'users.info'"><small ng-bind="user.last_active_at | timeago"></small></td>
   <td ng-if="state == 'users.info'"><small ng-bind="user.created_at | timeago"></small></td>
@@ -28,6 +27,7 @@
     <i class="fa fa-fw fa-check" ng-if="user.storefront_meta.earnings_accounts.paypal"></i>
   </td>
 
+  <td ng-if="state == 'users.social'"></td>
   <td ng-if="state == 'users.social'" ng-class="{ 'bg-facebook': user.storefront_meta.audience.social.facebook }" class="text-center white-color">
     <a ng-if="user.storefront_meta.audience.social.facebook" href="https://facebook.com/{{ user.storefront_meta.audience.social.facebook }}" target="_blank"><i class="fa fa-fw fa-facebook white-color"></i></a>
   </td>
@@ -48,5 +48,9 @@
       ng-if="user.storefront_meta.audience.social[site] && (user.storefront_meta.audience.social[site].indexOf('http') > -1 || user.storefront_meta.audience.social[site].indexOf(' ') > -1)">
       <small><i class="fa fa-fw fa-{{ site }}"></i> {{ user.storefront_meta.audience.social[site] }}</small>
     </div>
+  </td>
+
+  <td ng-if="state == 'users.activity'">
+    <div class="chart min-width-600"></div>
   </td>
 </tr>
