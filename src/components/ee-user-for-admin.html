@@ -1,6 +1,6 @@
 <tr>
 
-  <td><small ng-bind="user.id"></small></td>
+  <td><a ui-sref="user({ id: user.id })"><small ng-bind="user.id"></small></a></td>
   <td style="padding: 3px 5px; vertical-align: middle;" ng-style="{ 'background-color': user.storefront_meta.brand.color.secondary }">
     <a href="{{ target }}" target="_blank" ng-style="{ color: user.storefront_meta.brand.color.tertiary }">
       <span ng-if="user.storefront_meta.name" ng-bind="user.storefront_meta.name"></span>

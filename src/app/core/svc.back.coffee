@@ -45,6 +45,13 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
         headers: authorization: token
       }
 
+    userGET: (id, token) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'admin/users/' + id
+        headers: authorization: token
+      }
+
     userEmailGET: (id, token) ->
       _makeRequest {
         method: 'GET'
@@ -65,7 +72,7 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
         url: eeBackUrl + 'admin/products/' + id
         headers: authorization: token
       }
-      
+
     productPUT: (product, token) ->
       _makeRequest {
         method: 'PUT'

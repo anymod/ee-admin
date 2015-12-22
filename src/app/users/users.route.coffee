@@ -16,9 +16,9 @@ angular.module('users').config ($stateProvider) ->
 
   $stateProvider
     .state 'users',
-      url:      '/users'
-      views:    views
-      data:     data
+      url:   '/users'
+      views: views
+      data:  data
     .state 'users.info',
       url:    '/info'
       views:  views
@@ -31,5 +31,17 @@ angular.module('users').config ($stateProvider) ->
     .state 'users.activity',
       url:    '/activity'
       views:  views
+    .state 'user',
+      url: '/users/:id'
+      views:
+        header:
+          controller: 'usersCtrl as users'
+          templateUrl: 'app/users/users.header.html'
+        top:
+          controller: 'userCtrl as user'
+          templateUrl: 'app/users/user.html'
+      data:
+        pageTitle: 'User details'
+        padTop:    '100px'
 
   return

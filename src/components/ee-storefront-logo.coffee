@@ -8,7 +8,6 @@ angular.module('ee-storefront-logo').directive "eeStorefrontLogo", () ->
     blocked:  '@'
     mobile:   '@'
   link: (scope, ele, attrs) ->
-    console.log 'running 2'
 
     setBackgroundPath = () ->
       # 'g_north_west,c_fit,w_260,h_60,o_0'
