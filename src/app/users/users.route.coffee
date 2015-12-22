@@ -35,7 +35,7 @@ angular.module('users').config ($stateProvider) ->
       url: '/users/:id'
       views:
         header:
-          controller: 'usersCtrl as users'
+          # controller: 'userCtrl as user'
           templateUrl: 'app/users/users.header.html'
         top:
           controller: 'userCtrl as user'
