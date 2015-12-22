@@ -1,6 +1,7 @@
-<div class="container vert-10">
-  <div id="my_chart"></div>
+<div class="container vert-10" ng-hide="user.reading">
+  <div id="stacked_chart"></div>
+  <div id="pie_chart"></div>
   <pre class="vert-20"><small ng-bind="user.user | json"></small></pre>
 </div>
 
-<ee-loading loading="users.data.searching"></ee-loading>
+<ee-loading loading="user.reading"></ee-loading>
