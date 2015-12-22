@@ -17,17 +17,21 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, eeU
       operator: 'eq',
       property_name: 'user',
       property_value: u.tr_uuid
+    },{
+      operator: 'exists',
+      property_name: 'refererDomain',
+      property_value: true
     }]
-    for prop in ['eeosk.com', 'localhost', 'herokuapp']
+    for prop in ['eeosk', 'localhost', 'herokuapp']
       filters.push {
         operator: 'not_contains',
-        property_name: 'referer',
+        property_name: 'refererDomain',
         property_value: prop
       }
     for prop in ['username', 'domain']
       if user.user[prop] then filters.push {
         operator: 'not_contains',
-        property_name: 'referer',
+        property_name: 'refererDomain',
         property_value: u[prop]
       }
 
@@ -36,14 +40,14 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, eeU
       storeCount = new Keen.Query 'count', {
         eventCollection: 'store'
         filters: filters
-        groupBy: ['referer']
+        groupBy: ['refererDomain']
         interval: 'daily',
         timeframe: 'this_7_days',
         timezone: 'US/Pacific'
       }
 
       $rootScope.keenio.draw storeCount, document.getElementById('stacked_chart'), {
-        title: 'Last 7 days'
+        title: 'Social: Last 7 days'
         chartType: 'columnchart'
         isStacked: true
         legend: position: 'none'
@@ -52,13 +56,13 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, eeU
       storePie = new Keen.Query 'count', {
         eventCollection: 'store'
         filters: filters
-        groupBy: ['referer']
+        groupBy: ['refererDomain']
         timeframe: 'this_14_days',
         timezone: 'US/Pacific'
       }
 
       $rootScope.keenio.draw storePie, document.getElementById('pie_chart'), {
-        title: '14-day Visits'
+        title: 'Social: Last 14-days'
         chartType: 'piechart'
       }
 
