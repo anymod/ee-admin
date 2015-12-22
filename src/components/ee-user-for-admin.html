@@ -1,8 +1,8 @@
 <tr>
 
   <td><small ng-bind="user.id"></small></td>
-  <td style="padding: 3px" ng-style="{ 'background-color': user.storefront_meta.brand.color.secondary }">
-    <a href="{{ target }}" target="_blank" class="no-underline" ng-style="{ color: user.storefront_meta.brand.color.tertiary }">
+  <td style="padding: 3px 5px; vertical-align: middle;" ng-style="{ 'background-color': user.storefront_meta.brand.color.secondary }">
+    <a href="{{ target }}" target="_blank" ng-style="{ color: user.storefront_meta.brand.color.tertiary }">
       <span ng-if="user.storefront_meta.name" ng-bind="user.storefront_meta.name"></span>
       <span ng-if="!user.storefront_meta.name">(no name)</span>
     </a>
@@ -55,15 +55,17 @@
 
   <!-- branding -->
   <td ng-if="state == 'users.branding'">
-    <div style="width: 320px; overflow: hidden;">
-      <ee-storefront-logo meta="user.storefront_meta"></ee-storefront-logo>
+    <div style="width: 260px; overflow: hidden;">
+      <a href="{{ target }}" target="_blank">
+        <ee-storefront-logo meta="user.storefront_meta"></ee-storefront-logo>
+      </a>
     </div>
   </td>
   <td ng-if="state == 'users.branding'" class="text-center">
     <img ng-if="user.storefront_meta.about.imgUrl.indexOf('storefront_home') > -1" ng-src="{{ user.storefront_meta.about.imgUrl | tinyBackground }}">
   </td>
   <td ng-if="state == 'users.branding'">
-    <div ng-if="user.storefront_meta.about.headline || user.storefront_meta.about.content" class="max-width-400" style="max-height: 80px; overflow-y: scroll;">
+    <div ng-if="user.storefront_meta.about.headline || user.storefront_meta.about.content" class="max-width-400" style="max-height: 60px; overflow-y: scroll;">
       <strong><small ng-bind="user.storefront_meta.about.headline"></small></strong>
       <br>
       <small ng-bind="user.storefront_meta.about.content"></small>

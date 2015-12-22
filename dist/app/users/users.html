@@ -1,4 +1,4 @@
-<div class="pad-20" ng-hide="users.data.searching">
+<div class="container vert-20" ng-hide="users.data.searching">
 
   <div class="full-width text-center margin-0">
     <pagination
@@ -14,7 +14,7 @@
     </pagination>
   </div>
 
-  <div class="container vert-20 text-center">
+  <div class="vert-20" style="overflow-x: scroll">
 
     <!-- ONBOARD -->
     <!-- <div ng-if="$state.current.name == 'users.onboard'">
@@ -36,7 +36,7 @@
     <!-- /ONBOARD -->
 
     <!-- INFO -->
-    <table class="table table-condensed table-bordered table-striped table-hover table-responsive text-left">
+    <table class="table table-condensed table-bordered table-striped table-hover table-responsive">
       <thead>
         <tr>
           <th ng-click="users.fns.setOrder('id')" class="hover-pointer">ID <i class="fa fa-sort"></i></th>
