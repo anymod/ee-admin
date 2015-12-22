@@ -47,7 +47,7 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, eeU
       }
 
       $rootScope.keenio.draw storeCount, document.getElementById('stacked_chart'), {
-        title: 'Social: Last 7 days'
+        title: 'Visits: Last 7 days'
         chartType: 'columnchart'
         isStacked: true
         legend: position: 'none'
@@ -62,7 +62,7 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, eeU
       }
 
       $rootScope.keenio.draw storePie, document.getElementById('pie_chart'), {
-        title: 'Social: Last 14-days'
+        title: 'Visits: Last 14-days'
         chartType: 'piechart'
       }
 
