@@ -5,10 +5,11 @@ angular.module('app.core').controller 'demoCtrl', () ->
   demo = this
 
   demo.meta =
-    home:
-      name: 'Example'
-      topBarBackgroundColor: '#555'
-      topBarColor: '#FFF'
+    name: 'Example'
+    brand:
+      color:
+        primary: '#555'
+        tertiary: '#FFF'
     about: headline: '1'
     blog: url: '1'
     audience:

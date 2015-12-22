@@ -1,14 +1,10 @@
 <tr>
 
   <td><small ng-bind="user.id"></small></td>
-  <td style="padding: 3px" ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }">
-    <a href="{{ target }}" target="_blank" class="no-underline">
-      <img ng-if="user.storefront_meta.logo" ng-src="{{ user.storefront_meta.logo }}" class="img-circle margin-right-4" style="max-width: 26px; max-height: 26px;" />
-      <span ng-if="!user.storefront_meta.logo" class="fa-stack fa-xxs gray-border white-background" style="border-radius: 50%;">
-        <i class="fa fa-circle fa-stack-2x white-color"></i>
-        <i class="fa fa-home fa-stack-1x text-muted"></i>
-      </span>
-      <span ng-style="{ color: user.storefront_meta.home.topBarColor }" ng-bind="user.storefront_meta.home.name"></span>
+  <td style="padding: 3px" ng-style="{ 'background-color': user.storefront_meta.brand.color.secondary }">
+    <a href="{{ target }}" target="_blank" class="no-underline" ng-style="{ color: user.storefront_meta.brand.color.tertiary }">
+      <span ng-if="user.storefront_meta.name" ng-bind="user.storefront_meta.name"></span>
+      <span ng-if="!user.storefront_meta.name">(no name)</span>
     </a>
   </td>
 
@@ -58,8 +54,10 @@
   <!-- /social -->
 
   <!-- branding -->
-  <td ng-if="state == 'users.branding'" class="text-center">
-    <img ng-if="user.storefront_meta.logo" ng-src="{{ user.storefront_meta.logo }}" class="img-circle">
+  <td ng-if="state == 'users.branding'">
+    <div style="width: 320px; overflow: hidden;">
+      <ee-storefront-logo meta="user.storefront_meta"></ee-storefront-logo>
+    </div>
   </td>
   <td ng-if="state == 'users.branding'" class="text-center">
     <img ng-if="user.storefront_meta.about.imgUrl.indexOf('storefront_home') > -1" ng-src="{{ user.storefront_meta.about.imgUrl | tinyBackground }}">

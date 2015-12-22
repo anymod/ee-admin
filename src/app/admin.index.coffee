@@ -20,8 +20,8 @@ angular.module 'eeAdmin', [
 
   # custom
   'ee-navbar-main'
-  'ee-storefront-header'
   'ee-storefront-logo'
+  'ee-storefront-header'
   'ee-user-for-admin'
   'ee-product-for-admin'
   'ee-sku-for-admin'
