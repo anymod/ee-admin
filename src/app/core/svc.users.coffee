@@ -18,8 +18,9 @@ angular.module('app.core').factory 'eeUsers', ($q, eeBack, eeAuth) ->
   ## PRIVATE FUNCTIONS
   _formQuery = () ->
     query = {}
-    if _data.inputs.page  then query.page   = _data.inputs.page
-    if _data.inputs.order then query.order  = _data.inputs.order
+    if _data.inputs.page    then query.page   = _data.inputs.page
+    if _data.inputs.order   then query.order  = _data.inputs.order
+    if _data.inputs.search  then query.search = _data.inputs.search
     query
 
   _runQuery = () ->

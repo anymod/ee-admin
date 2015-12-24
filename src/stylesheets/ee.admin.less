@@ -30,7 +30,7 @@
 @ee-store-push-height: 80px;
 @ee-navbar-top-height: 0px;
 @ee-main-navbar-height: 50px;
-@ee-store-navbar-height: 75px;
+@ee-store-navbar-height: 90px;
 @ee-xxs-width: 480px;
 
 @offscreen-left-width: 300px;
@@ -443,6 +443,43 @@ img.small-thumb {
     opacity: 1;
     background: rgba(255, 255, 255, 0.1) !important;
   }
+}
+
+.store-navbar {
+  height: @ee-store-navbar-height;
+  min-height: @ee-store-navbar-height;
+  max-height: @ee-store-navbar-height;
+  overflow: hidden;
+  .navbar-nav > li > a { padding: 28px 15px 27px; }
+  a.navbar-brand {
+    font-size: 30px;
+    line-height: 30px;
+    padding: 19px 10px;
+    height: 73px;
+  }
+  @media (max-width: 767px) {
+    .navbar-nav > li > a {
+      padding: 20px;
+      font-size: 26px;
+      font-weight: 200;
+    }
+  }
+}
+
+.brand-area,
+.activity-area {
+  top: 0;
+  height: 80px;
+}
+.brand-area {
+  width: 274px;
+  left: 0;
+  padding: 7px;
+}
+.activity-area {
+  left: 274px;
+  right: 0;
+  padding: 7px 7px 0 0;
 }
 
 // bootstrap mod

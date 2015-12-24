@@ -1,4 +1,18 @@
 <div class="container vert-10" ng-hide="user.reading">
+  <div class="pad-10 gray-border vert-20 margin-top-0">
+    <a href="{{ user.user.domain ? 'http://' + user.user.domain : 'https://' + user.user.username + '.eeosk.com' }}"
+      target="_blank">
+      <!-- STORE navbar -->
+      <ee-storefront-header
+        class="navbar-static"
+        meta="user.user.storefront_meta"
+        fluid="true"
+        blocked="true">
+      </ee-storefront-header>
+      <!-- /STORE navbar -->
+    </a>
+  </div>
+
   <div id="stacked_chart"></div>
   <div id="pie_chart"></div>
   <pre class="vert-20"><small ng-bind="user.user | json"></small></pre>

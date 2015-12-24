@@ -2,18 +2,54 @@
 
 module = angular.module 'ee-storefront-header', []
 
-module.directive "eeStorefrontHeader", ($rootScope, $state) ->
+module.directive "eeStorefrontHeader", ($rootScope, $state, $window) ->
   templateUrl: 'components/ee-storefront-header.html'
-  restrict: 'E'
+  restrict: 'EA'
   scope:
     meta:           '='
     blocked:        '='
+    fluid:          '@'
     loading:        '='
     collections:    '='
     quantityArray:  '='
+    query:          '='
+    showSupranav:   '='
+    showScrollnav:  '='
+    showScrollToTop: '@'
   link: (scope, ele, attrs) ->
     scope.isStore     = $rootScope.isStore
     scope.isBuilder   = $rootScope.isBuilder
     scope.state       = $state.current.name
     # scope.cart        = eeCart.cart
+    scope.showScrollButton = false
+
+    scope.categories = [
+      { id: 1, title: 'Artwork' }
+      { id: 2, title: 'Bed & Bath' }
+      { id: 3, title: 'Furniture' }
+      { id: 4, title: 'Home Accents' }
+      { id: 5, title: 'Kitchen' }
+      { id: 6, title: 'Outdoor' }
+    ]
+
+    if scope.showScrollnav
+      trigger = 75
+      angular.element($window).bind 'scroll', (e, a, b) ->
+        if $window.pageYOffset > trigger then ele.addClass 'show-scrollnav' else ele.removeClass 'show-scrollnav'
+
+    if scope.showScrollToTop
+      trigger = 200
+      angular.element($window).bind 'scroll', (e, a, b) ->
+        if scope.showScrollButton and $window.pageYOffset < trigger
+          scope.showScrollButton = false
+          scope.$apply()
+        else if scope.showScrollButton isnt $window.pageYOffset > trigger
+          scope.showScrollButton = $window.pageYOffset > trigger
+          scope.$apply()
+
+    scope.search = (query, page) ->
+      $state.go 'search', { q: (query || scope.query), p: (page || scope.page) }
+
+    $rootScope.$on 'search:query', (e, query) -> scope.search query, 1
+
     return
