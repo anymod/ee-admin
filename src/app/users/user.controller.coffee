@@ -37,7 +37,7 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, eeU
   user.dayWidth = 34
 
   user.monthViewActive = false
-  user.months = ['January', 'December', 'November']
+  user.months = ['December', 'November']
   user.currentMonth = null
 
   user.setViewTo = (view, value) ->
