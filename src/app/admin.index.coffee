@@ -29,5 +29,6 @@ angular.module 'eeAdmin', [
   'ee-admin-live-button'
   'ee-admin-user-navbar'
   'ee-loading'
+  'ee-datepicker'
   # 'ee.templates' # commented out during build step for inline templates
 ]

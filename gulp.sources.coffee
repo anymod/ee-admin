@@ -106,6 +106,7 @@ sources.adminDirective = [
   './src/components/ee-admin-live-button.coffee'
   './src/components/ee-admin-user-navbar.coffee'
   './src/components/ee-loading.coffee'
+  './src/components/ee-datepicker.coffee'
 ]
 
 module.exports = sources
