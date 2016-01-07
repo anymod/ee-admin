@@ -20,11 +20,11 @@
     <div class="margin-0-auto max-width-600 text-left">
       <div class="vert-10">
         <!-- category -->
-        <div class="btn-group btn-group-sm" dropdown ng-if="!products.ee.Products.search.inputs.category.id">
-          <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+        <div class="btn-group btn-group-sm" uib-dropdown ng-if="!products.ee.Products.search.inputs.category.id">
+          <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
             Category&nbsp;&nbsp;<span class="caret"></span>
           </button>
-          <ul class="dropdown-menu">
+          <ul class="uib-dropdown-menu">
             <li ng-repeat="category in products.ee.Products.search.inputs.categoryArray">
               <a href
                 ng-click="products.fns.setCategory(category, 'search')"
@@ -42,11 +42,11 @@
         </div>
         <!-- /category -->
         <!-- price -->
-        <div class="btn-group btn-group-sm" dropdown ng-if="!products.ee.Products.search.inputs.range.min && !products.ee.Products.search.inputs.range.max">
-          <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+        <div class="btn-group btn-group-sm" uib-dropdown ng-if="!products.ee.Products.search.inputs.range.min && !products.ee.Products.search.inputs.range.max">
+          <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
             Price&nbsp;&nbsp;<span class="caret"></span>
           </button>
-          <ul class="dropdown-menu">
+          <ul class="uib-dropdown-menu">
             <li ng-repeat="range in products.ee.Products.search.inputs.rangeArray">
               <a href ng-click="products.fns.setRange(range, 'search')" ng-bind="range | rangeToText"></a>
             </li>
@@ -83,11 +83,11 @@
         <!-- /view -->
         <div class="pull-right">
           <!-- sort order -->
-          <div class="btn-group btn-group-sm" dropdown>
-            <button type="button" class="btn btn-default dropdown-toggle" ng-class="{ 'btn-success' : products.ee.Products.search.inputs.order.order }" dropdown-toggle>
+          <div class="btn-group btn-group-sm" uib-dropdown>
+            <button type="button" class="btn btn-default dropdown-toggle" ng-class="{ 'btn-success' : products.ee.Products.search.inputs.order.order }" uib-dropdown-toggle>
               {{ products.ee.Products.search.inputs.order.title }}&nbsp;&nbsp;<span class="caret"></span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-right">
+            <ul class="uib-dropdown-menu dropdown-menu-right">
               <li ng-repeat="order in products.ee.Products.search.inputs.orderArray">
                 <a href ng-click="products.fns.setOrder(order, 'search')" ng-bind="order.title"></a>
               </li>
@@ -101,7 +101,8 @@
     <!-- /Filters -->
 
     <div class="margin-10" ng-hide="products.ee.Products.search.products.length <= 0">
-      <pagination total-items="products.ee.Products.search.count"
+      <uib-pagination
+        total-items="products.ee.Products.search.count"
         items-per-page="products.ee.Products.search.inputs.perPage"
         ng-model="products.ee.Products.search.inputs.page"
         max-size="5"
@@ -110,7 +111,7 @@
         boundary-links="true"
         rotate="false"
         ng-change="products.fns.runSection('search')">
-      </pagination>
+      </uib-pagination>
     </div>
   </div>
 
@@ -135,7 +136,8 @@
   </div>
 
   <div ng-hide="products.ee.Products.search.reading || products.ee.Products.search.count <= products.ee.Products.search.inputs.perPage" class="pad-20 vert-20">
-    <pagination total-items="products.ee.Products.search.count"
+    <uib-pagination
+      total-items="products.ee.Products.search.count"
       items-per-page="products.ee.Products.search.inputs.perPage"
       ng-model="products.ee.Products.search.inputs.page"
       max-size="5"
@@ -144,7 +146,7 @@
       boundary-links="true"
       rotate="false"
       ng-change="products.fns.runSection('search')">
-    </pagination>
+    </uib-pagination>
   </div>
 </div>
 <!-- /PRODUCTS -->

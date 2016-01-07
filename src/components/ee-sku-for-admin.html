@@ -3,9 +3,9 @@
   <td><small ng-bind="sku.regular_price | centToDollar"></small></td>
   <td ng-if="false">
     <!-- style -->
-    <div class="dropdown" dropdown>
-      <input type="text" ng-model="sku.style" placeholder="Style" dropdown-toggle>
-      <ul class="dropdown-menu">
+    <div class="dropdown" uib-dropdown>
+      <input type="text" ng-model="sku.style" placeholder="Style" uib-dropdown-toggle>
+      <ul class="uib-dropdown-menu">
         <li ng-repeat="attr in styles">
           <a href ng-click="addVal('style', attr.value)" ng-bind="attr.value"></a>
         </li>
@@ -15,9 +15,9 @@
   </td>
   <td ng-if="false">
     <!-- color -->
-    <div class="dropdown" dropdown>
-      <input type="text" ng-model="sku.color" placeholder="Color" dropdown-toggle>
-      <ul class="dropdown-menu">
+    <div class="dropdown" uib-dropdown>
+      <input type="text" ng-model="sku.color" placeholder="Color" uib-dropdown-toggle>
+      <ul class="uib-dropdown-menu">
         <li ng-repeat="attr in colors">
           <a href ng-click="addVal('color', attr.value)" ng-bind="attr.value"></a>
         </li>
@@ -27,9 +27,9 @@
   </td>
   <td>
     <!-- material -->
-    <div class="dropdown" dropdown>
-      <input type="text" ng-model="sku.material" class="full-width" placeholder="Material" dropdown-toggle>
-      <ul class="dropdown-menu">
+    <div class="dropdown" uib-dropdown>
+      <input type="text" ng-model="sku.material" class="full-width" placeholder="Material" uib-dropdown-toggle>
+      <ul class="uib-dropdown-menu">
         <li ng-repeat="attr in materials">
           <a href ng-click="addVal('material', attr.value)" ng-bind="attr.value"></a>
         </li>
@@ -42,11 +42,11 @@
     <input type="text" ng-model="sku.length" style="width: 34px" placeholder="L">
     <input type="text" ng-model="sku.width" style="width: 34px" placeholder="W">
     <input type="text" ng-model="sku.height" style="width: 34px" placeholder="H">
-    <div class="dropdown inline-block" dropdown-DISABLE>
-      <div class="hover-pointer" style="width: 10px" dropdown-toggle>
+    <div class="dropdown inline-block" uib-dropdown>
+      <div class="hover-pointer" style="width: 10px" uib-dropdown-toggle-DISABLE>
         <small><!-- <span class="caret"></span> --> {{ taxonomy.current.lwh }}</small>
       </div>
-      <ul class="dropdown-menu dropdown-menu-right">
+      <ul class="uib-dropdown-menu dropdown-menu-right">
         <li ng-repeat="option in taxonomy.options.lwh">
           <a href ng-click="setTaxonomyDropdownLWH(option)" ng-bind="option"></a>
         </li>
@@ -57,11 +57,11 @@
   <td>
     <!-- weight -->
     <input type="text" ng-model="sku.weight" style="width: 34px" placeholder="Weight">
-    <div class="dropdown inline-block" dropdown-DISABLE>
-      <div class="hover-pointer" style="width: 14px" dropdown-toggle>
+    <div class="dropdown inline-block" uib-dropdown>
+      <div class="hover-pointer" style="width: 14px" uib-dropdown-toggle-DISABLE>
         <small><!-- <span class="caret"></span> --> {{ taxonomy.current.weight }}</small>
       </div>
-      <ul class="dropdown-menu dropdown-menu-right">
+      <ul class="uib-dropdown-menu dropdown-menu-right">
         <li ng-repeat="option in taxonomy.options.weight">
           <a href ng-click="setTaxonomyDropdownWeight(option)" ng-bind="option"></a>
         </li>

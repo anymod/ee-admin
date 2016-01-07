@@ -38,7 +38,7 @@
     </div>
 
     <div class="margin-10">
-      <pagination total-items="templates.data.count"
+      <uib-pagination total-items="templates.data.count"
         items-per-page="templates.data.inputs.perPage"
         ng-model="templates.data.inputs.page"
         max-size="5"
@@ -47,7 +47,7 @@
         boundary-links="true"
         rotate="false"
         ng-change="templates.fns.update()">
-      </pagination>
+      </uib-pagination>
     </div>
 
   </div>
@@ -88,7 +88,7 @@
   </div>
 
   <div class="margin-10" ng-hide="templates.data.templates.length <= 0">
-    <pagination total-items="templates.data.count"
+    <uib-pagination total-items="templates.data.count"
       items-per-page="templates.data.inputs.perPage"
       ng-model="templates.data.inputs.page"
       max-size="5"
@@ -97,7 +97,7 @@
       boundary-links="true"
       rotate="false"
       ng-change="templates.fns.update()">
-    </pagination>
+    </uib-pagination>
   </div>
 
   <div ng-show="!templates.data.searching && templates.data.templates.length <= 0">

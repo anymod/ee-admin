@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeModal', ($modal) ->
+angular.module('app.core').factory 'eeModal', ($uibModal) ->
 
   ## SETUP
   _modals         = {}
@@ -39,7 +39,7 @@ angular.module('app.core').factory 'eeModal', ($modal) ->
   ## PRIVATE FUNCTIONS
   _open = (name) ->
     if !name or !_config[name] then return
-    _modals[name] = $modal.open _config[name]
+    _modals[name] = $uibModal.open _config[name]
     return
 
   _close = (name) ->
@@ -60,7 +60,7 @@ angular.module('app.core').factory 'eeModal', ($modal) ->
     openFAQModal:           () -> _open 'faq'
 
     openProductModal: (product) ->
-      _modals.product = $modal.open({
+      _modals.product = $uibModal.open({
         templateUrl: 'app/products/product.modal.html'
         backdropClass: 'white-background opacity-08'
         resolve:

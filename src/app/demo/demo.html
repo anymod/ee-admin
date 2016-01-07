@@ -29,16 +29,16 @@
   </div> -->
 
   <div class="full-width text-center margin-0">
-    <pagination total-items="users.data.inputs.count"
-                items-per-page="users.data.inputs.perPage"
-                ng-model="users.data.inputs.page"
-                max-size="5"
-                class="pagination-sm margin-0 vertical-align-top"
-                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                boundary-links="true"
-                rotate="false"
-                ng-change="users.fns.update()">
-    </pagination>
+    <uib-pagination total-items="users.data.inputs.count"
+      items-per-page="users.data.inputs.perPage"
+      ng-model="users.data.inputs.page"
+      max-size="5"
+      class="pagination-sm margin-0 vertical-align-top"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="users.fns.update()">
+    </uib-pagination>
   </div>
 
   <div class="vert-20 text-left">
@@ -76,16 +76,17 @@
   </div>
 
   <div class="full-width text-center margin-0">
-    <pagination total-items="users.data.inputs.count"
-                items-per-page="users.data.inputs.perPage"
-                ng-model="users.data.inputs.page"
-                max-size="5"
-                class="pagination-sm margin-0 vertical-align-top"
-                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                boundary-links="true"
-                rotate="false"
-                ng-change="users.fns.update()">
-    </pagination>
+    <uib-pagination
+      total-items="users.data.inputs.count"
+      items-per-page="users.data.inputs.perPage"
+      ng-model="users.data.inputs.page"
+      max-size="5"
+      class="pagination-sm margin-0 vertical-align-top"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="users.fns.update()">
+    </uib-pagination>
   </div>
 
 </div>

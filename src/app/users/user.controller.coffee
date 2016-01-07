@@ -57,7 +57,7 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, $sc
       }
 
     tableTimeframe = keenioTimeframe year, month, day, 1
-    refererTimeframe = keenioTimeframe year, month, day, 10
+    refererTimeframe = keenioTimeframe year, month, day, 14
 
     # endDate = new Date(Date.parse('' + year + '-' + (month + 1) + '-' + day))
     # startDate = new Date(new Date(endDate).setDate(new Date(endDate).getDate() - 10))

@@ -8,16 +8,17 @@
   </div>
 
   <div class="full-width text-center margin-0">
-    <pagination total-items="leads.data.inputs.count"
-                items-per-page="leads.data.inputs.perPage"
-                ng-model="leads.data.inputs.page"
-                max-size="5"
-                class="pagination-sm margin-0 vertical-align-top"
-                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                boundary-links="true"
-                rotate="false"
-                ng-change="leads.fns.update()">
-    </pagination>
+    <uib-pagination
+      total-items="leads.data.inputs.count"
+      items-per-page="leads.data.inputs.perPage"
+      ng-model="leads.data.inputs.page"
+      max-size="5"
+      class="pagination-sm margin-0 vertical-align-top"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="leads.fns.update()">
+    </uib-pagination>
     &nbsp;&nbsp;
     <div class="inline-block" style="width: 80px;">
       <div class="input-group input-group-sm margin-0">
@@ -84,15 +85,16 @@
   </div>
 
   <div class="full-width text-center" ng-hide="leads.data.searching">
-    <pagination total-items="leads.data.inputs.count"
-                items-per-page="leads.data.inputs.perPage"
-                ng-model="leads.data.inputs.page"
-                max-size="5"
-                class="pagination-sm"
-                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                boundary-links="true"
-                rotate="false"
-                ng-change="leads.fns.update()">
-    </pagination>
+    <uib-pagination
+      total-items="leads.data.inputs.count"
+      items-per-page="leads.data.inputs.perPage"
+      ng-model="leads.data.inputs.page"
+      max-size="5"
+      class="pagination-sm"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="leads.fns.update()">
+    </uib-pagination>
   </div>
 </div>
