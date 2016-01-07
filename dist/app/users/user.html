@@ -13,37 +13,31 @@
     </a>
   </div>
 
+  <div class="vert-20">
+    <ee-datepicker
+      ng-if="user.user"
+      user="user.user"
+      year="user.selectedYear"
+      month="user.selectedMonth"
+      day="user.selectedDay">
+    </ee-datepicker>
+  </div>
+
+  <h3>
+    Activity for <span ng-bind="user.calendarMonths[user.selectedMonth]"></span>
+    <span ng-if="user.selectedDay"><span ng-bind="user.selectedDay"></span>, </span>
+    <span ng-bind="user.selectedYear"></span>
+  </h3>
+
+  <div id="visits_table"></div>
   <div id="stacked_chart"></div>
   <div id="pie_chart"></div>
 
-  <div class="vert-20">
-    <div class="full-width inline-block vert-2">
-      <a href class="btn btn-sm btn-default pad-5" style="margin-right: 1px; width: 70px;"
-        ng-repeat="month in user.months"
-        ng-bind="month"
-        ng-class="{ active: month == user.currentMonth, 'btn-info': month == user.currentMonth && user.monthViewActive }"
-        ng-click="user.setViewTo('month', month)">
-      </a>
-    </div>
-    <div class="full-width" style="overflow-x: scroll;">
-      <div ng-style="{ width: '' + (user.dayWidth + 1) * user.days.length + 'px' }">
-        <a href class="btn btn-sm pad-5" style="margin-right: 1px; width: 34px;"
-          ng-repeat="day in user.days"
-          ng-bind="day"
-          ng-class="day == user.currentDay ? 'btn-info' : 'btn-default'"
-          ng-style="{ width: '' + user.dayWidth + 'px' }"
-          ng-click="user.setViewTo('day', day)">
-        </a>
-      </div>
-    </div>
-  </div>
 
-  <h2>
-    <span ng-bind="user.currentMonth"></span>
-    <span ng-bind="user.currentDay" ng-if="user.currentDay"></span>
-  </h2>
-  <div ng-show="user.monthViewActive">Month View Active for {{ user.currentMonth }}</div>
-  <div ng-show="user.dayViewActive">Day View Active for {{ user.currentDay }} {{ user.currentMonth }}</div>
+
+
+  <!-- <div ng-hide="user.selectedDay">Month View Active for {{ user.calendarMonths[user.selectedMonth] }} {{ user.selectedYear }}</div> -->
+  <!-- <div ng-show="user.selectedDay">Day View Active for {{ user.calendarMonths[user.selectedMonth] }} {{ user.selectedDay }}, {{ user.selectedYear }}</div> -->
 
   <pre class="vert-20"><small ng-bind="user.user | json"></small></pre>
 </div>

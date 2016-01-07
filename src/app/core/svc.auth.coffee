@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $cookieStore, $q, eeBack) ->
+angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $q, eeBack) ->
 
   ## SETUP
   _status = {}
@@ -17,8 +17,8 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $cookieStore
     assignKey key for key in Object.keys u
     _user
 
-  _setLoginToken = (token) -> $cookies.loginToken = token
-  _clearLoginToken = () -> $cookieStore.remove 'loginToken'
+  _setLoginToken = (token) -> $cookies.put 'loginToken', token
+  _clearLoginToken = () -> $cookies.remove 'loginToken'
 
   _reset = () ->
     _clearLoginToken()
@@ -29,10 +29,10 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $cookieStore
     deferred = $q.defer()
 
     if !!_status.fetching then return _status.fetching
-    if !$cookies.loginToken then deferred.reject('Missing login credentials'); return deferred.promise
+    if !$cookies.get('loginToken') then deferred.reject('Missing login credentials'); return deferred.promise
     _status.fetching = deferred.promise
 
-    eeBack.fns.tokenPOST $cookies.loginToken
+    eeBack.fns.tokenPOST $cookies.get('loginToken')
     .then (data) ->
       _setUser data
       if !!data.email then deferred.resolve(data) else deferred.reject(data)
@@ -47,8 +47,8 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $cookieStore
     user: _user
   fns:
     logout:               () -> _reset()
-    hasToken:             () -> !!$cookies.loginToken
-    getToken:             () -> $cookies.loginToken
+    hasToken:             () -> !!$cookies.get('loginToken')
+    getToken:             () -> $cookies.get('loginToken')
     defineUserFromToken:  () -> _defineUserFromToken()
 
     setAdminFromCredentials: (email, password) ->

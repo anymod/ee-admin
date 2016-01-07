@@ -1,8 +1,8 @@
 <!-- Desktop nav -->
 <div class="position-relative hidden-xs" style="z-index: 5;">
-  <!-- blocker -->
+  <!-- Desktop blocker -->
   <div ng-show="blocked" class="navbar position-absolute margin-0" style="z-index: 2005; top: 0; left: 0; right: 0; height: 140px;"></div>
-  <!-- /blocker -->
+  <!-- /Desktop blocker -->
 
   <nav id="navtop"
        class="navbar store-navbar navbar-default white-background border-none margin-0 pad-0 round-0"
@@ -76,21 +76,26 @@
 <!-- /Desktop Subnav -->
 
 <!-- Mobile nav -->
-<nav class="navbar navbar-default white-background round-0 margin-0 no-side-border text-center visible-xs">
-  <div class="margin-7">
-    <a href ng-click="sidenavOpen = true" class="pad-5 pull-left inline-block text-muted">
-      <i class="fa fa-fw fa-2x fa-bars"></i>
-    </a>
-    <ee-storefront-logo ng-if="meta" meta="meta" mobile="true"></ee-storefront-logo>
-    <a ui-sref="cart" class="pad-5 pull-right inline-block text-muted">
-      <i class="fa fa-fw fa-2x fa-shopping-cart"></i>
-    </a>
+<div class="position-relative visible-xs">
+  <!-- Mobile blocker -->
+  <div ng-show="blocked" class="navbar position-absolute margin-0" style="z-index: 2005; top: 0; left: 0; right: 0; height: 95px;"></div>
+  <!-- /Mobile blocker -->
+  <nav class="navbar navbar-default white-background round-0 margin-0 no-side-border text-center">
+    <div class="margin-7">
+      <a href ng-click="sidenavOpen = true" class="pad-5 pull-left inline-block text-muted">
+        <i class="fa fa-fw fa-2x fa-bars"></i>
+      </a>
+      <ee-storefront-logo ng-if="meta" meta="meta" mobile="true"></ee-storefront-logo>
+      <a ui-sref="cart" class="pad-5 pull-right inline-block text-muted">
+        <i class="fa fa-fw fa-2x fa-shopping-cart"></i>
+      </a>
+    </div>
+  </nav>
+  <div class="white-background pad-5 border-bottom-gray">
+    <form class="margin-0" ng-submit="search()">
+      <input type="text" class="form-control" placeholder="Search for products" ng-model="query">
+    </form>
   </div>
-</nav>
-<div class="visible-xs white-background pad-5 border-bottom-gray">
-  <form class="margin-0" ng-submit="search()">
-    <input type="text" class="form-control" placeholder="Search for products" ng-model="query">
-  </form>
 </div>
 <!-- /Mobile nav -->
 

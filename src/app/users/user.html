@@ -13,11 +13,6 @@
     </a>
   </div>
 
-
-
-  <div id="stacked_chart"></div>
-  <div id="pie_chart"></div>
-
   <div class="vert-20">
     <ee-datepicker
       ng-if="user.user"
@@ -28,12 +23,21 @@
     </ee-datepicker>
   </div>
 
-  <h2>
-    <span ng-bind="user.selectedMonth"></span>
-    <span ng-bind="user.selectedDay" ng-if="user.selectedDay"></span>
-  </h2>
-  <div ng-hide="user.selectedDay">Month View Active for {{ user.selectedMonth }}</div>
-  <div ng-show="user.selectedDay">Day View Active for {{ user.selectedMonth }} {{ user.selectedDay }}, {{ user.selectedYear }}</div>
+  <h3>
+    Activity for <span ng-bind="user.calendarMonths[user.selectedMonth]"></span>
+    <span ng-if="user.selectedDay"><span ng-bind="user.selectedDay"></span>, </span>
+    <span ng-bind="user.selectedYear"></span>
+  </h3>
+
+  <div id="visits_table"></div>
+  <div id="stacked_chart"></div>
+  <div id="pie_chart"></div>
+
+
+
+
+  <!-- <div ng-hide="user.selectedDay">Month View Active for {{ user.calendarMonths[user.selectedMonth] }} {{ user.selectedYear }}</div> -->
+  <!-- <div ng-show="user.selectedDay">Day View Active for {{ user.calendarMonths[user.selectedMonth] }} {{ user.selectedDay }}, {{ user.selectedYear }}</div> -->
 
   <pre class="vert-20"><small ng-bind="user.user | json"></small></pre>
 </div>
