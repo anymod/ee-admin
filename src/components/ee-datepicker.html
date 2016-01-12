@@ -4,7 +4,7 @@
       ng-repeat="m in visibleMonths"
       ng-bind="m.name"
       ng-class="{ active: m.num == month, 'btn-info': m.num == month && !day }"
-      ng-click="setDate(m.year, m.num)">
+      ng-click="goToDate(user.id, m.year, m.num)">
     </a>
   </div>
   <div class="full-width" style="overflow-x: scroll;">
@@ -16,10 +16,8 @@
         ng-bind="d"
         ng-class="d == day ? 'btn-info' : 'btn-default'"
         ng-style="{ width: '' + dayWidth + 'px' }"
-        ng-click="setDate(year, month, d)">
+        ng-click="goToDate(user.id, year, month, d)">
       </a>
     </div>
   </div>
-  <!-- <pre>{{ month | json }}</pre>
-  <pre>{{ visibleMonths | json }}</pre> -->
 </div>

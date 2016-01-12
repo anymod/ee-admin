@@ -31,15 +31,32 @@ angular.module('users').config ($stateProvider) ->
     .state 'users.activity',
       url:    '/activity'
       views:  views
+
     .state 'user',
       url: '/users/:id'
       views:
         header:
-          # controller: 'userCtrl as user'
           templateUrl: 'app/users/users.header.html'
         top:
           controller: 'userCtrl as user'
           templateUrl: 'app/users/user.html'
+        middle:
+          controller: 'userDashboardCtrl as user'
+          templateUrl: 'app/users/user.dashboard.html'
+      data:
+        pageTitle: 'User details'
+        padTop:    '100px'
+    .state 'userDate',
+      url: '/users/:id/date/:year/:month/:day'
+      views:
+        header:
+          templateUrl: 'app/users/users.header.html'
+        top:
+          controller: 'userCtrl as user'
+          templateUrl: 'app/users/user.html'
+        middle:
+          controller: 'userDashboardCtrl as user'
+          templateUrl: 'app/users/user.dashboard.html'
       data:
         pageTitle: 'User details'
         padTop:    '100px'

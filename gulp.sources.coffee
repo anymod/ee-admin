@@ -76,6 +76,7 @@ sources.adminModule = [
   './src/app/users/users.route.coffee'
   './src/app/users/users.controller.coffee'
   './src/app/users/user.controller.coffee'
+  './src/app/users/user.dashboard.controller.coffee'
   # Module - products
   './src/app/products/products.module.coffee'
   './src/app/products/products.route.coffee'

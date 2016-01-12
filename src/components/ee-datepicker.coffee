@@ -2,7 +2,7 @@
 
 module = angular.module 'ee-datepicker', []
 
-angular.module('ee-datepicker').directive "eeDatepicker", () ->
+angular.module('ee-datepicker').directive "eeDatepicker", ($state) ->
   templateUrl: 'components/ee-datepicker.html'
   restrict: 'EA'
   scope:
@@ -30,12 +30,15 @@ angular.module('ee-datepicker').directive "eeDatepicker", () ->
       entry.days = [ lastDay..firstDay ]
       scope.visibleMonths.push entry
 
-    scope.setDate = (year, month, day) ->
-      # year like 2016; month like 0-11; day like 1-31
-      if !year or month is null then return
-      scope.year  = year
-      scope.month = month
-      scope.day   = day
+    scope.goToDate = (id, year, month, day) ->
+      $state.go 'userDate', { id: id, year: year, month: month + 1, day: day }
+
+    # scope.setDate = (year, month, day) ->
+    #   # year like 2016; month like 0-11; day like 1-31
+    #   if !year or month is null then return
+    #   scope.year  = year
+    #   scope.month = month
+    #   scope.day   = day
 
     if scope.user?.created_at?
       [ createdYear, createdMonth, createdDay ] = scope.user.created_at.split('T')[0].split('-')
@@ -53,6 +56,6 @@ angular.module('ee-datepicker').directive "eeDatepicker", () ->
         # Only go back to Dec 2015
         break if loopY is 2015 and loopM is 10
 
-    scope.setDate today.getFullYear(), today.getMonth(), today.getDate()
+    # scope.setDate today.getFullYear(), today.getMonth(), today.getDate()
 
     return
