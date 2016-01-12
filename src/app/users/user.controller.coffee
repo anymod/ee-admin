@@ -67,58 +67,87 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, $sc
 
     Keen.ready () ->
 
-      dailyTable = new Keen.Query 'count', {
-        eventCollection: 'store'
-        filters: baseFilters
-        groupBy: ['path']
-        timeframe:
-          start: tableTimeframe[0]
-          end: tableTimeframe[1]
-        timezone: 'US/Eastern'
-      }
-      $rootScope.keenio.draw dailyTable, document.getElementById('visits_table'), {
-        title: 'Visits'
-        chartType: 'table'
-        alternatingRowStyle: true
-        sortColumn: 1
-        sortAscending: false
-      }
+      # Daily view
+      if user.selectedDay
+        # Visits
+        dailyVisits = new Keen.Query 'count', {
+          eventCollection: 'store'
+          filters: baseFilters
+          groupBy: ['path']
+          timeframe:
+            start: tableTimeframe[0]
+            end: tableTimeframe[1]
+          timezone: 'US/Eastern'
+        }
+        user.dailyVisits = null
+        $rootScope.keenio.run dailyVisits, (err, res) ->
+          for view in res.result
+            if view.path
+              if view.path is '/'
+                view.type = 'Home'
+              else
+                last = view.path.split('/')[view.path.split('/').length - 1]
+                view.title = last
+                if view.path.indexOf('/collections/') is 0 then view.type = 'Collection'
+                else if view.path.indexOf('/categories/') is 0 then view.type = 'Category'
+                else if view.path.indexOf('/products/') is 0 then view.type = 'Product'
+                else if view.path is '/about' then view.type = 'About'
+          user.dailyVisits = res.result
+          $scope.$apply()
 
-      storeCount = new Keen.Query 'count', {
-        eventCollection: 'store'
-        filters: refererFilters
-        groupBy: ['refererDomain']
-        interval: 'daily'
-        timeframe:
-          start: refererTimeframe[0]
-          end: refererTimeframe[1]
-        timezone: 'US/Eastern'
-      }
+        # Referers
+        dailyReferers = new Keen.Query 'count', {
+          eventCollection: 'store'
+          filters: refererFilters
+          groupBy: ['refererDomain']
+          timeframe:
+            start: tableTimeframe[0]
+            end: tableTimeframe[1]
+          timezone: 'US/Eastern'
+        }
+        user.dailyReferers = null
+        $rootScope.keenio.run dailyReferers, (err, res) ->
+          user.dailyReferers = res.result
+          $scope.$apply()
 
-      $rootScope.keenio.draw storeCount, document.getElementById('stacked_chart'), {
-        title: 'Visits from other sites'
-        chartType: 'columnchart'
-        isStacked: true
-        legend: position: 'none'
-        height: 300
-        chartArea:
-          width: '100%'
-          height: '70%'
-        titlePosition: 'in'
-        axisTitlesPosition: 'in'
-        hAxis:
-          direction: -1
-          gridlines:
-            color: 'transparent'
-            count: 10
-          # textPosition: 'in'
-        vAxis:
-          # gridlines: color: 'transparent'
-          textPosition: 'in'
-          maxValue: 4
-        colorMapping: colorMapping
-        # theme: 'maximized'
-      }
+
+      # Monthly view
+      if !user.selectedDay
+        storeCount = new Keen.Query 'count', {
+          eventCollection: 'store'
+          filters: refererFilters
+          groupBy: ['refererDomain']
+          interval: 'daily'
+          timeframe:
+            start: refererTimeframe[0]
+            end: refererTimeframe[1]
+          timezone: 'US/Eastern'
+        }
+
+        $rootScope.keenio.draw storeCount, document.getElementById('stacked_chart'), {
+          title: 'Visits from other sites'
+          chartType: 'columnchart'
+          isStacked: true
+          legend: position: 'none'
+          height: 300
+          chartArea:
+            width: '100%'
+            height: '70%'
+          titlePosition: 'in'
+          axisTitlesPosition: 'in'
+          hAxis:
+            direction: -1
+            gridlines:
+              color: 'transparent'
+              count: 10
+            # textPosition: 'in'
+          vAxis:
+            # gridlines: color: 'transparent'
+            textPosition: 'in'
+            maxValue: 4
+          colorMapping: colorMapping
+          # theme: 'maximized'
+        }
 
       # storePie = new Keen.Query 'count', {
       #   eventCollection: 'store'
@@ -138,7 +167,7 @@ angular.module('app.core').controller 'userCtrl', ($rootScope, $stateParams, $sc
       # }
 
   $scope.$watchGroup ['user.selectedYear','user.selectedMonth','user.selectedDay'], (newValues, oldValues, scope) ->
-    if user.user && user.selectedYear && user.selectedMonth isnt null && user.selectedDay
+    if user.user && user.selectedYear && user.selectedMonth isnt null
       console.log user.selectedYear, user.selectedMonth, user.selectedDay
       createCharts user.user, user.selectedYear, user.selectedMonth, user.selectedDay
 

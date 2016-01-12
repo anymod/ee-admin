@@ -1,16 +1,17 @@
 <div class="container vert-10" ng-hide="user.reading">
-  <div class="pad-10 gray-border vert-20 margin-top-0">
+  <div class="vert-20 margin-top-0 text-center">
     <a href="{{ user.user.domain ? 'http://' + user.user.domain : 'https://' + user.user.username + '.eeosk.com' }}"
-      target="_blank">
+      target="_blank"
+      ng-if="user.user.storefront_meta">
       <!-- STORE navbar -->
-      <ee-storefront-header
-        class="navbar-static"
+      <ee-storefront-logo
+        class="vert-10"
         meta="user.user.storefront_meta"
-        fluid="true"
         blocked="true">
-      </ee-storefront-header>
+      </ee-storefront-logo>
       <!-- /STORE navbar -->
     </a>
+    <div class="inline-block full-width pad-15" ng-style="{ 'background-color': user.user.storefront_meta.brand.color.secondary }"></div>
   </div>
 
   <div class="vert-20">
@@ -29,17 +30,90 @@
     <span ng-bind="user.selectedYear"></span>
   </h3>
 
+  <div class="row">
+    <div class="col col-sm-6">
+      <div class="well white-background">Suggested Activity</div>
+    </div>
+    <div class="col col-sm-6">
+      <div class="well white-background">Content</div>
+    </div>
+  </div>
+
+  <h3>
+    Visits for <span ng-bind="user.calendarMonths[user.selectedMonth]"></span>
+    <span ng-if="user.selectedDay"><span ng-bind="user.selectedDay"></span>, </span>
+    <span ng-bind="user.selectedYear"></span>
+  </h3>
+
+  <div class="row">
+    <!-- Visits -->
+    <div class="col col-sm-6">
+      <div class="well white-background box-shadow">
+        <ee-loading loading="!user.dailyVisits"></ee-loading>
+        <table ng-if="user.dailyVisits" class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Customers visited</th>
+              <th># Views</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="page in user.dailyVisits | orderBy:'-result'">
+              <td>
+                <div ng-if="page.path == '/'">
+                  <ee-storefront-logo class="vert-2"
+                    meta="user.user.storefront_meta"
+                    blocked="true">
+                  </ee-storefront-logo>
+                </div>
+                <h4 ng-if="page.path != '/'">
+                  <span ng-bind="page.type"></span>
+                  <span ng-bind="page.title"></span>
+                </h4>
+              </td>
+              <td><h4 ng-bind="page.result"></h4></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <!-- /Visits -->
+    <!-- Referers -->
+    <div class="col col-sm-6">
+      <div class="well white-background box-shadow">
+        <ee-loading loading="!user.dailyReferers"></ee-loading>
+        <table ng-if="user.dailyReferers" class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Customers visited you from</th>
+              <th># Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="page in user.dailyReferers | orderBy:'-result'">
+              <td>
+                <h4 class="text-{{ page.refererDomain.toLowerCase() }}">
+                  <span ng-repeat="site in ['Google', 'Facebook', 'Pinterest', 'Twitter', 'Instagram']" ng-if="site == page.refererDomain"><i class="fa fa-fw fa-lg fa-{{ page.refererDomain.toLowerCase() }}"></i></span>
+                  <span ng-bind="page.refererDomain"></span>
+                </h4>
+              </td>
+              <td>
+                <h4 ng-bind="page.result"></h4>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- /Referers -->
+  </div>
+
   <div id="visits_table"></div>
   <div id="stacked_chart"></div>
   <div id="pie_chart"></div>
 
-
-
-
-  <!-- <div ng-hide="user.selectedDay">Month View Active for {{ user.calendarMonths[user.selectedMonth] }} {{ user.selectedYear }}</div> -->
-  <!-- <div ng-show="user.selectedDay">Day View Active for {{ user.calendarMonths[user.selectedMonth] }} {{ user.selectedDay }}, {{ user.selectedYear }}</div> -->
-
-  <pre class="vert-20"><small ng-bind="user.user | json"></small></pre>
+  <!-- <pre class="vert-20"><small ng-bind="user.user | json"></small></pre> -->
 </div>
 
 <ee-loading loading="user.reading"></ee-loading>
