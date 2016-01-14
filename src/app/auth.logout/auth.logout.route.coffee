@@ -11,5 +11,6 @@ angular.module('admin.auth').config ($stateProvider) ->
           templateUrl: 'app/auth.logout/auth.logout.html'
       data:
         pageTitle: 'Logged out'
+        padTop: '80px'
 
   return

@@ -1,8 +1,7 @@
 'use strict'
 
-angular.module('app.core').run ($rootScope, $location, $anchorScroll, $state, eeAuth, templatesPerPage) ->
+angular.module('app.core').run ($rootScope, $location, $anchorScroll, $state, eeAuth) ->
 
-  $rootScope.templatesPerPage = templatesPerPage
   $rootScope.$state   = $state
   $rootScope.isAdmin  = true
 

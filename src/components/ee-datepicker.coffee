@@ -30,9 +30,6 @@ angular.module('ee-datepicker').directive "eeDatepicker", ($state) ->
       entry.days = [ lastDay..firstDay ]
       scope.visibleMonths.push entry
 
-    scope.goToDate = (id, year, month, day) ->
-      $state.go 'userDate', { id: id, year: year, month: month + 1, day: day }
-
     # scope.setDate = (year, month, day) ->
     #   # year like 2016; month like 0-11; day like 1-31
     #   if !year or month is null then return

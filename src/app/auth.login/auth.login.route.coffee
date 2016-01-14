@@ -11,5 +11,6 @@ angular.module('admin.auth').config ($stateProvider) ->
           templateUrl: 'app/auth.login/auth.login.html'
       data:
         pageTitle: 'Login'
+        padTop: '80px'
 
   return

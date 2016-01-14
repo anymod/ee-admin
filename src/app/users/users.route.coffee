@@ -46,7 +46,7 @@ angular.module('users').config ($stateProvider) ->
       data:
         pageTitle: 'User details'
         padTop:    '100px'
-    .state 'userDate',
+    .state 'date',
       url: '/users/:id/date/:year/:month/:day'
       views:
         header:

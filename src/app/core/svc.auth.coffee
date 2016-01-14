@@ -17,11 +17,11 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $q, eeBack) 
     assignKey key for key in Object.keys u
     _user
 
-  _setLoginToken = (token) -> $cookies.put 'loginToken', token
-  _clearLoginToken = () -> $cookies.remove 'loginToken'
+  _setadminToken = (token) -> $cookies.put 'adminToken', token
+  _clearadminToken = () -> $cookies.remove 'adminToken'
 
   _reset = () ->
-    _clearLoginToken()
+    _clearadminToken()
     _setUser {}
     $rootScope.$emit 'definer:logout'
 
@@ -29,11 +29,12 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $q, eeBack) 
     deferred = $q.defer()
 
     if !!_status.fetching then return _status.fetching
-    if !$cookies.get('loginToken') then deferred.reject('Missing login credentials'); return deferred.promise
+    if !$cookies.get('adminToken') then deferred.reject('Missing login credentials'); return deferred.promise
     _status.fetching = deferred.promise
 
-    eeBack.fns.tokenPOST $cookies.get('loginToken')
+    eeBack.fns.tokenPOST $cookies.get('adminToken')
     .then (data) ->
+      if !data.admin then return _reset()
       _setUser data
       if !!data.email then deferred.resolve(data) else deferred.reject(data)
     .catch (err) ->
@@ -47,8 +48,8 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $q, eeBack) 
     user: _user
   fns:
     logout:               () -> _reset()
-    hasToken:             () -> !!$cookies.get('loginToken')
-    getToken:             () -> $cookies.get('loginToken')
+    hasToken:             () -> !!$cookies.get('adminToken')
+    getToken:             () -> $cookies.get('adminToken')
     defineUserFromToken:  () -> _defineUserFromToken()
 
     setAdminFromCredentials: (email, password) ->
@@ -62,7 +63,7 @@ angular.module('app.core').factory 'eeAuth', ($rootScope, $cookies, $q, eeBack) 
           if !data.user?.admin
             deferred.reject 'Not an admin'
           else if !!data.user and !!data.token
-            _setLoginToken data.token
+            _setadminToken data.token
             _setUser data.user
             $rootScope.$emit 'definer:login'
             deferred.resolve data.user
