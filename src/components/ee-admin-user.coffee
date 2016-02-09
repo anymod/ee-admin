@@ -6,14 +6,14 @@ angular.module('ee-admin-user').directive "eeAdminUser", ($rootScope, $window, e
   scope:
     user:         '='
     showOnboard:  '@'
-    showActivity: '@'
+    showAnalytics: '@'
     subject:      '='
     body:         '='
   link: (scope, ele, attrs) ->
     scope.user.reading = false
     scope.mailto = null
 
-    if scope.showActivity is 'true' and scope.user?.tr_uuid
+    if scope.showAnalytics is 'true' and scope.user?.tr_uuid
       Keen.ready () ->
 
         query = new Keen.Query 'count', {

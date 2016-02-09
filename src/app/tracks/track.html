@@ -1,0 +1,47 @@
+<div class="container vert-20">
+  <div class="full-width text-center">
+    <a ui-sref="track({ id: tr.id, title: (tr.title | urlText) })"
+      ng-repeat="tr in track.ee.Tracks.tracks | orderBy:'id'"
+      ng-class="tr.show ? 'text-success' : 'text-danger'"
+      class="no-underline">
+      <i class="fa fa-fw fa-2x fa-{{ tr.icon }}"></i>
+    </a>
+    <hr>
+  </div>
+  <div ng-if="track.data.track.id">
+    <h2>
+      {{ track.data.track.title }}
+      <span class="pull-right hover-pointer" ng-click="track.data.track.show = !track.data.track.show">
+        <i class="fa fa-fw fa-toggle-on text-success" ng-if="track.data.track.show"></i>
+        <i class="fa fa-fw fa-toggle-off text-danger" ng-if="!track.data.track.show"></i>
+      </span>
+    </h2>
+
+    <uib-accordion>
+      <div ng-repeat="lane in track.data.track.lanes" class="position-relative">
+        <div class="position-absolute" style="top: 9px; right: 7px;">
+          <span class="hover-pointer" ng-click="lane.show = !lane.show">
+            <i class="fa fa-fw fa-lg fa-toggle-on text-success" ng-if="lane.show"></i>
+            <i class="fa fa-fw fa-lg fa-toggle-off text-danger" ng-if="!lane.show"></i>
+          </span>
+        </div>
+        <uib-accordion-group>
+          <uib-accordion-heading class="white-background">
+            <span class="pull-left">
+              <span ng-repeat="n in [1,2,3,4,5]">
+                <i ng-if="n < lane.activities.length" class="fa fa-lg fa-check-circle text-success"></i>
+                <i ng-if="n >= lane.activities.length" class="fa fa-lg fa-circle-o"></i>
+              </span>
+              &nbsp;
+            </span>{{ lane.title }}
+          </uib-accordion-heading>
+          <span ng-bind="lane.intro"></span>
+          <pre>{{ lane | json }}</pre>
+        </uib-accordion-group>
+      </div>
+
+    </uib-accordion>
+
+    <pre>{{ track.data.track | json }}</pre>
+  </div>
+</div>

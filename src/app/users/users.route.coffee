@@ -28,8 +28,8 @@ angular.module('users').config ($stateProvider) ->
     .state 'users.branding',
       url:    '/branding'
       views:  views
-    .state 'users.activity',
-      url:    '/activity'
+    .state 'users.analytics',
+      url:    '/analytics'
       views:  views
 
     .state 'user',

@@ -1,0 +1,12 @@
+<div class="container vert-20">
+  <div class="full-width text-center">
+    <a ui-sref="track({ id: tr.id, title: (tr.title | urlText) })"
+      ng-repeat="tr in tracks.ee.Tracks.tracks | orderBy:'id'"
+      ng-class="tr.show ? 'text-success' : 'text-danger'"
+      class="no-underline">
+      <i class="fa fa-fw fa-2x fa-{{ tr.icon }}"></i>
+    </a>
+    <hr>
+  </div>
+  <pre>{{ tracks.ee.Tracks.tracks | json }}</pre>
+</div>

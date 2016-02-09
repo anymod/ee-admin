@@ -124,3 +124,25 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
         url: eeBackUrl + 'admin/taxonomies/' + id
         headers: authorization: token
       }
+
+    tracksGET: (token, query) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'admin/tracks' + _formQueryString(query)
+        headers: authorization: token
+      }
+
+    trackGET: (id, token) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'admin/tracks/' + id
+        headers: authorization: token
+      }
+
+    trackPUT: (track, token) ->
+      _makeRequest {
+        method: 'PUT'
+        url: eeBackUrl + 'admin/tracks/' + track.id
+        headers: authorization: token
+        data: track
+      }

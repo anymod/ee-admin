@@ -13,7 +13,7 @@ angular.module('admin.auth').controller 'loginCtrl', ($state, eeAuth) ->
     setBtnText 'Sending...'
     eeAuth.fns.setAdminFromCredentials that.email, that.password
     .then () ->
-      $state.go 'activity'
+      $state.go 'analytics'
     .catch (err) ->
       resetBtnText()
       alert = err.message || err || 'Problem logging in'

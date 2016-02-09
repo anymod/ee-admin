@@ -68,7 +68,7 @@
           <th ng-if="users.state.current.name == 'users.branding'">About image</th>
           <th ng-if="users.state.current.name == 'users.branding'">About messaging</th>
 
-          <th ng-if="users.state.current.name == 'users.activity'">Activity</th>
+          <th ng-if="users.state.current.name == 'users.analytics'">Analytics</th>
         </tr>
       </thead>
       <tbody>
@@ -77,16 +77,16 @@
     </table>
     <!-- /INFO -->
 
-    <!-- ACTIVITY -->
-    <!-- <div ng-if="$state.current.name == 'users.activity'">
+    <!-- ANALYTICS -->
+    <!-- <div ng-if="$state.current.name == 'users.analytics'">
       <ee-adminz-user
         ng-repeat="user in users.data.users"
         user="user"
         ng-if="user.id != 1 && user.id != 47"
-        show-activity="true">
+        show-analytics="true">
       </ee-adminz-user>
     </div> -->
-    <!-- /ACTIVITY -->
+    <!-- /ANALYTICS -->
 
   </div>
 

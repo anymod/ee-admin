@@ -51,6 +51,8 @@ sources.appModule = [
   './src/app/core/svc.users.coffee'
   './src/app/core/svc.taxonomies.coffee'
   './src/app/core/svc.categorizations.coffee'
+  './src/app/core/svc.track.coffee'
+  './src/app/core/svc.tracks.coffee'
   # Product modal
   './src/app/products/product.modal.controller.coffee'
 ]
@@ -67,10 +69,15 @@ sources.adminModule = [
   # auth.logout
   './src/app/auth.logout/auth.logout.route.coffee'
   './src/app/auth.logout/auth.logout.controller.coffee'
-  # Module - activity
-  './src/app/activity/activity.module.coffee'
-  './src/app/activity/activity.route.coffee'
-  './src/app/activity/activity.controller.coffee'
+  # Module - analytics
+  './src/app/analytics/analytics.module.coffee'
+  './src/app/analytics/analytics.route.coffee'
+  './src/app/analytics/analytics.controller.coffee'
+  # Module - tracks
+  './src/app/tracks/tracks.module.coffee'
+  './src/app/tracks/tracks.route.coffee'
+  './src/app/tracks/tracks.controller.coffee'
+  './src/app/tracks/track.controller.coffee'
   # Module - users
   './src/app/users/users.module.coffee'
   './src/app/users/users.route.coffee'

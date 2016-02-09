@@ -1,8 +1,8 @@
 'use strict'
 
-angular.module('app.core').controller 'activityCtrl', ($rootScope) ->
+angular.module('app.core').controller 'analyticsCtrl', ($rootScope) ->
 
-  activity = this
+  analytics = this
 
   Keen.ready () ->
 
