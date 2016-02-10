@@ -83,11 +83,11 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) 
     promise = eeBack.fns.tracksGET(eeAuth.fns.getToken(), _formQuery())
     _runQuery promise
 
-  _searchWithTerm = (term) ->
-    _data.search.inputs.order = _data.search.inputs.orderArray[0]
-    _data.search.inputs.search = term
-    _data.search.inputs.page = 1
-    _runSection()
+  # _searchWithTerm = (term) ->
+  #   _data.search.inputs.order = _data.search.inputs.orderArray[0]
+  #   _data.search.inputs.search = term
+  #   _data.search.inputs.page = 1
+  #   _runSection()
 
   _addTrackModal = (track, type) ->
     track.err = null
@@ -97,22 +97,28 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) 
   ## MESSAGING
   # $rootScope.$on 'reset:tracks', () -> _data.search.tracks = []
   #
-  $rootScope.$on 'added:track', (e, track, collection) ->
-    _data.search.lastCollectionAddedTo = collection.id
+  # $rootScope.$on 'track:added', (e, track, collection) ->
+    # _data.search.lastCollectionAddedTo = collection.id
     # (if track.id is prod.id then prod.trackId = track.trackId) for prod in _data.search.tracks
     # eeModal.fns.close('addTrack')
+
+  _copyTrack = (fromTrack, toTrack) ->
+    toTrack[prop] = fromTrack[prop] for prop in ['title', 'icon', 'lanes', 'type', 'last_lane_name', 'show']
+
+  $rootScope.$on 'track:updated', (e, track) ->
+    (if track.id is tr.id then _copyTrack(track, tr)) for tr in _data.tracks
 
   ## EXPORTS
   data: _data
   fns:
     runSection: _runSection
-    search: _searchWithTerm
+    # search: _searchWithTerm
     featured: () ->
       _clearSection()
       _data.inputs.page      = 1
       _data.inputs.featured  = true
       _runSection()
-    clearSearch: () -> _searchWithTerm ''
+    # clearSearch: () -> _searchWithTerm ''
     setCategory: (category) ->
       _data.inputs.page      = 1
       _data.inputs.category  = category

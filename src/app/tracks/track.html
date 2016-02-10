@@ -2,25 +2,38 @@
   <div class="full-width text-center">
     <a ui-sref="track({ id: tr.id, title: (tr.title | urlText) })"
       ng-repeat="tr in track.ee.Tracks.tracks | orderBy:'id'"
-      ng-class="tr.show ? 'text-success' : 'text-danger'"
       class="no-underline">
-      <i class="fa fa-fw fa-2x fa-{{ tr.icon }}"></i>
+      <span class="fa-stack fa-2x">
+        <i class="fa fa-circle fa-stack-2x" style="-webkit-font-smoothing: antialiased;"
+          ng-class="tr.show ? 'text-success' : 'text-danger'"
+          ng-style="{ 'text-shadow': tr.id == track.id ? '#333 0px 0px 5px, #333 0px 0px 5px, #333 0px 0px 5px, #333 0px 0px 5px, #333 0px 0px 5px, #333 0px 0px 5px' : 'none' }"></i>
+        <i class="fa fa-{{ tr.icon }} fa-stack-1x fa-inverse"></i>
+      </span>
     </a>
     <hr>
   </div>
   <div ng-if="track.data.track.id">
     <h2>
       {{ track.data.track.title }}
-      <span class="pull-right hover-pointer" ng-click="track.data.track.show = !track.data.track.show">
-        <i class="fa fa-fw fa-toggle-on text-success" ng-if="track.data.track.show"></i>
-        <i class="fa fa-fw fa-toggle-off text-danger" ng-if="!track.data.track.show"></i>
-      </span>
+      <div class="pull-right hover-pointer">
+        <i class="fa fa-fw fa-pencil text-muted hover-pointer margin-7" style="font-size: 16px; vertical-align: middle;"
+          ng-click="track.modalFns.open('track', { type: 'Update track', track: track.data.track })">
+        </i>
+        <span ng-click="track.toggleShow('track', track.data.track)">
+          <i class="fa fa-fw fa-toggle-on text-success" ng-if="track.data.track.show"></i>
+          <i class="fa fa-fw fa-toggle-off text-danger" ng-if="!track.data.track.show"></i>
+        </span>
+      </div>
     </h2>
 
     <uib-accordion>
       <div ng-repeat="lane in track.data.track.lanes" class="position-relative">
         <div class="position-absolute" style="top: 9px; right: 7px;">
-          <span class="hover-pointer" ng-click="lane.show = !lane.show">
+          <i class="fa fa-fw fa-pencil text-muted hover-pointer"
+            ng-click="track.modalFns.open('track', { type: 'Update lane', lane: lane })">
+          </i>
+          <i class="fa fa-fw fa-arrows text-muted hover-pointer"></i>
+          <span class="hover-pointer" ng-click="track.toggleShow('lane', lane)">
             <i class="fa fa-fw fa-lg fa-toggle-on text-success" ng-if="lane.show"></i>
             <i class="fa fa-fw fa-lg fa-toggle-off text-danger" ng-if="!lane.show"></i>
           </span>
@@ -28,20 +41,51 @@
         <uib-accordion-group>
           <uib-accordion-heading class="white-background">
             <span class="pull-left">
-              <span ng-repeat="n in [1,2,3,4,5]">
-                <i ng-if="n < lane.activities.length" class="fa fa-lg fa-check-circle text-success"></i>
+              <span ng-repeat="activity in lane.activities">
+                <i ng-if="$index < 5" class="fa fa-lg fa-circle-o" ng-class="activity.show ? 'text-success' : 'text-muted'"></i>
+              </span>
+              <span ng-repeat="n in [0,1,2,3,4]">
                 <i ng-if="n >= lane.activities.length" class="fa fa-lg fa-circle-o"></i>
               </span>
               &nbsp;
             </span>{{ lane.title }}
           </uib-accordion-heading>
-          <span ng-bind="lane.intro"></span>
-          <pre>{{ lane | json }}</pre>
+          <span ng-if="lane.intro" ng-bind="lane.intro"></span>
+          <div class="media" ng-repeat="activity in lane.activities">
+            <div class="media-left">
+              <i class="fa fa-fw fa-2x fa-circle-o" ng-class="activity.show ? 'text-success' : 'text-muted'"></i>
+            </div>
+            <div class="media-body">
+              <h4 ng-bind="activity.title" class="media-heading"></h4>
+              <p ng-bind="activity.html"></p>
+            </div>
+            <div class="media-right">
+              <div style="min-width: 70px;">
+                <i class="fa fa-fw fa-pencil text-muted hover-pointer"
+                  ng-click="track.modalFns.open('track', { type: 'Update activity', activity: activity })">
+                </i>
+                <i class="fa fa-fw fa-arrows text-muted hover-pointer"></i>
+                <span class="hover-pointer" ng-click="track.toggleShow('activity', activity)">
+                  <i class="fa fa-fw fa-lg fa-toggle-on text-success" ng-if="activity.show"></i>
+                  <i class="fa fa-fw fa-lg fa-toggle-off text-danger" ng-if="!activity.show"></i>
+                </span>
+              </div>
+
+            </div>
+          </div>
+          <div class="btn btn-default pull-right"
+            ng-click="track.modalFns.open('track', { type: 'Create activity', track: track.data.track, lane: lane })">
+            Add an<span ng-if="lane.activities.length > 0">other</span> activity
+          </div>
+          <!-- <pre>{{ lane | json }}</pre> -->
         </uib-accordion-group>
       </div>
-
     </uib-accordion>
+    <div class="btn btn-default pull-right"
+      ng-click="track.modalFns.open('track', { type: 'Create lane', track: track.data.track })">
+      Add a<span ng-if="track.data.track.lanes.length > 0">nother</span> lane
+    </div>
 
-    <pre>{{ track.data.track | json }}</pre>
+    <!-- <pre>{{ track.data.track | json }}</pre> -->
   </div>
 </div>

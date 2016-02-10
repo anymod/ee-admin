@@ -2,9 +2,11 @@
   <div class="full-width text-center">
     <a ui-sref="track({ id: tr.id, title: (tr.title | urlText) })"
       ng-repeat="tr in tracks.ee.Tracks.tracks | orderBy:'id'"
-      ng-class="tr.show ? 'text-success' : 'text-danger'"
       class="no-underline">
-      <i class="fa fa-fw fa-2x fa-{{ tr.icon }}"></i>
+      <span class="fa-stack fa-2x">
+        <i class="fa fa-circle fa-stack-2x" ng-class="tr.show ? 'text-success' : 'text-danger'"></i>
+        <i class="fa fa-{{ tr.icon }} fa-stack-1x fa-inverse"></i>
+      </span>
     </a>
     <hr>
   </div>

@@ -53,6 +53,8 @@ sources.appModule = [
   './src/app/core/svc.categorizations.coffee'
   './src/app/core/svc.track.coffee'
   './src/app/core/svc.tracks.coffee'
+  './src/app/core/svc.lane.coffee'
+  './src/app/core/svc.activity.coffee'
   # Product modal
   './src/app/products/product.modal.controller.coffee'
 ]
@@ -78,6 +80,7 @@ sources.adminModule = [
   './src/app/tracks/tracks.route.coffee'
   './src/app/tracks/tracks.controller.coffee'
   './src/app/tracks/track.controller.coffee'
+  './src/app/tracks/track.modal.controller.coffee'
   # Module - users
   './src/app/users/users.module.coffee'
   './src/app/users/users.route.coffee'

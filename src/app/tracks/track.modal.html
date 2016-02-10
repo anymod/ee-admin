@@ -1,0 +1,66 @@
+<div class="container-fluid vert-20">
+  <div class="full-width text-right">
+    <div class="btn btn-sm btn-default" ng-click="$close()">Close</div>&nbsp;
+    <div class="btn btn-primary" ng-click="modal.process()" ng-bind="modal.data.type"></div>
+  </div>
+  <div ng-switch="modal.data.type">
+    <!-- Update track -->
+    <form ng-switch-when="Update track" ng-submit="modal.process()">
+      <small>Title</small>
+      <input ng-model="modal.data.track.title" class="form-control"/>
+      <small>Name of last (ongoing) lane</small>
+      <input ng-model="modal.data.track.last_lane_name" class="form-control"/>
+      <button type="submit" class="hidden"></button>
+    </form>
+    <!-- /Update track -->
+    <!-- Update lane -->
+    <form ng-switch-when="Update lane" ng-submit="modal.process()">
+      <small>Title</small>
+      <input ng-model="modal.data.lane.title" class="form-control"/>
+      <small>Intro text</small>
+      <textarea ng-model="modal.data.lane.intro" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <button type="submit" class="hidden"></button>
+    </form>
+    <!-- /Update lane -->
+    <!-- Update activity -->
+    <form ng-switch-when="Update activity" ng-submit="modal.process()">
+      <small>Title</small>
+      <input ng-model="modal.data.activity.title" class="form-control"/>
+      <small>HTML</small>
+      <textarea ng-model="modal.data.activity.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <button type="submit" class="hidden"></button>
+    </form>
+    <!-- /Update activity -->
+    <!-- Create lane -->
+    <form ng-switch-when="Create lane" ng-submit="modal.process()">
+      <small>Title</small>
+      <input ng-model="modal.data.lane.title" class="form-control"/>
+      <small>Intro text</small>
+      <textarea ng-model="modal.data.lane.intro" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <button type="submit" class="hidden"></button>
+    </form>
+    <!-- /Create lane -->
+    <!-- Create activity -->
+    <form ng-switch-when="Create activity" ng-submit="modal.process()">
+      <small>Title</small>
+      <input ng-model="modal.data.activity.title" class="form-control"/>
+      <small>HTML</small>
+      <textarea ng-model="modal.data.activity.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <button type="submit" class="hidden"></button>
+    </form>
+    <!-- /Create activity -->
+
+
+
+
+  </div>
+
+  <!-- <div>
+    <small>title</small>
+    <input ng-model="modal.product.title" class="form-control max-width-100-pct"/>
+  </div>
+  <div>
+    <small>intro</small>
+    <textarea ng-model="modal.product.content" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+  </div> -->
+</div>
