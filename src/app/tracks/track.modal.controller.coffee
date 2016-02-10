@@ -9,9 +9,9 @@ angular.module('tracks').controller 'trackModalCtrl', (eeDefiner, eeModal, eeTra
 
   modal.process = () ->
     switch modal.data.type
-      when 'Update track'     then eeTrack.fns.update(modal.data.track).then () -> eeModal.fns.close 'track'
-      when 'Update lane'      then eeLane.fns.update(modal.data.lane).then () -> eeModal.fns.close 'track'
-      when 'Update activity'  then eeActivity.fns.update(modal.data.activity).then () -> eeModal.fns.close 'track'
+      when 'Update track', 'Reorder lanes' then eeTrack.fns.update(modal.data.track).then () -> eeModal.fns.close 'track'
+      when 'Update lane', 'Reorder activities' then eeLane.fns.update(modal.data.lane).then () -> eeModal.fns.close 'track'
+      when 'Update activity' then eeActivity.fns.update(modal.data.activity).then () -> eeModal.fns.close 'track'
       when 'Create lane'
         eeLane.fns.create modal.data.lane
         .then (lane) ->
@@ -26,14 +26,25 @@ angular.module('tracks').controller 'trackModalCtrl', (eeDefiner, eeModal, eeTra
         .then () ->
           eeModal.fns.close 'track'
 
-  # this.setMainImage = (img) -> that.mainImage = img
-  # this.save = (product) ->
-  #   product.saving = true
-  #   eeBack.fns.productPUT { id: product.id, title: product.title, content: product.content }, eeAuth.fns.getToken()
-  #   .then (prod) ->
-  #     eeProducts.fns.updateProduct prod
-  #     eeModal.fns.close 'product'
-  #   .catch (err) -> console.error err
-  #   .finally () ->  product.saving = false
+  modal.reorder = (arr, index, moveBy) ->
+    from  = index
+    to    = index + moveBy
+    arr.splice(to, 0, arr.splice(from, 1)[0])
+
+  modal.summernoteConfig =
+    height: 300
+    focus: true
+    toolbar: [
+      ['style', ['style', 'bold', 'italic', 'height', 'clear']] # , 'underline', 'superscript', 'subscript', 'strikethrough'
+      # ['fontface', ['fontname']]
+      # ['textsize', ['fontsize']]
+      # ['fontclr', ['color']]
+      ['insert', ['link','picture','video']] # ,'hr'
+      ['alignment', ['paragraph']] # , 'lineheight', 'ul', 'ol',
+      ['height', ['table']]
+      # ['help', ['help']]
+      ['edit',['undo','redo']]
+      ['view', ['codeview']] # 'fullscreen',
+    ]
 
   return

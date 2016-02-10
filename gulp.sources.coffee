@@ -20,12 +20,17 @@ sources.adminModules = () ->
 
 ### VENDOR ###
 sources.adminVendorMin = [
+  './src/bower_components/jquery/dist/jquery.min.js' # for summernote
   './src/bower_components/angular/angular.min.js'
   './src/bower_components/angular-ui-router/release/angular-ui-router.min.js'
   './src/bower_components/angular-cookies/angular-cookies.min.js'
   './src/bower_components/angular-bootstrap/ui-bootstrap.min.js'
   './src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
+  './src/bower_components/angular-sanitize/angular-sanitize.min.js'
   './src/bower_components/keen-js/dist/keen.min.js'
+  './src/bower_components/bootstrap/dist/js/bootstrap.min.js' # for summernote
+  './src/bower_components/summernote/dist/summernote.min.js' # for summernote
+  './src/bower_components/angular-summernote/dist/angular-summernote.min.js' # for summernote
 ]
 sources.adminVendorUnmin = [
 

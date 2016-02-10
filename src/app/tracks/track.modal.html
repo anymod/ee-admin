@@ -7,7 +7,7 @@
     <!-- Update track -->
     <form ng-switch-when="Update track" ng-submit="modal.process()">
       <small>Title</small>
-      <input ng-model="modal.data.track.title" class="form-control"/>
+      <input ng-model="modal.data.track.title" class="form-control input-lg"/>
       <small>Name of last (ongoing) lane</small>
       <input ng-model="modal.data.track.last_lane_name" class="form-control"/>
       <button type="submit" class="hidden"></button>
@@ -16,7 +16,7 @@
     <!-- Update lane -->
     <form ng-switch-when="Update lane" ng-submit="modal.process()">
       <small>Title</small>
-      <input ng-model="modal.data.lane.title" class="form-control"/>
+      <input ng-model="modal.data.lane.title" class="form-control input-lg"/>
       <small>Intro text</small>
       <textarea ng-model="modal.data.lane.intro" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
       <button type="submit" class="hidden"></button>
@@ -25,16 +25,17 @@
     <!-- Update activity -->
     <form ng-switch-when="Update activity" ng-submit="modal.process()">
       <small>Title</small>
-      <input ng-model="modal.data.activity.title" class="form-control"/>
+      <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
       <small>HTML</small>
-      <textarea ng-model="modal.data.activity.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html"></summernote>
+      <!-- <textarea class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea> -->
       <button type="submit" class="hidden"></button>
     </form>
     <!-- /Update activity -->
     <!-- Create lane -->
     <form ng-switch-when="Create lane" ng-submit="modal.process()">
       <small>Title</small>
-      <input ng-model="modal.data.lane.title" class="form-control"/>
+      <input ng-model="modal.data.lane.title" class="form-control input-lg"/>
       <small>Intro text</small>
       <textarea ng-model="modal.data.lane.intro" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
       <button type="submit" class="hidden"></button>
@@ -43,24 +44,32 @@
     <!-- Create activity -->
     <form ng-switch-when="Create activity" ng-submit="modal.process()">
       <small>Title</small>
-      <input ng-model="modal.data.activity.title" class="form-control"/>
+      <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
       <small>HTML</small>
-      <textarea ng-model="modal.data.activity.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html"></summernote>
+      <!-- <textarea ng-model="modal.data.activity.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea> -->
       <button type="submit" class="hidden"></button>
     </form>
     <!-- /Create activity -->
-
-
-
-
+    <!-- Reorder lanes -->
+    <ul ng-switch-when="Reorder lanes" class="list-group vert-10">
+      <li class="list-group-item" ng-repeat="lane in modal.data.track.lanes">
+        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$last ? '' : 'fa-arrow-circle-o-down' " ng-click="modal.reorder(modal.data.track.lanes, $index, 1)"></i>
+        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$first ? '' : 'fa-arrow-circle-o-up' " ng-click="modal.reorder(modal.data.track.lanes, $index, -1)"></i>
+        &nbsp;&nbsp;
+        <span ng-bind="lane.title"></span>
+      </li>
+    </ul>
+    <!-- /Reorder lanes -->
+    <!-- Reorder activities -->
+    <ul ng-switch-when="Reorder activities" class="list-group vert-10">
+      <ul class="list-group-item" ng-repeat="activity in modal.data.lane.activities">
+        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$last ? '' : 'fa-arrow-circle-o-down' " ng-click="modal.reorder(modal.data.lane.activities, $index, 1)"></i>
+        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$first ? '' : 'fa-arrow-circle-o-up' " ng-click="modal.reorder(modal.data.lane.activities, $index, -1)"></i>
+        &nbsp;&nbsp;
+        <span ng-bind="activity.title"></span>
+      </ul>
+    </ul>
+    <!-- /Reorder activities -->
   </div>
-
-  <!-- <div>
-    <small>title</small>
-    <input ng-model="modal.product.title" class="form-control max-width-100-pct"/>
-  </div>
-  <div>
-    <small>intro</small>
-    <textarea ng-model="modal.product.content" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
-  </div> -->
 </div>

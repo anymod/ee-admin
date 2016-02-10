@@ -5,6 +5,8 @@ angular.module 'eeAdmin', [
   'ui.router'
   'ui.bootstrap'
   'ngCookies'
+  'ngSanitize'
+  'summernote'
 
   # core
   'app.core'

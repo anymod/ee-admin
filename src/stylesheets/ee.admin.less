@@ -1,6 +1,7 @@
 // vendor
 @import "../bower_components/bootstrap/less/bootstrap";
 @import "../bower_components/font-awesome/less/font-awesome";
+@import "../bower_components/summernote/dist/summernote.css";
 
 // ======================
 // bootstrap override
@@ -108,9 +109,22 @@
   transition: none !important;
   transform: none !important;
 }
-uib-accordion {
-  i { color: #f5f5f5; }
-  a:focus { outline: none; }
+uib-accordion.track-accordion {
+  .panel-group {
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.15);
+    box-shadow: 0 1px 4px rgba(0,0,0,.15);
+  }
+  .panel { border: none; }
+  .panel-open {
+    border-top: 1px solid #E6E6E6;
+    border-radius: 0;
+  }
+  .panel-heading {
+    background: #FFFFFF;
+    i.fa-hide { color: #FFFFFF; }
+    a:focus { outline: none; }
+  }
+  .panel-collapse { background: #F5F5F5; }
 }
 
 // ======================
@@ -315,7 +329,10 @@ html { overflow-x: hidden; }
 .round-right { border-top-right-radius: 5px !important; border-bottom-right-radius: 5px !important; }
 .border-none { border: none; }
 .no-side-border { border-left: none; border-right: none; }
-.box-shadow { box-shadow: 0 1px 4px rgba(0,0,0,.15) }
+.box-shadow {
+  box-shadow: 0 1px 4px rgba(0,0,0,.15);
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.15);
+}
 .height-auto { height: auto; }
 .width-auto { width: auto; }
 .full-height { height: 100%; }
