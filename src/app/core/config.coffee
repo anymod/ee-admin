@@ -3,6 +3,8 @@
 angular.module('app.core').config ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider, $cookiesProvider) ->
   $locationProvider.html5Mode true
 
+  $.cloudinary.config({ cloud_name: 'eeosk' })
+
   ## Configure CORS
   $httpProvider.defaults.useXDomain = true
   $httpProvider.defaults.withCredentials = true

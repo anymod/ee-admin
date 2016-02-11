@@ -4,7 +4,7 @@
     <div class="btn btn-primary" ng-click="modal.process()" ng-bind="modal.data.type"></div>
   </div>
 
-  <form id="cloudinaryForm"></form>
+  <form id="cloudinaryForm" class="hidden"></form>
 
   <div ng-switch="modal.data.type">
     <!-- Update track -->
@@ -30,7 +30,10 @@
       <small>Title</small>
       <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
       <small>HTML</small>
-      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html"></summernote>
+      <div ng-if="modal.progress > 0 && modal.progress < 100" class="progress vert-2">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: {{ modal.progress }}%;">{{ modal.progress }}%</div>
+      </div>
+      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html" editor="modal.editor"></summernote>
       <!-- <textarea class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea> -->
       <button type="submit" class="hidden"></button>
     </form>
@@ -49,7 +52,10 @@
       <small>Title</small>
       <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
       <small>HTML</small>
-      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html" on-image-upload="modal.imageUpload(files, $)" editor="modal.editor"></summernote>
+      <div ng-if="modal.progress > 0 && modal.progress < 100" class="progress vert-2">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: {{ modal.progress }}%;">{{ modal.progress }}%</div>
+      </div>
+      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html" editor="modal.editor"></summernote>
       <!-- <textarea ng-model="modal.data.activity.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea> -->
       <button type="submit" class="hidden"></button>
     </form>

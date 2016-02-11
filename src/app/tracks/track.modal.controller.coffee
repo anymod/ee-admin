@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('tracks').controller 'trackModalCtrl', ($timeout, eeDefiner, eeModal, eeTrack, eeLane, eeActivity, data) ->
+angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefiner, eeModal, eeTrack, eeLane, eeActivity, data) ->
 
   modal = this
 
@@ -45,55 +45,49 @@ angular.module('tracks').controller 'trackModalCtrl', ($timeout, eeDefiner, eeMo
       ['height', ['table']]
       # ['help', ['help']]
       ['edit',['undo','redo']]
-      ['view', ['codeview']] # 'fullscreen',
+      ['view', ['fullscreen', 'codeview']]
     ]
+    # oninit: () ->
+      # Add "open" - "save" buttons
 
-  $.cloudinary.config({ cloud_name: 'eeosk' })
+
+  addImage = (url) ->
+    imgNode = $('<img>').attr('src', url).attr('class','max-width-100-pct')[0]
+    modal.editor.summernote('insertNode', imgNode)
+
+  runIt = () ->
+    console.log 'runIt'
+    $('#cloudinaryForm > .cloudinary_fileupload').click()
+
   fn = () ->
 
+    noteBtn = '<button id="insertImageBtn" type="button" class="btn btn-sm btn-default" title="Insert an image" tabindex="-1"><i class="fa fa-image"></i></button>'
+    $(noteBtn).appendTo($('.note-toolbar .note-insert'))
+    $('#insertImageBtn').on 'click', runIt
+
     form = angular.element(document.querySelector('#cloudinaryForm'))
-    cloudinary_transform = 'playbook'
 
-    form
-      .append($.cloudinary.unsigned_upload_tag cloudinary_transform, {
-          cloud_name: 'eeosk',
-          tags: 'playbook'
-        }).bind('cloudinarydone', () -> console.log 'finished')
-
-    assignAttr = (data) ->
-      console.log 'assignAttr', data.result.secure_url
+    $.cloudinary.unsigned_upload_tag('playbook', {
+      cloud_name: 'eeosk',
+      tags: 'playbook'
+    }).appendTo(form).bind('cloudinarydone', (e, data) ->
+      addImage data.result.secure_url
+    ).bind('cloudinaryprogress', (e, data) ->
+      percentage = Math.round((data.loaded * 100.0) / data.total)
+      # Only modal.$apply periodically
+      console.log 'cloudinaryprogress', percentage
+      if percentage > modal.partialProgress
+        modal.partialProgress = percentage + 5
+        modal.progress = if modal.progress > 99 then 0 else percentage
+        $scope.$apply()
+    )
 
     resetProgress = () ->
       modal.progress = 0
       modal.partialProgress = 5
 
-    imageDone = (e, data) ->
-      console.log 'cloudinarydone'
-      # resetProgress()
-      # unbindCloudinary()
-      # assignAttr(data)
-      # # modal.$apply()
-      # # $rootScope.$broadcast 'cloudinaryUploadFinished'
-      # bindCloudinary()
-
     imageProgress = (e, data) ->
       console.log 'cloudinaryprogress'
-      percentage = Math.round((data.loaded * 100.0) / data.total)
-      # Only modal.$apply periodically
-      if percentage > modal.partialProgress
-        modal.partialProgress = percentage + 5
-        modal.progress = if modal.progress > 99 then 0 else percentage
-        # modal.$apply()
-
-    # bindCloudinary = () ->
-    #   console.log 'bindCloudinary'
-    #   # form.on 'cloudinarydone', () -> imageDone()
-    #   form
-    #     .on 'cloudinaryprogress', imageProgress
-
-      unbindCloudinary = () ->
-        form.unbind 'cloudinaryprogress'
-        form.unbind 'cloudinarydone'
 
     resetProgress()
     # bindCloudinary()
@@ -106,18 +100,7 @@ angular.module('tracks').controller 'trackModalCtrl', ($timeout, eeDefiner, eeMo
     #       cloud_name: 'eeosk',
     #       tags: 'playbook'
     #     })
-    # form
-    #   .bind 'cloudinarydone', (e, data) ->
-    #     console.log 'done!', data
-    #     addImage data.result.secure_url
-    #     # resetProgress()
-    #     # unbindCloudinary()
-    #     form.unbind 'cloudinaryprogress'
-    #     form.unbind 'cloudinarydone'
-    #     # assignAttr(data)
-    #     # scope.$apply()
-    #     # $rootScope.$broadcast 'cloudinaryUploadFinished'
-    #     # bindCloudinary()
+
     #   .bind 'cloudinaryprogress', (e, data) ->
     #     percentage = Math.round((data.loaded * 100.0) / data.total)
     #     # Only scope.$apply periodically
@@ -128,10 +111,10 @@ angular.module('tracks').controller 'trackModalCtrl', ($timeout, eeDefiner, eeMo
     #       console.log modal.partialProgress
     #       # scope.$apply()
 
-  $timeout fn, 500
 
-  addImage = (url) ->
-    imgNode = $('<img>').attr('src', url)[0]
-    modal.editor.summernote('insertNode', imgNode)
+  if modal.data.type.indexOf('activity') > -1
+    $timeout fn, 500
+
+
 
   return
