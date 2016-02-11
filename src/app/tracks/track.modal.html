@@ -3,6 +3,9 @@
     <div class="btn btn-sm btn-default" ng-click="$close()">Close</div>&nbsp;
     <div class="btn btn-primary" ng-click="modal.process()" ng-bind="modal.data.type"></div>
   </div>
+
+  <form id="cloudinaryForm"></form>
+
   <div ng-switch="modal.data.type">
     <!-- Update track -->
     <form ng-switch-when="Update track" ng-submit="modal.process()">
@@ -46,7 +49,7 @@
       <small>Title</small>
       <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
       <small>HTML</small>
-      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html"></summernote>
+      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html" on-image-upload="modal.imageUpload(files, $)" editor="modal.editor"></summernote>
       <!-- <textarea ng-model="modal.data.activity.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea> -->
       <button type="submit" class="hidden"></button>
     </form>

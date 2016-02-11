@@ -20,7 +20,7 @@ sources.adminModules = () ->
 
 ### VENDOR ###
 sources.adminVendorMin = [
-  './src/bower_components/jquery/dist/jquery.min.js' # for summernote
+  './src/bower_components/jquery/dist/jquery.min.js' # for summernote & cloudinary image upload
   './src/bower_components/angular/angular.min.js'
   './src/bower_components/angular-ui-router/release/angular-ui-router.min.js'
   './src/bower_components/angular-cookies/angular-cookies.min.js'
@@ -32,8 +32,13 @@ sources.adminVendorMin = [
   './src/bower_components/summernote/dist/summernote.min.js' # for summernote
   './src/bower_components/angular-summernote/dist/angular-summernote.min.js' # for summernote
 ]
-sources.adminVendorUnmin = [
 
+sources.adminVendorUnmin = [
+  './src/bower_components/jquery/dist/jquery.js' # for cloudinary image upload
+  './src/bower_components/jquery-ui/ui/widget.js' # for cloudinary image upload
+  './src/bower_components/blueimp-file-upload/js/jquery.fileupload.js' # for cloudinary image upload
+  './src/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js' # for cloudinary image upload
+  './src/bower_components/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js' # for cloudinary image upload
 ]
 
 ### MODULE ###
