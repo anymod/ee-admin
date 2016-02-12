@@ -1,0 +1,70 @@
+<!-- isAdmin ONLY -->
+<div class="container-fluid vert-10" ng-if="isAdmin">
+  <div class="row">
+    <div class="col col-sm-7">
+      <img ng-src="{{ modal.mainImage.url }}" class="full-width" name="mainImage">
+      <!-- images -->
+      <div ng-show="modal.template.image_meta.additional_images.length > 0" class="vert-5">
+        <img ng-src="{{ modal.template.image_meta.main_image.url | thumbnail }}"
+             class="inline-block width-62 gray-border hover-pointer margin-2"
+             ng-click="modal.setMainImage(modal.template.image_meta.main_image)" />
+        <img ng-repeat="img in modal.template.image_meta.additional_images"
+             ng-src="{{ img.url | thumbnail }}"
+             class="inline-block width-62 gray-border hover-pointer margin-2"
+             ng-click="modal.setMainImage(img)" />
+      </div>
+    </div>
+    <div class="col col-sm-5">
+      <div ng-hide="catalog.catalogData.loading">
+        <div class="full-width text-right">
+          <p ng-if="modal.template.hide_from_catalog" class="pull-left label label-danger">Hidden</p>
+          <div class="btn btn-sm btn-default" ng-click="$close()">Close</div>&nbsp;
+          <div class="btn btn-sm btn-default" ng-click="modal.save(modal.template)" ng-disabled="modal.template.saving">Save</div>
+        </div>
+        <small>title</small>
+        <textarea ng-model="modal.template.title" class="form-control max-width-100-pct" rows=4></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-sm-12">
+      <small>description</small>
+      <textarea ng-model="modal.template.content" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <table ng-show="modal.template.content_meta && !catalog.catalogData.loading" class="table table-condensed table-striped table-bordered white-background">
+        <tr ng-if="modal.template.content_meta.item_name">
+          <td>Item</td>
+          <td ng-bind="modal.template.content_meta.item_name"></td>
+        </tr>
+        <tr ng-if="modal.template.availability_meta.quantity">
+          <td>Quantity Available</td>
+          <td ng-bind="modal.template.availability_meta.quantity | truncateQty"></td>
+        </tr>
+        <tr ng-if="modal.template.shipping_price">
+          <td>Shipping Cost</td>
+          <td ng-bind="modal.template.shipping_price | centToDollar"></td>
+        </tr>
+        <tr ng-if="modal.template.content_meta.brand_name">
+          <td>Brand Name</td>
+          <td ng-bind="modal.template.content_meta.brand_name"</td>
+        </tr>
+        <tr ng-if="modal.template.content_meta.manufacturer">
+          <td>Manufacturer</td>
+          <td ng-bind="modal.template.content_meta.manufacturer"></td>
+        </tr>
+        <tr ng-if="modal.template.content_meta.condition">
+          <td>Condition</td>
+          <td ng-bind="modal.template.content_meta.condition"></td>
+        </tr>
+        <tr ng-if="modal.template.content_meta.warranty">
+          <td>Warranty</td>
+          <td ng-bind="modal.template.content_meta.warranty"></td>
+        </tr>
+        <tr ng-if="modal.template.content_meta.details">
+          <td>Details</td>
+          <td ng-bind-html="modal.template.content_meta.details | unboldHtml"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- /isAdmin ONLY -->

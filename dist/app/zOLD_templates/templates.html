@@ -1,0 +1,104 @@
+<!-- TEMPLATES -->
+<div id="taxonomy-templates" class="inline-block full-width pad-20 position-relative text-center" ng-hide="templates.ee.loading">
+
+  <div class="margin-5 text-center">
+
+    <form class="margin-0-auto max-width-600" ng-submit="templates.fns.search()">
+      <div class="input-group">
+        <input type="text" ng-model="templates.data.inputs.search" class="form-control" placeholder="Search">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit" name="search-btn">
+            <span class="hidden-xs">Search</span>
+            <span class="visible-xs"><i class="fa fa-search"></i></span>
+          </button>
+        </span>
+      </div>
+    </form>
+
+    <div class="inline-block margin-5">
+      <div ng-repeat="category in templates.data.inputs.categoryArray"
+           ng-click="templates.fns.setCategory(category)"
+           class="btn btn-xs btn-default margin-2"
+           ng-class="{ 'btn-primary': category == templates.data.inputs.category }"
+           ng-hide="templates.data.hideFilterBtns && category != templates.data.inputs.category">
+        <span ng-show="category == templates.data.inputs.category"><i class="fa fa-fw fa-times"></i></span>{{ category }}
+      </div>
+      <br ng-hide="templates.data.hideFilterBtns">
+      <div ng-repeat="range in templates.data.inputs.rangeArray"
+           ng-click="templates.fns.setRange(range)"
+           class="btn btn-xs btn-default margin-2"
+           ng-class="{ 'btn-primary': range.min == templates.data.inputs.range.min && range.max == templates.data.inputs.range.max }"
+           ng-hide="templates.data.hideFilterBtns && range.min != templates.data.inputs.range.min">
+        <span ng-show="range.min == templates.data.inputs.range.min && range.max == templates.data.inputs.range.max"><i class="fa fa-fw fa-times"></i></span>{{ range | rangeToText }}
+      </div>
+      <br ng-hide="templates.data.hideFilterBtns">
+      <div class="btn btn-xs btn-primary margin-2" ng-show="templates.data.inputs.searchLabel" ng-click="templates.fns.clearSearch()">
+        <i class="fa fa-fw fa-times"></i>{{ templates.data.inputs.searchLabel }}
+      </div>
+    </div>
+
+    <div class="margin-10">
+      <uib-pagination total-items="templates.data.count"
+        items-per-page="templates.data.inputs.perPage"
+        ng-model="templates.data.inputs.page"
+        max-size="5"
+        class="pagination-sm margin-0 vertical-align-top"
+        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+        boundary-links="true"
+        rotate="false"
+        ng-change="templates.fns.update()">
+      </uib-pagination>
+    </div>
+
+  </div>
+
+  <div class="inline-block" ng-hide="templates.data.searching">
+    <div class="vert-10">
+      <div class="btn-group btn-group-xs">
+        <div class="btn btn-default" ng-class="{ active: templates.compact }" ng-click="templates.compact = !templates.compact">
+          compact view
+        </div>
+        <div class="btn btn-default" ng-class="{ active: !templates.compact }" ng-click="templates.compact = !templates.compact">
+          edit view
+        </div>
+      </div>
+      <div class="btn btn-xs btn-default" ng-class="{ active: templates.hideHidden }" ng-click="templates.hideHidden = !templates.hideHidden">
+        <i class="fa fa-times" ng-show="templates.hideHidden"></i> hide hidden
+      </div>
+    </div>
+    <div class="alert alert-info max-width-600 margin-0-auto" ng-hide="templates.compact">
+      Warning: Edits are immediately reflected on builder and in all stores
+    </div>
+    <div class="vert-20">
+      <ee-product-for-admin
+        ng-repeat="template in templates.data.templates"
+        ng-hide="template.hide_from_catalog && templates.hideHidden"
+        template="template"
+        styles="templates.taxonomyData.taxonomies.styles"
+        colors="templates.taxonomyData.taxonomies.colors"
+        materials="templates.taxonomyData.taxonomies.materials"
+        compact="templates.compact">
+      </ee-product-for-admin>
+    </div>
+  </div>
+
+  <div class="margin-10" ng-hide="templates.data.templates.length <= 0 || templates.data.searching">
+    <uib-pagination total-items="templates.data.count"
+      items-per-page="templates.data.inputs.perPage"
+      ng-model="templates.data.inputs.page"
+      max-size="5"
+      class="pagination-sm margin-0 vertical-align-top"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="templates.fns.update()">
+    </uib-pagination>
+  </div>
+
+  <div ng-show="!templates.data.searching && templates.data.templates.length <= 0">
+    <div class="pad-20">No results found</div>
+  </div>
+</div>
+<!-- /TEMPLATES -->
+
+<ee-loading loading="templates.data.searching"></ee-loading>

@@ -18,12 +18,21 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
         .then (lane) ->
           modal.data.track.lanes.push lane.id
           eeTrack.fns.update modal.data.track
-        .then () -> eeModal.fns.close 'track'
+        .finally () -> eeModal.fns.close 'track'
       when 'Create activity'
+        modal.data.activity.track_id = modal.data.track.id
         eeActivity.fns.create modal.data.activity
         .then (activity) ->
-          modal.data.lane.activities.push activity.id
-          eeLane.fns.update modal.data.lane
+          promiseObj = null
+          if modal.data?.lane?.id
+            promiseObj = () ->
+              modal.data.lane.activities.push activity.id
+              eeLane.fns.update modal.data.lane
+          else
+            promiseObj = () ->
+              eeTrack.fns.get modal.data.track.id
+              .then (tr) -> modal.data.track.unassigned_activities = tr.unassigned_activities
+          promiseObj()
         .then () ->
           eeModal.fns.close 'track'
 
@@ -47,23 +56,16 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
       ['edit',['undo','redo']]
       ['view', ['fullscreen', 'codeview']]
     ]
-    # oninit: () ->
-      # Add "open" - "save" buttons
 
-
-  addImage = (url) ->
+  addImageToSummernote = (url) ->
     imgNode = $('<img>').attr('src', url).attr('class','max-width-100-pct')[0]
     modal.editor.summernote('insertNode', imgNode)
-
-  runIt = () ->
-    console.log 'runIt'
-    $('#cloudinaryForm > .cloudinary_fileupload').click()
 
   fn = () ->
 
     noteBtn = '<button id="insertImageBtn" type="button" class="btn btn-sm btn-default" title="Insert an image" tabindex="-1"><i class="fa fa-image"></i></button>'
     $(noteBtn).appendTo($('.note-toolbar .note-insert'))
-    $('#insertImageBtn').on 'click', runIt
+    $('#insertImageBtn').on 'click', () -> $('#cloudinaryForm > .cloudinary_fileupload').click()
 
     form = angular.element(document.querySelector('#cloudinaryForm'))
 
@@ -71,11 +73,11 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
       cloud_name: 'eeosk',
       tags: 'playbook'
     }).appendTo(form).bind('cloudinarydone', (e, data) ->
-      addImage data.result.secure_url
+      resetProgress()
+      addImageToSummernote data.result.secure_url
     ).bind('cloudinaryprogress', (e, data) ->
       percentage = Math.round((data.loaded * 100.0) / data.total)
       # Only modal.$apply periodically
-      console.log 'cloudinaryprogress', percentage
       if percentage > modal.partialProgress
         modal.partialProgress = percentage + 5
         modal.progress = if modal.progress > 99 then 0 else percentage
@@ -86,30 +88,7 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
       modal.progress = 0
       modal.partialProgress = 5
 
-    imageProgress = (e, data) ->
-      console.log 'cloudinaryprogress'
-
     resetProgress()
-    # bindCloudinary()
-
-    # modal.progress = 0
-    # modal.partialProgress = 5
-    # form = angular.element(document.querySelector('#cloudinaryForm'))
-    # form
-    #   .append($.cloudinary.unsigned_upload_tag 'playbook', {
-    #       cloud_name: 'eeosk',
-    #       tags: 'playbook'
-    #     })
-
-    #   .bind 'cloudinaryprogress', (e, data) ->
-    #     percentage = Math.round((data.loaded * 100.0) / data.total)
-    #     # Only scope.$apply periodically
-    #     console.log modal.partialProgress
-    #     if percentage > modal.partialProgress
-    #       modal.partialProgress = percentage + 5
-    #       modal.progress = if modal.progress > 99 then 0 else percentage
-    #       console.log modal.partialProgress
-    #       # scope.$apply()
 
 
   if modal.data.type.indexOf('activity') > -1

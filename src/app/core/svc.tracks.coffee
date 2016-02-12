@@ -69,7 +69,6 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) 
     _data.reading = true
     queryPromise
     .then (res) ->
-      console.log 'res', res
       { rows, count, took } = res
       _data.tracks  = rows
       _data.count   = count

@@ -1,0 +1,108 @@
+<div class="container vert-20" ng-hide="users.data.searching">
+
+  <div class="full-width text-center margin-0">
+    <uib-pagination
+      total-items="users.data.inputs.count"
+      items-per-page="users.data.inputs.perPage"
+      ng-model="users.data.inputs.page"
+      max-size="5"
+      class="pagination-sm margin-0 vertical-align-top"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="users.fns.update()">
+    </uib-pagination>
+  </div>
+
+  <div class="vert-20" style="overflow-x: scroll">
+
+    <!-- ONBOARD -->
+    <!-- <div ng-if="$state.current.name == 'users.onboard'">
+      <div class="btn btn-default btn-xs" ng-active="showEmail" ng-click="showEmail = !showEmail">Show email form</div>
+      <div ng-show="showEmail" class="max-width-900 margin-0-auto pad-10">
+        <input type="text" ng-model="users.mailto.subject" class="form-control">
+        <textarea ng-model="users.mailto.body" class="form-control" rows=15></textarea>
+      </div>
+
+      <ee-admin-user
+        ng-repeat="user in users.data.users"
+        user="user"
+        ng-if="user.id != 1 && user.id != 47"
+        show-onboard="true"
+        subject="users.mailto.subject"
+        body="users.mailto.body">
+      </ee-admin-user>
+    </div> -->
+    <!-- /ONBOARD -->
+
+    <!-- SEARCH -->
+    <form ng-submit="users.fns.search()" class="vert-5 margin-top-0">
+      <input type="text" ng-model="users.data.inputs.search" class="form-control max-width-300" placeholder="Search by id, username, or email"/>
+    </form>
+    <!-- /SEARCH -->
+
+    <!-- INFO -->
+    <table class="table table-condensed table-bordered table-striped table-hover table-responsive">
+      <thead>
+        <tr>
+          <th ng-click="users.fns.setOrder('id')" class="hover-pointer" ng-class="{ info: !users.data.inputs.order || users.data.inputs.order.indexOf('id_') > -1 }">ID <i class="fa fa-sort"></i></th>
+          <th>Store name</th>
+
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('username')" class="hover-pointer" ng-class="{ info: users.data.inputs.order.indexOf('username_') > -1 }">Username <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('domain')" class="hover-pointer" ng-class="{ info: users.data.inputs.order.indexOf('domain_') > -1 }">Domain <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('last_active_at')" class="hover-pointer" ng-class="{ info: users.data.inputs.order.indexOf('last_active_') > -1 }">Active <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('created_at')" class="hover-pointer" ng-class="{ info: users.data.inputs.order.indexOf('created_at_') > -1 }">Created <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('onboarded_at')" class="hover-pointer" ng-class="{ info: users.data.inputs.order.indexOf('onboarded_at_') > -1 }">Onboarded <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" ng-click="users.fns.setOrder('proposition')" class="hover-pointer" ng-class="{ info: users.data.inputs.order.indexOf('proposition_') > -1 }">Prop <i class="fa fa-sort"></i></th>
+          <th ng-if="users.state.current.name == 'users.info'" class="text-center"><i class="fa fa-fw fa-paypal"></i></th>
+
+          <th ng-if="users.state.current.name == 'users.social'"></th>
+          <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-facebook"></i></th>
+          <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-pinterest"></i></th>
+          <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-twitter"></i></th>
+          <th ng-if="users.state.current.name == 'users.social'" class="text-center"><i class="fa fa-fw fa-instagram"></i></th>
+          <th ng-if="users.state.current.name == 'users.social'">Blog</th>
+          <th ng-if="users.state.current.name == 'users.social'">Problem(s)</th>
+
+          <th ng-if="users.state.current.name == 'users.branding'">Logo</th>
+          <th ng-if="users.state.current.name == 'users.branding'">About image</th>
+          <th ng-if="users.state.current.name == 'users.branding'">About messaging</th>
+
+          <th ng-if="users.state.current.name == 'users.analytics'">Analytics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ee-user-for-admin ng-repeat="user in users.data.users" user="user" state="users.state.current.name"></tr>
+      </tbody>
+    </table>
+    <!-- /INFO -->
+
+    <!-- ANALYTICS -->
+    <!-- <div ng-if="$state.current.name == 'users.analytics'">
+      <ee-adminz-user
+        ng-repeat="user in users.data.users"
+        user="user"
+        ng-if="user.id != 1 && user.id != 47"
+        show-analytics="true">
+      </ee-adminz-user>
+    </div> -->
+    <!-- /ANALYTICS -->
+
+  </div>
+
+  <div class="full-width text-center" ng-hide="users.data.searching">
+    <uib-pagination
+      total-items="users.data.inputs.count"
+      items-per-page="users.data.inputs.perPage"
+      ng-model="users.data.inputs.page"
+      max-size="5"
+      class="pagination-sm"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="users.fns.update()">
+    </uib-pagination>
+  </div>
+</div>
+
+<ee-loading loading="users.data.searching"></ee-loading>
