@@ -25,7 +25,6 @@
         </span>
       </div>
     </h2>
-
     <uib-accordion class="track-accordion">
       <div ng-repeat="lane in track.data.track.lanes" class="position-relative">
         <div class="position-absolute" style="top: 9px; right: 7px;">
@@ -49,8 +48,17 @@
               &nbsp;
             </span>{{ lane.title }}
           </uib-accordion-heading>
-          <p ng-if="lane.intro" ng-bind="lane.intro" style="white-space: pre-line;"></p>
-          <div class="media white-background gray-border pad-10 vert-10 margin-top-0 position-relative"
+          <div class="media white-background gray-border pad-10 margin-0">
+            <div class="media-left">
+              <i class="fa fa-fw fa-2x fa-info-circle text-muted"></i>
+            </div>
+            <div class="media-body">
+              <p ng-if="lane.intro" ng-bind="lane.intro"
+                style="white-space: pre-line;" class="margin-0">
+              </p>
+            </div>
+          </div>
+          <div class="media white-background gray-border pad-10 margin-0 position-relative"
             ng-repeat="activity in lane.activities">
             <div class="position-absolute" style="top: 7px; right: 5px; width: 70px;">
               <i class="fa fa-fw fa-pencil text-muted hover-pointer"
@@ -77,7 +85,7 @@
               ng-click="track.modalFns.open('track', { type: 'Reorder activities', lane: lane })">
               Reorder activities
             </div>
-            <div class="btn btn-default"
+            <div class="btn btn-default vert-5"
               ng-click="track.modalFns.open('track', { type: 'Create activity', track: track.data.track, lane: lane })">
               Add an<span ng-if="lane.activities.length > 0">other</span> activity
             </div>
