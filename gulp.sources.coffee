@@ -56,6 +56,7 @@ sources.appModule = [
   './src/app/core/svc.modal.coffee'
   './src/app/core/svc.product.coffee'
   './src/app/core/svc.products.coffee'
+  './src/app/core/svc.collections.coffee'
   './src/app/core/svc.leads.coffee'
   './src/app/core/svc.user.coffee'
   './src/app/core/svc.users.coffee'
@@ -101,6 +102,10 @@ sources.adminModule = [
   './src/app/products/products.module.coffee'
   './src/app/products/products.route.coffee'
   './src/app/products/products.controller.coffee'
+  # Module - collections
+  './src/app/collections/collections.module.coffee'
+  './src/app/collections/collections.route.coffee'
+  './src/app/collections/collections.controller.coffee'
   # Module - taxonomies
   './src/app/taxonomies/taxonomies.module.coffee'
   './src/app/taxonomies/taxonomies.route.coffee'

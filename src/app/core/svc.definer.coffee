@@ -1,18 +1,19 @@
 'use strict'
 
-angular.module('app.core').factory 'eeDefiner', ($rootScope, eeAuth, eeProducts, eeTracks) ->
+angular.module('app.core').factory 'eeDefiner', ($rootScope, eeAuth, eeProducts, eeTracks, eeCollections) ->
 
   ## SETUP
   _loggedIn  = eeAuth.fns.hasToken()
   _loggedOut = !_loggedIn
 
   _exports =
-    Products:   eeProducts.data
-    Tracks:     eeTracks.data
-    logged_in:  _loggedIn
-    loading:    {}
-    blocked:    {}
-    unsaved:    false
+    Products:     eeProducts.data
+    Tracks:       eeTracks.data
+    Collections:  eeCollections.data
+    logged_in:    _loggedIn
+    loading:      {}
+    blocked:      {}
+    unsaved:      false
 
   ## PRIVATE FUNCTIONS
   _fillExportData = (user, data) ->

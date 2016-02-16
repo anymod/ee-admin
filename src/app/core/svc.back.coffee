@@ -81,6 +81,13 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
         data: product
       }
 
+    collectionsGET: (token, query) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'admin/collections' + _formQueryString(query)
+        headers: authorization: token
+      }
+
     leadsGET: (token, query) ->
       _makeRequest {
         method: 'GET'

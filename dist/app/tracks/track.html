@@ -38,7 +38,7 @@
         </div>
         <uib-accordion-group>
           <uib-accordion-heading>
-            <span class="pull-left">
+            <span class="pull-left vert-2">
               <span ng-repeat="activity in lane.activities">
                 <i ng-if="$index < 5" class="fa fa-lg fa-circle-o" ng-class="activity.show ? 'text-success' : 'text-muted'"></i>
               </span>
@@ -46,14 +46,15 @@
                 <i ng-if="n >= lane.activities.length" class="fa fa-lg fa-circle-o fa-hide"></i>
               </span>
               &nbsp;
-            </span>{{ lane.title }}
+            </span>
+            <span ng-bind="lane.title"></span>
           </uib-accordion-heading>
-          <div class="media white-background gray-border pad-10 margin-0">
+          <div ng-if="lane.intro" class="media white-background gray-border pad-10 margin-0">
             <div class="media-left">
               <i class="fa fa-fw fa-2x fa-info-circle text-muted"></i>
             </div>
             <div class="media-body">
-              <p ng-if="lane.intro" ng-bind="lane.intro"
+              <p ng-bind="lane.intro"
                 style="white-space: pre-line;" class="margin-0">
               </p>
             </div>

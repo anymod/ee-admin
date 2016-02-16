@@ -6,6 +6,6 @@ angular.module('ee-navbar-main').directive "eeNavbarMain", ($state, eeDefiner) -
   scope:
     usersNav: '@'
   link: (scope, ele, attrs) ->
-    scope.ee          = eeDefiner.exports
-    scope.state       = $state.current.name
+    scope.ee    = eeDefiner.exports
+    scope.state = $state.current.name
     return

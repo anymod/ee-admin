@@ -16,6 +16,7 @@ angular.module 'eeAdmin', [
   'tracks'
   'users'
   'products'
+  'collections'
   'taxonomies'
   'leads'
   'demo'
