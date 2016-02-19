@@ -74,6 +74,7 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
           .replace(/ style=\"[^\"]+\"/gi, '') # "
           .replace(/<\/?span[^>]*>/gi, '')
           .replace(/ dir=\"ltr\"/gi, '') # "
+          .replace(/<p><\/p>/gi,'')
       $scope.$apply()
 
     form = angular.element(document.querySelector('#cloudinaryForm'))

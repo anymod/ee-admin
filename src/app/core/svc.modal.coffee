@@ -15,7 +15,7 @@ angular.module('app.core').factory 'eeModal', ($uibModal) ->
     track:
       templateUrl:    'app/tracks/track.modal.html'
       controller:     'trackModalCtrl as modal'
-      # size:           'lg'
+      size:           'lg'
       backdrop:       'static' # disables clicking on backdrop to close
       backdropClass:  _backdropClass
 

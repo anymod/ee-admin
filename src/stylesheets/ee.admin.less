@@ -110,22 +110,35 @@
   transform: none !important;
 }
 uib-accordion.track-accordion {
-  .panel-group {
-    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.15);
-    box-shadow: 0 1px 4px rgba(0,0,0,.15);
-  }
-  .panel { border: none; }
-  .panel-open {
-    border-top: 1px solid #E6E6E6;
+  .panel {
+    margin: 0 20px;
     border-radius: 0;
+    border-top: none;
+    border-bottom: none;
+    -webkit-transition: all 0.2s cubic-bezier(0.7, 0, 0.175, 1) 0s;
+    -ms-transition: all 0.2s cubic-bezier(0.7, 0, 0.175, 1) 0s;
+    transition: all 0.2s cubic-bezier(0.7, 0, 0.175, 1) 0s;
+  }
+  .track-lane:first-child .panel { border-top: 1px solid #E6E6E6; }
+  .track-lane:last-child .panel { border-bottom: 1px solid #E6E6E6; }
+  .panel-open {
+    margin: 20px 0;
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.15);
+    box-shadow: 0 1px 4px rgba(0,0,0,.19), 0 2px 8px rgba(0, 0, 0, 0.2);
+    .panel-title { font-weight: normal !important; }
   }
   .panel-heading {
     background: #FFFFFF;
-    i.fa-hide { color: #FFFFFF; }
     a:focus { outline: none; }
   }
-  .panel-title { font-size: 20px; }
-  .panel-collapse { background: #AFE1F7; }
+  .panel-title {
+    font-size: 20px;
+    font-weight: 200 !important;
+  }
+  .panel-body {
+    padding: 0;
+    border: none !important;
+  }
 }
 
 // ======================
