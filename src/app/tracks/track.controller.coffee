@@ -21,5 +21,4 @@ angular.module('tracks').controller 'trackCtrl', ($stateParams, eeDefiner, eeTra
       when 'lane'     then eeLane.fns.update model
       when 'activity' then eeActivity.fns.update model
 
-
   return

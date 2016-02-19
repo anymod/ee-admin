@@ -45,7 +45,7 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
     height: 300
     focus: true
     toolbar: [
-      ['style', ['style', 'bold', 'italic', 'height', 'clear']] # , 'underline', 'superscript', 'subscript', 'strikethrough'
+      ['style', ['style', 'bold', 'italic', 'height']] # , 'clear', 'underline', 'superscript', 'subscript', 'strikethrough'
       # ['fontface', ['fontname']]
       # ['textsize', ['fontsize']]
       # ['fontclr', ['color']]
@@ -62,10 +62,19 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
     modal.editor.summernote('insertNode', imgNode)
 
   fn = () ->
-
     noteBtn = '<button id="insertImageBtn" type="button" class="btn btn-sm btn-default" title="Insert an image" tabindex="-1"><i class="fa fa-image"></i></button>'
     $(noteBtn).appendTo($('.note-toolbar .note-insert'))
     $('#insertImageBtn').on 'click', () -> $('#cloudinaryForm > .cloudinary_fileupload').click()
+
+    eraserBtn = '<button id="eraseBtn" type="button" class="btn btn-sm btn-default" title="Erase formatting" tabindex="-1"><i class="fa fa-eraser"></i></button>'
+    $(eraserBtn).appendTo($('.note-toolbar .note-style'))
+    $('#eraseBtn').on 'click', () ->
+      modal.data.activity.html =
+        modal.data.activity.html
+          .replace(/ style=\"[^\"]+\"/gi, '') # "
+          .replace(/<\/?span[^>]*>/gi, '')
+          .replace(/ dir=\"ltr\"/gi, '') # "
+      $scope.$apply()
 
     form = angular.element(document.querySelector('#cloudinaryForm'))
 
@@ -93,7 +102,5 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
 
   if modal.data.type.indexOf('activity') > -1
     $timeout fn, 500
-
-
 
   return
