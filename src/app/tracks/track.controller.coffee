@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('tracks').controller 'trackCtrl', ($stateParams, eeDefiner, eeTrack, eeTracks, eeLane, eeActivity, eeModal) ->
+angular.module('tracks').controller 'trackCtrl', ($stateParams, eeDefiner, eeTrack, eeTracks, eeLane, eeStep, eeModal) ->
 
   track = this
 
@@ -19,6 +19,6 @@ angular.module('tracks').controller 'trackCtrl', ($stateParams, eeDefiner, eeTra
     switch type
       when 'track'    then eeTrack.fns.update model
       when 'lane'     then eeLane.fns.update model
-      when 'activity' then eeActivity.fns.update model
+      when 'step'     then eeStep.fns.update model
 
   return

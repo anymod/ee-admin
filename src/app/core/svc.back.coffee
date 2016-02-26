@@ -170,18 +170,18 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
         data: lane
       }
 
-    activityPOST: (activity, token) ->
+    stepPOST: (step, token) ->
       _makeRequest {
         method: 'POST'
-        url: eeBackUrl + 'admin/activities'
+        url: eeBackUrl + 'admin/steps'
         headers: authorization: token
-        data: activity
+        data: step
       }
 
-    activityPUT: (activity, token) ->
+    stepPUT: (step, token) ->
       _makeRequest {
         method: 'PUT'
-        url: eeBackUrl + 'admin/activities/' + activity.id
+        url: eeBackUrl + 'admin/steps/' + step.id
         headers: authorization: token
-        data: activity
+        data: step
       }

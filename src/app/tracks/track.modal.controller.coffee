@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefiner, eeModal, eeTrack, eeLane, eeActivity, data) ->
+angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefiner, eeModal, eeTrack, eeLane, eeStep, data) ->
 
   modal = this
 
@@ -11,27 +11,27 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
   modal.process = () ->
     switch modal.data.type
       when 'Update track', 'Reorder lanes' then eeTrack.fns.update(modal.data.track).then () -> eeModal.fns.close 'track'
-      when 'Update lane', 'Reorder activities' then eeLane.fns.update(modal.data.lane).then () -> eeModal.fns.close 'track'
-      when 'Update activity' then eeActivity.fns.update(modal.data.activity).then () -> eeModal.fns.close 'track'
+      when 'Update lane', 'Reorder steps' then eeLane.fns.update(modal.data.lane).then () -> eeModal.fns.close 'track'
+      when 'Update step' then eeStep.fns.update(modal.data.step).then () -> eeModal.fns.close 'track'
       when 'Create lane'
         eeLane.fns.create modal.data.lane
         .then (lane) ->
           modal.data.track.lanes.push lane.id
           eeTrack.fns.update modal.data.track
         .finally () -> eeModal.fns.close 'track'
-      when 'Create activity'
-        modal.data.activity.track_id = modal.data.track.id
-        eeActivity.fns.create modal.data.activity
-        .then (activity) ->
+      when 'Create step'
+        modal.data.step.track_id = modal.data.track.id
+        eeStep.fns.create modal.data.step
+        .then (step) ->
           promiseObj = null
           if modal.data?.lane?.id
             promiseObj = () ->
-              modal.data.lane.activities.push activity.id
+              modal.data.lane.steps.push step.id
               eeLane.fns.update modal.data.lane
           else
             promiseObj = () ->
               eeTrack.fns.get modal.data.track.id
-              .then (tr) -> modal.data.track.unassigned_activities = tr.unassigned_activities
+              .then (tr) -> modal.data.track.unassigned_steps = tr.unassigned_steps
           promiseObj()
         .then () ->
           eeModal.fns.close 'track'
@@ -69,8 +69,8 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
     eraserBtn = '<button id="eraseBtn" type="button" class="btn btn-sm btn-default" title="Erase formatting" tabindex="-1"><i class="fa fa-eraser"></i></button>'
     $(eraserBtn).appendTo($('.note-toolbar .note-style'))
     $('#eraseBtn').on 'click', () ->
-      modal.data.activity.html =
-        modal.data.activity.html
+      modal.data.step.html =
+        modal.data.step.html
           .replace(/ style=\"[^\"]+\"/gi, '') # "
           .replace(/<\/?span[^>]*>/gi, '')
           .replace(/ dir=\"ltr\"/gi, '') # "
@@ -101,7 +101,7 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
     resetProgress()
 
 
-  if modal.data.type.indexOf('activity') > -1
+  if modal.data.type.indexOf('step') > -1
     $timeout fn, 500
 
   return

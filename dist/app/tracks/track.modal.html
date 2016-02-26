@@ -31,26 +31,26 @@
       </small>
     </form>
     <!-- /Update lane -->
-    <!-- Update activity -->
-    <form ng-switch-when="Update activity" ng-submit="modal.process()">
+    <!-- Update step -->
+    <form ng-switch-when="Update step" ng-submit="modal.process()">
       <small>Title</small>
-      <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
+      <input ng-model="modal.data.step.title" class="form-control input-lg"/>
       <small>HTML</small>
       <div ng-if="modal.progress > 0 && modal.progress < 100" class="progress vert-2">
         <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: {{ modal.progress }}%;">{{ modal.progress }}%</div>
       </div>
-      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html" editor="modal.editor"></summernote>
+      <summernote config="modal.summernoteConfig" ng-model="modal.data.step.html" editor="modal.editor"></summernote>
       <!-- <textarea class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea> -->
       <button type="submit" class="hidden"></button>
       <small class="text-muted">
-        Activity ID: {{ modal.data.activity.id }}
-        <a href="mailto:admin@eeosk.com?subject=Please%20delete%20activity%20{{ modal.data.activity.id }}" target=_blank class="pull-right">
+        Step ID: {{ modal.data.step.id }}
+        <a href="mailto:admin@eeosk.com?subject=Please%20delete%20step%20{{ modal.data.step.id }}" target=_blank class="pull-right">
           Request deletion
         </a>
       </small>
 
     </form>
-    <!-- /Update activity -->
+    <!-- /Update step -->
     <!-- Create lane -->
     <form ng-switch-when="Create lane" ng-submit="modal.process()">
       <small>Title</small>
@@ -60,19 +60,19 @@
       <button type="submit" class="hidden"></button>
     </form>
     <!-- /Create lane -->
-    <!-- Create activity -->
-    <form ng-switch-when="Create activity" ng-submit="modal.process()">
+    <!-- Create step -->
+    <form ng-switch-when="Create step" ng-submit="modal.process()">
       <small>Title</small>
-      <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
+      <input ng-model="modal.data.step.title" class="form-control input-lg"/>
       <small>HTML</small>
       <div ng-if="modal.progress > 0 && modal.progress < 100" class="progress vert-2">
         <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: {{ modal.progress }}%;">{{ modal.progress }}%</div>
       </div>
-      <summernote config="modal.summernoteConfig" ng-model="modal.data.activity.html" editor="modal.editor"></summernote>
-      <!-- <textarea ng-model="modal.data.activity.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea> -->
+      <summernote config="modal.summernoteConfig" ng-model="modal.data.step.html" editor="modal.editor"></summernote>
+      <!-- <textarea ng-model="modal.data.step.html" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea> -->
       <button type="submit" class="hidden"></button>
     </form>
-    <!-- /Create activity -->
+    <!-- /Create step -->
     <!-- Reorder lanes -->
     <ul ng-switch-when="Reorder lanes" class="list-group vert-10">
       <li class="list-group-item" ng-repeat="lane in modal.data.track.lanes">
@@ -83,15 +83,15 @@
       </li>
     </ul>
     <!-- /Reorder lanes -->
-    <!-- Reorder activities -->
-    <ul ng-switch-when="Reorder activities" class="list-group vert-10">
-      <ul class="list-group-item" ng-repeat="activity in modal.data.lane.activities">
-        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$last ? '' : 'fa-arrow-circle-o-down' " ng-click="modal.reorder(modal.data.lane.activities, $index, 1)"></i>
-        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$first ? '' : 'fa-arrow-circle-o-up' " ng-click="modal.reorder(modal.data.lane.activities, $index, -1)"></i>
+    <!-- Reorder steps -->
+    <ul ng-switch-when="Reorder steps" class="list-group vert-10">
+      <ul class="list-group-item" ng-repeat="step in modal.data.lane.steps">
+        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$last ? '' : 'fa-arrow-circle-o-down' " ng-click="modal.reorder(modal.data.lane.steps, $index, 1)"></i>
+        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$first ? '' : 'fa-arrow-circle-o-up' " ng-click="modal.reorder(modal.data.lane.steps, $index, -1)"></i>
         &nbsp;&nbsp;
-        <span ng-bind="activity.title"></span>
+        <span ng-bind="step.title"></span>
       </ul>
     </ul>
-    <!-- /Reorder activities -->
+    <!-- /Reorder steps -->
   </div>
 </div>

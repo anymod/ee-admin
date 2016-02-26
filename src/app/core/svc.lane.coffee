@@ -9,11 +9,11 @@ angular.module('app.core').factory 'eeLane', ($rootScope, $q, eeAuth, eeBack) ->
   _data = {}
 
   ## PRIVATE FUNCTIONS
-  _stripActivities = (lane) ->
+  _stripSteps = (lane) ->
     ids = []
-    for activity in lane.activities
-      if typeof activity is 'number' then ids.push(activity) else ids.push(activity.id)
-    lane.activities = ids
+    for step in lane.steps
+      if typeof step is 'number' then ids.push(step) else ids.push(step.id)
+    lane.steps = ids
 
   _create = (lane) ->
     eeBack.fns.lanePOST lane, eeAuth.fns.getToken()
@@ -21,10 +21,10 @@ angular.module('app.core').factory 'eeLane', ($rootScope, $q, eeAuth, eeBack) ->
   _update = (lane) ->
     lane.saved = false
     lane.updating = true
-    _stripActivities lane
+    _stripSteps lane
     eeBack.fns.lanePUT lane, eeAuth.fns.getToken()
     .then (ln) ->
-      lane[prop] = ln[prop] for prop in ['title', 'activities', 'intro', 'show']
+      lane[prop] = ln[prop] for prop in ['title', 'steps', 'intro', 'show']
       $rootScope.$broadcast 'lane:updated', lane
       lane
     .catch (err) -> lane.err = err

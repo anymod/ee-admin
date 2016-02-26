@@ -37,9 +37,9 @@
                 </small>
               </div>
               <div class="col col-sm-4 text-right">
-                <i ng-repeat="activity in lane.activities"
+                <i ng-repeat="step in lane.steps"
                   class="fa fa-circle-o"
-                  ng-class="activity.show ? 'text-success' : 'text-muted'">
+                  ng-class="step.show ? 'text-success' : 'text-muted'">
                 </i>
                 <span>
                   <span class="hover-pointer" ng-click="track.toggleShow('lane', lane)">
@@ -61,38 +61,38 @@
             </div>
           </div>
           <div class="media white-background pad-10 margin-0 position-relative"
-            ng-repeat="activity in lane.activities">
+            ng-repeat="step in lane.steps">
             <div class="position-absolute" style="top: 7px; right: 5px; width: 70px;">
               <i class="fa fa-fw fa-pencil text-muted hover-pointer"
-                ng-click="track.modalFns.open('track', { type: 'Update activity', activity: activity })">
+                ng-click="track.modalFns.open('track', { type: 'Update step', step: step })">
               </i>
-              <span class="hover-pointer" ng-click="track.toggleShow('activity', activity)">
-                <i class="fa fa-fw fa-lg fa-toggle-on text-success" ng-if="activity.show"></i>
-                <i class="fa fa-fw fa-lg fa-toggle-off text-danger" ng-if="!activity.show"></i>
+              <span class="hover-pointer" ng-click="track.toggleShow('step', step)">
+                <i class="fa fa-fw fa-lg fa-toggle-on text-success" ng-if="step.show"></i>
+                <i class="fa fa-fw fa-lg fa-toggle-off text-danger" ng-if="!step.show"></i>
               </span>
             </div>
             <div class="media-left">
-              <i class="fa fa-fw fa-2x fa-circle-o" ng-class="activity.show ? 'text-success' : 'text-muted'"></i>
+              <i class="fa fa-fw fa-2x fa-circle-o" ng-class="step.show ? 'text-success' : 'text-muted'"></i>
             </div>
             <div class="media-body">
-              <h4 class="vert-15 margin-top-0" ng-bind="activity.title"></h4>
-              <p ng-bind-html="activity.html"></p>
+              <h4 class="vert-15 margin-top-0" ng-bind="step.title"></h4>
+              <p ng-bind-html="step.html"></p>
             </div>
           </div>
           <div class="pull-right margin-5">
             <div class="btn btn-sm btn-link"
-              ng-if="lane.activities.length > 1"
-              ng-click="track.modalFns.open('track', { type: 'Reorder activities', lane: lane })">
-              Reorder activities
+              ng-if="lane.steps.length > 1"
+              ng-click="track.modalFns.open('track', { type: 'Reorder steps', lane: lane })">
+              Reorder steps
             </div>
             <div class="btn btn-default vert-5"
-              ng-click="track.modalFns.open('track', { type: 'Create activity', track: track.data.track, lane: lane })">
-              Add an<span ng-if="lane.activities.length > 0">other</span> activity
+              ng-click="track.modalFns.open('track', { type: 'Create step', track: track.data.track, lane: lane })">
+              Add an<span ng-if="lane.steps.length > 0">other</span> step
             </div>
           </div>
         </uib-accordion-group>
       </div>
-      <!-- Ongoing activities -->
+      <!-- Ongoing steps -->
       <div class="position-relative">
         <uib-accordion-group>
           <uib-accordion-heading>
@@ -111,35 +111,35 @@
             </div>
           </uib-accordion-heading>
           <div class="media white-background gray-border pad-10 vert-10 margin-top-0 position-relative"
-            ng-repeat="activity in track.data.track.unassigned_activities">
+            ng-repeat="step in track.data.track.unassigned_steps">
             <div class="position-absolute" style="top: 7px; right: 5px; width: 70px;">
               <i class="fa fa-fw fa-pencil text-muted hover-pointer"
-                ng-click="track.modalFns.open('track', { type: 'Update activity', activity: activity })">
+                ng-click="track.modalFns.open('track', { type: 'Update step', step: step })">
               </i>
-              <span class="hover-pointer" ng-click="track.toggleShow('activity', activity)">
-                <i class="fa fa-fw fa-lg fa-toggle-on text-success" ng-if="activity.show"></i>
-                <i class="fa fa-fw fa-lg fa-toggle-off text-danger" ng-if="!activity.show"></i>
+              <span class="hover-pointer" ng-click="track.toggleShow('step', step)">
+                <i class="fa fa-fw fa-lg fa-toggle-on text-success" ng-if="step.show"></i>
+                <i class="fa fa-fw fa-lg fa-toggle-off text-danger" ng-if="!step.show"></i>
               </span>
             </div>
             <div class="media-left">
-              <i class="fa fa-fw fa-2x fa-circle-o" ng-class="activity.show ? 'text-success' : 'text-muted'"></i>
+              <i class="fa fa-fw fa-2x fa-circle-o" ng-class="step.show ? 'text-success' : 'text-muted'"></i>
             </div>
             <div class="media-body">
-              <h4 class="vert-15 margin-top-0 hover-pointer" ng-click="activity.uncollapse = !activity.uncollapse">
-                <span ng-bind="activity.title"></span>&nbsp;<i class="fa" ng-class="activity.uncollapse ? 'fa-angle-up' : 'fa-angle-down'"></i>
+              <h4 class="vert-15 margin-top-0 hover-pointer" ng-click="step.uncollapse = !step.uncollapse">
+                <span ng-bind="step.title"></span>&nbsp;<i class="fa" ng-class="step.uncollapse ? 'fa-angle-up' : 'fa-angle-down'"></i>
               </h4>
-              <p ng-bind-html="activity.html" uib-collapse="!activity.uncollapse"></p>
+              <p ng-bind-html="step.html" uib-collapse="!step.uncollapse"></p>
             </div>
           </div>
           <div class="pull-right margin-5">
             <div class="btn btn-default"
-              ng-click="track.modalFns.open('track', { type: 'Create activity', track: track.data.track, lane: {} })">
-              Add an<span ng-if="lane.activities.length > 0">other</span> activity
+              ng-click="track.modalFns.open('track', { type: 'Create step', track: track.data.track, lane: {} })">
+              Add an<span ng-if="lane.steps.length > 0">other</span> step
             </div>
           </div>
         </uib-accordion-group>
       </div>
-      <!-- /Ongoing activities -->
+      <!-- /Ongoing steps -->
     </uib-accordion>
     <div class="pull-right">
       <div class="btn btn-sm btn-link"
