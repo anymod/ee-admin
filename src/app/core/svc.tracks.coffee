@@ -102,7 +102,7 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) 
     # eeModal.fns.close('addTrack')
 
   _copyTrack = (fromTrack, toTrack) ->
-    toTrack[prop] = fromTrack[prop] for prop in ['title', 'icon', 'lanes', 'type', 'last_lane_name', 'show']
+    toTrack[prop] = fromTrack[prop] for prop in ['title', 'icon', 'activities', 'type', 'title_for_unassigned', 'show']
 
   $rootScope.$on 'track:updated', (e, track) ->
     (if track.id is tr.id then _copyTrack(track, tr)) for tr in _data.tracks

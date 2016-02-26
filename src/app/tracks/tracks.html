@@ -3,7 +3,11 @@
     <a ng-repeat="track in tracks.ee.Tracks.tracks | orderBy:'id'"
       ui-sref="track({ id: track.id, title: (track.title | urlText)})"
       class="list-group-item">
-      <span class="badge"><span ng-bind="track.lanes.length"></span> lane<span ng-if="track.lanes.length != 1">s</span></span>
+      <span class="badge">
+        <span ng-bind="track.activities.length"></span>&nbsp;
+        <span ng-if="track.activities.length != 1">activities</span>
+        <span ng-if="track.activities.length == 1">activity</span>
+      </span>
       <small class="pull-right text-muted" ng-bind="track.type" style="margin-right: 10px;"></small>
       <h4 class="list-group-item-heading">
         <span ng-bind="track.title"></span>&nbsp;

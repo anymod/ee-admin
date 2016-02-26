@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefiner, eeModal, eeTrack, eeLane, eeStep, data) ->
+angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefiner, eeModal, eeTrack, eeActivity, eeStep, data) ->
 
   modal = this
 
@@ -10,13 +10,13 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
 
   modal.process = () ->
     switch modal.data.type
-      when 'Update track', 'Reorder lanes' then eeTrack.fns.update(modal.data.track).then () -> eeModal.fns.close 'track'
-      when 'Update lane', 'Reorder steps' then eeLane.fns.update(modal.data.lane).then () -> eeModal.fns.close 'track'
+      when 'Update track', 'Reorder activities' then eeTrack.fns.update(modal.data.track).then () -> eeModal.fns.close 'track'
+      when 'Update activity', 'Reorder steps' then eeActivity.fns.update(modal.data.activity).then () -> eeModal.fns.close 'track'
       when 'Update step' then eeStep.fns.update(modal.data.step).then () -> eeModal.fns.close 'track'
-      when 'Create lane'
-        eeLane.fns.create modal.data.lane
-        .then (lane) ->
-          modal.data.track.lanes.push lane.id
+      when 'Create activity'
+        eeActivity.fns.create modal.data.activity
+        .then (activity) ->
+          modal.data.track.activities.push activity.id
           eeTrack.fns.update modal.data.track
         .finally () -> eeModal.fns.close 'track'
       when 'Create step'
@@ -24,10 +24,10 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
         eeStep.fns.create modal.data.step
         .then (step) ->
           promiseObj = null
-          if modal.data?.lane?.id
+          if modal.data?.activity?.id
             promiseObj = () ->
-              modal.data.lane.steps.push step.id
-              eeLane.fns.update modal.data.lane
+              modal.data.activity.steps.push step.id
+              eeActivity.fns.update modal.data.activity
           else
             promiseObj = () ->
               eeTrack.fns.get modal.data.track.id
