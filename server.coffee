@@ -36,6 +36,10 @@ if process.env.NODE_ENV is 'production'
 else
   app.use morgan 'dev'
 
+app.all '/favicon.ico', (req, res, next) ->
+  res.redirect 'https://res.cloudinary.com/eeosk/image/upload/v1456514495/favicon_lock.ico'
+  return
+
 app.use bodyParser.urlencoded({ extended: true })
 app.use bodyParser.json()
 
