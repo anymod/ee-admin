@@ -4,6 +4,11 @@
       ui-sref="track({ id: track.id, title: (track.title | urlText)})"
       class="list-group-item">
       <span class="badge">
+        <span ng-bind="track.guides.length"></span>&nbsp;
+        <span ng-if="track.guides.length != 1">guides</span>
+        <span ng-if="track.guides.length == 1">guide</span>
+      </span>
+      <span class="badge">
         <span ng-bind="track.activities.length"></span>&nbsp;
         <span ng-if="track.activities.length != 1">activities</span>
         <span ng-if="track.activities.length == 1">activity</span>

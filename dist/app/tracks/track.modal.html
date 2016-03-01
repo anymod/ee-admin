@@ -31,6 +31,21 @@
       </small>
     </form>
     <!-- /Update activity -->
+    <!-- Update guide -->
+    <form ng-switch-when="Update guide" ng-submit="modal.process()">
+      <small>Title</small>
+      <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
+      <small>Intro text</small>
+      <textarea ng-model="modal.data.activity.intro" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <button type="submit" class="hidden"></button>
+      <small class="text-muted">
+        Activity ID: {{ modal.data.activity.id }}
+        <a href="mailto:admin@eeosk.com?subject=Please%20delete%20activity%20{{ modal.data.activity.id }}" target=_blank class="pull-right">
+          Request deletion
+        </a>
+      </small>
+    </form>
+    <!-- /Update guide -->
     <!-- Update step -->
     <form ng-switch-when="Update step" ng-submit="modal.process()">
       <small>Title</small>
@@ -60,6 +75,15 @@
       <button type="submit" class="hidden"></button>
     </form>
     <!-- /Create activity -->
+    <!-- Create guide -->
+    <form ng-switch-when="Create guide" ng-submit="modal.process()">
+      <small>Title</small>
+      <input ng-model="modal.data.activity.title" class="form-control input-lg"/>
+      <small>Intro text</small>
+      <textarea ng-model="modal.data.activity.intro" class="form-control max-width-100-pct vert-10 margin-top-0" rows=7></textarea>
+      <button type="submit" class="hidden"></button>
+    </form>
+    <!-- /Create guide -->
     <!-- Create step -->
     <form ng-switch-when="Create step" ng-submit="modal.process()">
       <small>Title</small>
@@ -83,6 +107,16 @@
       </li>
     </ul>
     <!-- /Reorder activities -->
+    <!-- Reorder guides -->
+    <ul ng-switch-when="Reorder guides" class="list-group vert-10">
+      <li class="list-group-item" ng-repeat="activity in modal.data.track.guides">
+        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$last ? '' : 'fa-arrow-circle-o-down' " ng-click="modal.reorder(modal.data.track.guides, $index, 1)"></i>
+        <i class="fa fa-fw fa-lg text-muted hover-pointer" ng-class="$first ? '' : 'fa-arrow-circle-o-up' " ng-click="modal.reorder(modal.data.track.guides, $index, -1)"></i>
+        &nbsp;&nbsp;
+        <span ng-bind="activity.title"></span>
+      </li>
+    </ul>
+    <!-- /Reorder guides -->
     <!-- Reorder steps -->
     <ul ng-switch-when="Reorder steps" class="list-group vert-10">
       <ul class="list-group-item" ng-repeat="step in modal.data.activity.steps">

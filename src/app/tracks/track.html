@@ -1,4 +1,4 @@
-<div class="container-fluid vert-20" ng-if="track.data.track.id">
+<div class="container-fluid max-width-900 vert-20" ng-if="track.data.track.id">
   <div class="full-width text-center">
     <a ui-sref="track({ id: tr.id, title: (tr.title | urlText) })"
       ng-repeat="tr in track.ee.Tracks.tracks | orderBy:'id' | filter:{ type: track.data.track.type }"
@@ -23,16 +23,33 @@
         ng-click="track.modalFns.open('track', { type: 'Update track', track: track.data.track })">
       </i>
     </h2>
+    <!-- <div ng-if="track.data.track.guides.length > 0" class="row text-center vert-10">
+      <div ng-repeat="activity in track.data.track.guides"
+        class="btn btn-default text-{{ track.data.track.icon }}">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-{{ track.data.track.icon }} fa-stack-1x fa-inverse"></i>
+        </span>&nbsp;&nbsp;{{ activity.title }}&nbsp;
+      </div>
+    </div> -->
     <uib-accordion class="track-accordion">
-      <div ng-repeat="activity in track.data.track.activities" class="track-activity">
+      <div ng-repeat="activity in track.data.track.guides.concat(track.data.track.activities)"
+        class="track-activity"
+        ng-init="guide = track.data.track.guides.indexOf(activity) > -1">
         <uib-accordion-group>
           <uib-accordion-heading>
             <div class="row">
               <div class="col col-sm-8">
+                <span ng-if="guide" class="badge">Guide</span>
                 <span ng-bind="activity.title"></span>
-                <small>
+                <small ng-if="!guide">
                   <i class="fa fa-fw fa-pencil text-muted hover-pointer"
                     ng-click="track.modalFns.open('track', { type: 'Update activity', activity: activity })">
+                  </i>
+                </small>
+                <small ng-if="guide">
+                  <i class="fa fa-fw fa-pencil text-muted hover-pointer"
+                    ng-click="track.modalFns.open('track', { type: 'Update guide', activity: activity })">
                   </i>
                 </small>
               </div>
@@ -87,7 +104,7 @@
             </div>
             <div class="btn btn-default vert-5"
               ng-click="track.modalFns.open('track', { type: 'Create step', track: track.data.track, activity: activity })">
-              Add an<span ng-if="activity.steps.length > 0">other</span> step
+              Add a<span ng-if="activity.steps.length > 0">nother</span> step
             </div>
           </div>
         </uib-accordion-group>
@@ -134,14 +151,14 @@
           <div class="pull-right margin-5">
             <div class="btn btn-default"
               ng-click="track.modalFns.open('track', { type: 'Create step', track: track.data.track, activity: {} })">
-              Add an<span ng-if="activity.steps.length > 0">other</span> step
+              Add a<span ng-if="activity.steps.length > 0">nother</span> step
             </div>
           </div>
         </uib-accordion-group>
       </div>
       <!-- /Ongoing steps -->
     </uib-accordion>
-    <div class="pull-right">
+    <div class="pull-right text-right">
       <div class="btn btn-sm btn-link"
         ng-if="track.data.track.activities.length > 1"
         ng-click="track.modalFns.open('track', { type: 'Reorder activities', track: track.data.track })">
@@ -149,7 +166,18 @@
       </div>
       <div class="btn btn-default"
         ng-click="track.modalFns.open('track', { type: 'Create activity', track: track.data.track })">
-        Add a<span ng-if="track.data.track.activities.length > 0">nother</span> activity
+        Add an<span ng-if="track.data.track.activities.length > 0">other</span> activity
+      </div>
+      <div class="vert-5">
+        <div class="btn btn-sm btn-link"
+          ng-if="track.data.track.activities.length > 1"
+          ng-click="track.modalFns.open('track', { type: 'Reorder guides', track: track.data.track })">
+          Reorder guides
+        </div>
+        <div class="btn btn-default"
+          ng-click="track.modalFns.open('track', { type: 'Create guide', track: track.data.track })">
+          Add a<span ng-if="track.data.track.guides.length > 0">nother</span> guide
+        </div>
       </div>
     </div>
     <!-- <pre>{{ track.data.track | json }}</pre> -->

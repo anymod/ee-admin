@@ -119,7 +119,10 @@ uib-accordion.track-accordion {
     -ms-transition: all 0.2s cubic-bezier(0.7, 0, 0.175, 1) 0s;
     transition: all 0.2s cubic-bezier(0.7, 0, 0.175, 1) 0s;
   }
-  .track-activity:first-child .panel { border-top: 1px solid #E6E6E6; }
+  .track-activity:first-child .panel {
+    border-top: 1px solid #E6E6E6;
+    margin-top: 0px !important;
+  }
   .track-activity:last-child .panel { border-bottom: 1px solid #E6E6E6; }
   .panel-open {
     margin: 20px 0;
@@ -140,6 +143,7 @@ uib-accordion.track-accordion {
     border: none !important;
   }
 }
+.track-guide .panel-heading { background: @ee-light-gold !important; }
 
 // ======================
 

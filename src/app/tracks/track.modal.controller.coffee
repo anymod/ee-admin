@@ -10,13 +10,13 @@ angular.module('tracks').controller 'trackModalCtrl', ($scope, $timeout, eeDefin
 
   modal.process = () ->
     switch modal.data.type
-      when 'Update track', 'Reorder activities' then eeTrack.fns.update(modal.data.track).then () -> eeModal.fns.close 'track'
-      when 'Update activity', 'Reorder steps' then eeActivity.fns.update(modal.data.activity).then () -> eeModal.fns.close 'track'
+      when 'Update track', 'Reorder activities', 'Reorder guides' then eeTrack.fns.update(modal.data.track).then () -> eeModal.fns.close 'track'
+      when 'Update activity', 'Update guide', 'Reorder steps' then eeActivity.fns.update(modal.data.activity).then () -> eeModal.fns.close 'track'
       when 'Update step' then eeStep.fns.update(modal.data.step).then () -> eeModal.fns.close 'track'
-      when 'Create activity'
+      when 'Create activity', 'Create guide'
         eeActivity.fns.create modal.data.activity
         .then (activity) ->
-          modal.data.track.activities.push activity.id
+          if modal.data.type is 'Create guide' then modal.data.track.guides.push activity.id else modal.data.track.activities.push activity.id
           eeTrack.fns.update modal.data.track
         .finally () -> eeModal.fns.close 'track'
       when 'Create step'
