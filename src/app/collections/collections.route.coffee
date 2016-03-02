@@ -13,7 +13,7 @@ angular.module('collections').config ($stateProvider) ->
           controller: 'collectionsCtrl as collections'
           templateUrl: 'app/collections/collections.html'
       data:
-        pageTitle:        'collections'
+        pageTitle:        'Collections'
         padTop:           '60px'
 
   return
