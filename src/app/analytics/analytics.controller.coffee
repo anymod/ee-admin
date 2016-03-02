@@ -18,47 +18,9 @@ angular.module('app.core').controller 'analyticsCtrl', ($rootScope) ->
     sortColumn: 1
     sortAscending: false
     width: '110%'
-    height: '270px'
+    height: '450px'
 
   Keen.ready () ->
-
-    # DAILY ACTIVE SELLERS
-    das = new Keen.Query 'count_unique', {
-      eventCollection: 'builder',
-      interval: 'daily',
-      targetProperty: 'username',
-      groupBy: 'username',
-      timeframe: 'this_30_days',
-      timezone: 'US/Pacific'
-    }
-    $rootScope.keenio.draw das, document.getElementById('das'), {
-      chartType: 'columnchart',
-      chartOptions: chartOptions
-    }
-    # das = new Keen.Query 'count_unique', {
-    #   eventCollection: 'builder',
-    #   interval: 'daily',
-    #   targetProperty: 'keen.id',
-    #   groupBy: 'username',
-    #   timeframe: 'this_30_days',
-    #   timezone: 'US/Pacific'
-    # }
-    # $rootScope.keenio.draw das, document.getElementById('das'), {
-    #   chartType: 'columnchart',
-    #   chartOptions: chartOptions
-    # }
-
-    # MOST ACTIVE SELLERS
-    active_sellers = new Keen.Query 'count', {
-      eventCollection: 'builder',
-      groupBy: 'username',
-      timeframe: 'this_14_days',
-      timezone: 'US/Pacific'
-    }
-    $rootScope.keenio.draw active_sellers, document.getElementById('active_sellers'), {
-      chartType: 'table',
-      chartOptions: tableOptions
-    }
 
     # DAILY ACTIVE CUSTOMERS
     dac = new Keen.Query 'count_unique', {
@@ -81,6 +43,66 @@ angular.module('app.core').controller 'analyticsCtrl', ($rootScope) ->
     $rootScope.keenio.draw dac, document.getElementById('dac'), {
       chartType: 'columnchart'
       chartOptions: chartOptions
+    }
+    # DAILY ACTIVE STORES
+    dac_store = new Keen.Query 'count_unique', {
+      eventCollection: 'store',
+      filters: [{
+        operator: 'eq',
+        property_name: 'self',
+        property_value: false
+      },{
+        operator: 'exists'
+        property_name: 'host',
+        property_value: true
+      }],
+      interval: 'daily'
+      targetProperty: 'host',
+      groupBy: 'host',
+      timeframe: 'this_30_days',
+      timezone: 'US/Pacific'
+    }
+    $rootScope.keenio.draw dac_store, document.getElementById('dac_store'), {
+      chartType: 'columnchart'
+      chartOptions: chartOptions
+    }
+
+    # DAILY ACTIVE SELLERS
+    das = new Keen.Query 'count_unique', {
+      eventCollection: 'builder',
+      interval: 'daily',
+      targetProperty: 'username',
+      groupBy: 'username',
+      timeframe: 'this_30_days',
+      timezone: 'US/Pacific'
+    }
+    $rootScope.keenio.draw das, document.getElementById('das'), {
+      chartType: 'columnchart',
+      chartOptions: chartOptions
+    }
+    das_activity = new Keen.Query 'count_unique', {
+      eventCollection: 'builder',
+      interval: 'daily',
+      targetProperty: 'keen.id',
+      groupBy: 'username',
+      timeframe: 'this_30_days',
+      timezone: 'US/Pacific'
+    }
+    $rootScope.keenio.draw das_activity, document.getElementById('das_activity'), {
+      chartType: 'columnchart',
+      chartOptions: chartOptions
+    }
+
+    # MOST ACTIVE SELLERS
+    active_sellers = new Keen.Query 'count', {
+      eventCollection: 'builder',
+      groupBy: 'username',
+      timeframe: 'this_14_days',
+      timezone: 'US/Pacific'
+    }
+    $rootScope.keenio.draw active_sellers, document.getElementById('active_sellers'), {
+      chartType: 'table',
+      chartOptions: tableOptions
     }
 
     # TOP PERFORMERS
