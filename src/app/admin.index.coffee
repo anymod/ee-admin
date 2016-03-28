@@ -24,14 +24,14 @@ angular.module 'eeAdmin', [
 
   # custom
   'ee-navbar-main'
-  'ee-storefront-logo'
+  # 'ee-storefront-logo'
   'ee-storefront-header'
   'ee-user-for-admin'
   'ee-product-for-admin'
   'ee-sku-for-admin'
-  'ee-admin-user'
-  'ee-admin-live-button'
-  'ee-admin-user-navbar'
+  # 'ee-admin-user'
+  # 'ee-admin-live-button'
+  # 'ee-admin-user-navbar'
   'ee-loading'
   'ee-datepicker'
   # 'ee.templates' # commented out during build step for inline templates

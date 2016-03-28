@@ -55,9 +55,9 @@
 
   <!-- branding -->
   <td ng-if="state == 'users.branding'">
-    <div style="width: 260px; overflow: hidden;">
+    <div style="min-width: 180px;">
       <a href="{{ target }}" target="_blank">
-        <ee-storefront-logo meta="user.storefront_meta" blocked="true"></ee-storefront-logo>
+        <img ng-src="{{ user.logo }}" class="max-width-100-pct"/>
       </a>
     </div>
   </td>

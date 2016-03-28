@@ -17,6 +17,15 @@ angular.module('app.core').filter 'cloudinaryResizeTo', () ->
   # Usage: | cloudinaryResizeTo:400:200
   (input, w, h) -> resizeCloudinaryImageTo input, w, h
 
+angular.module('app.core').filter 'cloudinaryTrim', () ->
+  (url) ->
+    if !!url and url.indexOf("image/upload") > -1
+      regex = /\/v\d{8,12}\//g
+      id = url.match(regex)[0]
+      url.split(regex).join('/e_trim' + id)
+    else
+      url
+
 angular.module('app.core').filter 'thumbnail', () ->
   (url) ->
     if !!url and url.indexOf('image/upload') > -1

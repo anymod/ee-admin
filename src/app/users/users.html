@@ -16,25 +16,6 @@
 
   <div class="vert-20" style="overflow-x: scroll">
 
-    <!-- ONBOARD -->
-    <!-- <div ng-if="$state.current.name == 'users.onboard'">
-      <div class="btn btn-default btn-xs" ng-active="showEmail" ng-click="showEmail = !showEmail">Show email form</div>
-      <div ng-show="showEmail" class="max-width-900 margin-0-auto pad-10">
-        <input type="text" ng-model="users.mailto.subject" class="form-control">
-        <textarea ng-model="users.mailto.body" class="form-control" rows=15></textarea>
-      </div>
-
-      <ee-admin-user
-        ng-repeat="user in users.data.users"
-        user="user"
-        ng-if="user.id != 1 && user.id != 47"
-        show-onboard="true"
-        subject="users.mailto.subject"
-        body="users.mailto.body">
-      </ee-admin-user>
-    </div> -->
-    <!-- /ONBOARD -->
-
     <!-- SEARCH -->
     <form ng-submit="users.fns.search()" class="vert-5 margin-top-0">
       <input type="text" ng-model="users.data.inputs.search" class="form-control max-width-300" placeholder="Search by id, username, or email"/>

@@ -69,10 +69,7 @@
               <td>
                 <div ng-if="page.path == '/'">
                   <h4 class="visible-xs">Home</h4>
-                  <ee-storefront-logo class="vert-2 hidden-xs"
-                    meta="user.user.storefront_meta"
-                    blocked="true">
-                  </ee-storefront-logo>
+                  <img ng-src="{{ user.user.logo | cloudinaryTrim }}"/>
                 </div>
                 <h4 ng-if="page.path != '/'">
                   <span ng-bind="page.title | humanize"></span>

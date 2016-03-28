@@ -183,7 +183,7 @@ gulp.task 'server-dev', () ->
     port: 9000
   )
 
-gulp.task 'server-prod', () -> spawn 'foreman', ['start'], stdio: 'inherit'
+gulp.task 'server-prod', () -> spawn 'foreman', ['start'], { stdio: 'inherit' }
 
 # ==========================
 # watchers

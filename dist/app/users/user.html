@@ -4,11 +4,7 @@
       target="_blank"
       ng-if="user.user.storefront_meta">
       <!-- STORE navbar -->
-      <ee-storefront-logo
-        class="vert-10"
-        meta="user.user.storefront_meta"
-        blocked="true">
-      </ee-storefront-logo>
+      <img ng-src="{{ user.user.logo | cloudinaryTrim }}" class="vert-10"/>
       <!-- /STORE navbar -->
     </a>
     <div class="inline-block full-width pad-15" ng-style="{ 'background-color': user.user.storefront_meta.brand.color.secondary }"></div>

@@ -5,7 +5,7 @@
     ng-style="{ color: user.storefront_meta.brand.color.secondary }">
     &nbsp;
     <!-- Logo -->
-    <ee-storefront-logo meta="user.storefront_meta" sref="-" blocked="true" class="pad-0 vert-2"></ee-storefront-logo>
+    <img ng-src="{{ user.logo }}" class="max-width-100-pct"/>
     <!-- /Logo -->
     <div ng-if="user.storefront_meta.name" class="title-text inline-block" ng-bind="user.storefront_meta.name"></div>
   </a>
