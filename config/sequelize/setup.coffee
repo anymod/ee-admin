@@ -11,7 +11,7 @@ else
     host: 'localhost',
     port: 5432,
     dialect: 'postgres',
-    logging: console.log if !process.env.SILENT_OPS
+    logging: false # console.log if !process.env.SILENT_OPS
   }
   # sequelize = new Sequelize 'postgres://tyler@localhost:5432/ee_db_test'
 
