@@ -11,13 +11,28 @@ angular.module('products').config ($stateProvider) ->
       templateUrl: 'app/products/products.html'
 
   data =
-    pageTitle:        'Products'
-    padTop:           '60px'
+    pageTitle: 'Products'
+    padTop:    '111px'
 
   $stateProvider
     .state 'products',
-      url:      '/products'
-      views:    views
-      data:     data
+      url:   '/products'
+      views: views
+      data:  data
+    .state 'products.pricing',
+      url:    '/pricing'
+      views:  views
+    .state 'products.text',
+      url:    '/text'
+      views:  views
+    .state 'products.properties',
+      url:    '/properties'
+      views:  views
+    .state 'products.links',
+      url:    '/links'
+      views:  views
+    .state 'products.dropbox',
+      url:    '/dropbox'
+      views:  views
 
   return

@@ -4,15 +4,14 @@ angular.module('app.core').controller 'productsCtrl', (eeDefiner, eeProducts, ee
 
   products = this
 
-  products.compact    = true
-  products.hideHidden = true
-
   products.ee   = eeDefiner.exports
   products.data = eeProducts.data
   products.fns  = eeProducts.fns
-  products.taxonomyData = eeTaxonomies.data
+  products.hideHidden = true
 
   eeProducts.fns.runSection 'search'
+
+  products.taxonomyData = eeTaxonomies.data
   eeTaxonomies.fns.search()
 
   return

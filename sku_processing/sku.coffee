@@ -36,38 +36,42 @@ fns.updateSkus = (reference_skus) ->
   #   msrp
   #   discontinued
   # }
-  count =
-    total: reference_skus.length
-    updated:
-      total: 0
-    unchanged: 0
-    not_found: 0
+  info =
+    count:
+      total: reference_skus.length
+      updated:
+        total: 0
+      unchanged: 0
+      not_found: 0
+      large_price_change: 0
     not_found_identifiers: []
     large_price_change_identifiers: []
-  count.updated[attr] = 0 for attr in fns.editableAttrs
-  Promise.reduce reference_skus, ((total, sku) -> fns.updateSku(sku, count)), 0
-  .then () -> count
+  info.count.updated[attr] = 0 for attr in fns.editableAttrs
+  Promise.reduce reference_skus, ((total, sku) -> fns.updateSku(sku, info)), 0
+  .then () -> info
 
-fns.updateSku = (reference_sku, count) ->
+fns.updateSku = (reference_sku, info) ->
   fns.findByIdentifierAndSupplierId reference_sku.identifier, reference_sku.supplier_id
   .then (res) ->
     sku = res[0]
     # Handle not_found
     if !sku or !sku.id
-      count.not_found++
-      count.not_found_identifiers.push reference_sku.identifier
+      info.count.not_found++
+      info.not_found_identifiers.push reference_sku.identifier
       return 'not_found'
     toUpdate = []
     for attr in fns.editableAttrs
       if reference_sku[attr] isnt sku[attr] then toUpdate.push attr
     # Handle unchanged
     if toUpdate.length is 0
-      count.unchanged++
+      info.count.unchanged++
       return 'unchanged'
     # Handle updates
-    count.updated.total++
-    count.updated[attr]++ for attr in toUpdate
-    if (reference_sku.supply_price > sku.supply_price * 1.2) or (reference_sku.supply_shipping_price > sku.supply_shipping_price * 1.2) then count.large_price_change_identifiers.push reference_sku.identifier
+    info.count.updated.total++
+    info.count.updated[attr]++ for attr in toUpdate
+    if (reference_sku.supply_price > sku.supply_price * 1.2) or (reference_sku.supply_shipping_price > sku.supply_shipping_price * 1.2)
+      info.count.large_price_change++
+      info.large_price_change_identifiers.push reference_sku.identifier
     fns.updateAttrs reference_sku
 
 module.exports = fns

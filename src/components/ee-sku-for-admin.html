@@ -1,10 +1,59 @@
-<tr ng-class="{ danger: sku.discontinued }">
-  <td style="width: 40%; overflow: hidden;"><small ng-bind="sku.selection_text"></small></td>
-  <td><small ng-bind="sku.regular_price | centToDollar"></small></td>
-  <td ng-if="false">
+<div ng-class="{ 'bg-warning': sku.quantity < 1, 'bg-danger': sku.discontinued }">
+  <!-- Pricing -->
+  <div ng-if="$state.current.name == 'products.pricing'"
+    class="full-width text-right"
+    style="width: 790px; height: 24px; border-bottom: 1px solid #eceff1;">
+    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.supply_price | centToDollar"></div>
+    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.supply_shipping_price | centToDollar"></div>
+
+    <div class="inline-block pull-left width-70">
+      <strong ng-bind="sku.baseline_price | centToDollar"></strong>
+    </div>
+    <div class="inline-block pull-left width-70">
+      <strong ng-bind="sku.shipping_price | centToDollar"></strong>
+    </div>
+
+    <div class="inline-block pull-left width-70">
+      <strong ng-bind="sku.baseline_price + sku.shipping_price - sku.supply_price - sku.supply_shipping_price | centToDollar"
+        ng-class="{ 'text-danger': sku.baseline_price + sku.shipping_price - sku.supply_price - sku.supply_shipping_price < 0 }"></strong>
+    </div>
+
+    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.regular_price | centToDollar"></div>
+    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.msrp | centToDollar"></div>
+    <div class="inline-block pull-left text-muted width-70">
+      <span ng-bind="100*(sku.msrp - sku.regular_price)/sku.msrp | number:1"></span>%
+    </div>
+
+    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.quantity"></div>
+
+    <div class="inline-block pull-left width-70">
+      <input type="checkbox" ng-checked="sku.auto_pricing">
+    </div>
+    <div class="inline-block pull-left width-70">
+      <i class="fa fa-fw fa-lg vert-2" ng-class="sku.hide_from_catalog ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'"></i>
+    </div>
+
+  </div>
+  <!-- /Pricing -->
+
+  <!-- Dimension -->
+  <div ng-if="$state.current.name == 'products.text'" class="pad-5">
+    <input type="text" ng-model="sku.selection_text" style="width: 420px;" placeholder="Sku description">
+    &nbsp;<small>sku id: <span ng-bind="sku.id"></span></small>
+    <div class="pull-right text-right" style="width: 280px;">
+      <input type="text" ng-model="sku.length" style="width: 34px" placeholder="L">
+      <input type="text" ng-model="sku.width" style="width: 34px" placeholder="W">
+      <input type="text" ng-model="sku.height" style="width: 34px" placeholder="H">&nbsp;in.&nbsp;&nbsp;
+      <input type="text" ng-model="sku.weight" style="width: 34px" placeholder="Weight">&nbsp;lbs.
+    </div>
+  </div>
+  <!-- /Dimension -->
+
+  <!-- Style, color, material -->
+  <div ng-if="$state.current.name == 'products.properties'" class="pad-5">
     <!-- style -->
-    <div class="dropdown" uib-dropdown>
-      <input type="text" ng-model="sku.style" placeholder="Style" uib-dropdown-toggle>
+    <div class="dropdown inline-block" uib-dropdown>
+      <input type="text" style="width: 140px;" ng-model="sku.style" placeholder="Styles" uib-dropdown-toggle>
       <ul class="uib-dropdown-menu">
         <li ng-repeat="attr in styles">
           <a href ng-click="addVal('style', attr.value)" ng-bind="attr.value"></a>
@@ -12,11 +61,9 @@
       </ul>
     </div>
     <!-- /style -->
-  </td>
-  <td ng-if="false">
     <!-- color -->
-    <div class="dropdown" uib-dropdown>
-      <input type="text" ng-model="sku.color" placeholder="Color" uib-dropdown-toggle>
+    <div class="dropdown inline-block" uib-dropdown>
+      <input type="text" style="width: 100px;" ng-model="sku.color" placeholder="Colors" uib-dropdown-toggle>
       <ul class="uib-dropdown-menu">
         <li ng-repeat="attr in colors">
           <a href ng-click="addVal('color', attr.value)" ng-bind="attr.value"></a>
@@ -24,11 +71,9 @@
       </ul>
     </div>
     <!-- /color -->
-  </td>
-  <td>
     <!-- material -->
-    <div class="dropdown" uib-dropdown>
-      <input type="text" ng-model="sku.material" class="full-width" placeholder="Material" uib-dropdown-toggle>
+    <div class="dropdown inline-block" uib-dropdown>
+      <input type="text" style="width: 150px;" ng-model="sku.material" placeholder="Materials" uib-dropdown-toggle>
       <ul class="uib-dropdown-menu">
         <li ng-repeat="attr in materials">
           <a href ng-click="addVal('material', attr.value)" ng-bind="attr.value"></a>
@@ -36,38 +81,32 @@
       </ul>
     </div>
     <!-- /material -->
-  </td>
-  <td>
-    <!-- lwh -->
-    <input type="text" ng-model="sku.length" style="width: 34px" placeholder="L">
-    <input type="text" ng-model="sku.width" style="width: 34px" placeholder="W">
-    <input type="text" ng-model="sku.height" style="width: 34px" placeholder="H">
-    <div class="dropdown inline-block" uib-dropdown>
-      <div class="hover-pointer" style="width: 10px" uib-dropdown-toggle-DISABLE>
-        <small><!-- <span class="caret"></span> --> {{ taxonomy.current.lwh }}</small>
-      </div>
-      <ul class="uib-dropdown-menu dropdown-menu-right">
-        <li ng-repeat="option in taxonomy.options.lwh">
-          <a href ng-click="setTaxonomyDropdownLWH(option)" ng-bind="option"></a>
-        </li>
-      </ul>
+
+    <input ng-model="sku.selection_text" style="width: 300px;">
+  </div>
+  <!-- /Style, color, material -->
+
+  <!-- Links -->
+  <div ng-if="$state.current.name == 'products.links'">
+    <!-- <pre>{{ sku | json }}</pre> -->
+    <div class="inline-block text-right width-70">
+      <span ng-bind="sku.regular_price | centToDollar"></span> +
     </div>
-    <!-- /lwh -->
-  </td>
-  <td>
-    <!-- weight -->
-    <input type="text" ng-model="sku.weight" style="width: 34px" placeholder="Weight">
-    <div class="dropdown inline-block" uib-dropdown>
-      <div class="hover-pointer" style="width: 14px" uib-dropdown-toggle-DISABLE>
-        <small><!-- <span class="caret"></span> --> {{ taxonomy.current.weight }}</small>
-      </div>
-      <ul class="uib-dropdown-menu dropdown-menu-right">
-        <li ng-repeat="option in taxonomy.options.weight">
-          <a href ng-click="setTaxonomyDropdownWeight(option)" ng-bind="option"></a>
-        </li>
-      </ul>
+    <div class="inline-block text-right width-70">
+      <span ng-bind="sku.shipping_price | centToDollar"></span> =
     </div>
-    <!-- /weight -->
-  </td>
-  <td class="text-muted"><small ng-bind="sku.id"></small></td>
-</tr>
+    <div class="inline-block text-right width-70">
+      <strong ng-bind="sku.regular_price + sku.shipping_price | centToDollar"></strong>
+    </div>
+
+    <div class="btn-group" style="margin-left: 20px;">
+      <a href="https://www.doba.com/members/my-inventory/product/details/{{ externalId }}" target="_blank" class="btn btn-xs btn-default">doba</a>
+      <a href="https://www.doba.com/members/catalog/search?adv_filter_update%5B%5D=0&shipping_filter=all&min_qty=0&adv_filter_update%5B%5D=0&adv_filter_update%5Bout_of_stock%5D=on&adv_filter_update%5Bdiscontinued%5D=on&adv_filter_update%5Brefurbished%5D=on&terms={{ sku.identifier }}" target="_blank" class="btn btn-xs btn-default">doba</a>
+      <a href="https://www.google.com/search?q={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank" class="btn btn-xs btn-default">google</a>
+      <a href="http://www.amazon.com/s/?field-keywords={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank" class="btn btn-xs btn-default">amazon</a>
+      <a href="http://www.wayfair.com/keyword.php?keyword={{ sku.selection_text | pluses }}" target="_blank" class="btn btn-xs btn-default">wayfair</a>
+    </div>
+  </div>
+  <!-- /Links -->
+
+</div>

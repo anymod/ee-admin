@@ -31,11 +31,16 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       { min: 20000, max: null   }
     ]
     orderArray: [
-      { order: null,          title: 'Most relevant' },
-      { order: 'price ASC',   title: 'Price, low to high',  use: true },
-      { order: 'price DESC',  title: 'Price, high to low',  use: true },
-      { order: 'title ASC',   title: 'A to Z',              use: true },
-      { order: 'title DESC',  title: 'Z to A',              use: true }
+      { order: 'price ASC',   html: '$-$$$' },
+      { order: 'price DESC',  html: '$$$-$' },
+      { order: 'title ASC',   html: 'A-Z' },
+      { order: 'title DESC',  html: 'Z-A' },
+      { order: '(shipping_price/baseline_price) DESC', html: 'Shipping % <i class="fa fa-sort-amount-desc"></i>' },
+      { order: '(shipping_price/baseline_price) ASC', html: 'Shipping % <i class="fa fa-sort-amount-asc"></i>' },
+      { order: '(1 - (supply_price - supply_shipping_price) / (baseline_price + shipping_price)) DESC', html: 'eeosk profit % <i class="fa fa-sort-amount-desc"></i>' },
+      { order: '(1 - (supply_price - supply_shipping_price) / (baseline_price + shipping_price)) ASC', html: 'eeosk profit % <i class="fa fa-sort-amount-asc"></i>' },
+      { order: '(regular_price - baseline_price) DESC', html: 'Seller profit $-$$$' },
+      { order: '(regular_price - baseline_price) ASC', html: 'Seller profit $$$-$' }
     ]
 
   ## PRIVATE EXPORT DEFAULTS
@@ -67,7 +72,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     if _data[section].inputs.search       then query.search       = _data[section].inputs.search
     if _data[section].inputs.range.min    then query.min_price    = _data[section].inputs.range.min
     if _data[section].inputs.range.max    then query.max_price    = _data[section].inputs.range.max
-    if _data[section].inputs.order.use    then query.order        = _data[section].inputs.order.order
+    if _data[section].inputs.order.order  then query.order        = _data[section].inputs.order.order
     if _data[section].inputs.supplier_id  then query.supplier_id  = _data[section].inputs.supplier_id
     if _data[section].inputs.category     then query.category_ids = [_data[section].inputs.category.id]
     query

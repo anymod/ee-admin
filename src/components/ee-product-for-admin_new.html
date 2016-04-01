@@ -1,0 +1,12 @@
+<!-- <div ng-repeat="sku in product.skus" sku="sku" materials="materials"> -->
+  <!-- <td style="max-width: 300px; overflow: hidden;"><small ng-bind="sku.selection_text"></small></td> -->
+  <td rowspan={{ product.skus.length }}>
+    <img class="media-object" ng-src="{{ product.image | thumbnail }}">
+  </td>
+  <td ee-sku-for-admin ng-repeat="sku in product.skus" sku="sku" materials="materials"></tr>
+  <td ng-bind="product.skus[0].baseline_price"></td>
+  <td ng-bind="product.skus[0].regular_price"></td>
+  <td ng-bind="product.skus[0].supply_price"></td>
+  <td ng-bind="product.skus[0].shipping_price"></td>
+  <td ng-bind="product.skus[0].supply_shipping_price"></td>
+<!-- </div> -->

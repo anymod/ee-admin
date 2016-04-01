@@ -5,6 +5,7 @@ angular.module('ee-navbar-main').directive "eeNavbarMain", ($state, eeDefiner) -
   restrict: 'E'
   scope:
     usersNav: '@'
+    skusNav: '@'
   link: (scope, ele, attrs) ->
     scope.ee    = eeDefiner.exports
     scope.state = $state.current.name

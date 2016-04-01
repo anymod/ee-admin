@@ -1,8 +1,8 @@
 angular.module 'ee-product-for-admin', []
 
-angular.module('ee-product-for-admin').directive "eeProductForAdmin", (eeAuth, eeBack, eeModal, eeProduct) ->
+angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, eeAuth, eeBack, eeModal, eeProduct) ->
   templateUrl: 'components/ee-product-for-admin.html'
-  restrict: 'E'
+  restrict: 'EA'
   scope:
     product:    '='
     styles:     '='
@@ -10,6 +10,7 @@ angular.module('ee-product-for-admin').directive "eeProductForAdmin", (eeAuth, e
     materials:  '='
     compact:    '='
   link: (scope, ele, attrs) ->
+    scope.$state = $state
     scope.compact = false
     scope.product.updating = false
 

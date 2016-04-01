@@ -6,14 +6,19 @@ dropbox = require './dropbox'
 csv     = require './csv'
 sku     = require './sku'
 utils   = require './utils'
+keen    = require './keen'
 
 processFile = (path) ->
   dropbox.getFile path
   .then (file) -> csv.parseFile file
   .then (skus) -> sku.updateSkus skus
-  .then (count) ->
-    console.log count
-    count
+  .then (info) ->
+    info.path = path
+    file_parts = path.split(/\//g)
+    info.type = file_parts[1]
+    info.filename = file_parts[file_parts.length - 1]?.replace('.csv', '')
+    console.log info
+    keen.addSkuEvent info
 
 if argv.update
   ### coffee sku_processing/runner.coffee --update ###
@@ -23,8 +28,6 @@ if argv.update
     Promise.reduce files, ((total, file) -> processFile file.path_lower), 0
   .catch (err) -> console.log 'err', err
   .finally () -> process.exit()
-  # console.log utils.timestamp()
-  # process.exit()
 
 else if argv.download
   ### coffee sku_processing/runner.coffee --download ###

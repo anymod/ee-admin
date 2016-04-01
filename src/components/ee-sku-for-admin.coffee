@@ -1,6 +1,6 @@
 angular.module 'ee-sku-for-admin', []
 
-angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", (eeAuth, eeBack, eeModal) ->
+angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, eeBack, eeModal) ->
   templateUrl: 'components/ee-sku-for-admin.html'
   restrict: 'EA'
   replace: true
@@ -9,7 +9,10 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", (eeAuth, eeBack, e
     styles:     '='
     colors:     '='
     materials:  '='
+    externalId: '='
   link: (scope, ele, attrs) ->
+    scope.$state = $state
+
     scope.sku.updating = false
 
     scope.taxonomy =

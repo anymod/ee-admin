@@ -1,12 +1,14 @@
 <!--
   usersNav: when true show the sub-navbar for users
+  skusNav: when true show the sub-navbar for skus
 //-->
 
-<nav class="navbar navbar-default main-navbar navbar-fixed-top margin-0 round-0 no-side-border box-shadow">
+<nav class="navbar navbar-default white-background main-navbar navbar-fixed-top margin-0 round-0 no-side-border"
+  ng-class="{ 'box-shadow': !usersNav && !skusNav }">
   <div class="container-fluid pad-5">
     <a ui-sref="analytics" ui-sref-active="active" class="btn btn-default">Analytics</a>
     <a ui-sref="tracks" ui-sref-active="active" class="btn btn-default">Tracks</a>
-    <a ui-sref="products" ui-sref-active="active" class="btn btn-default">Products</a>
+    <a ui-sref="products.pricing" ng-class="{ active: state.indexOf('products.') > -1 }" class="btn btn-default">Products</a>
     <a ui-sref="collections" ui-sref-active="active" class="btn btn-default">Collections</a>
     <a ui-sref="users.info" ng-class="{ active: state.indexOf('users.') > -1 }" class="btn btn-default">Users</a>
     <!-- <a ui-sref="taxonomy" ui-sref-active="active" class="btn btn-default">Taxonomy</a> -->
@@ -17,11 +19,21 @@
   </div>
 </nav>
 
-<nav ng-if="usersNav == 'true'" class="navbar navbar-fixed-top ee-builder-subnav box-shadow round-0 text-center">
+<nav ng-if="usersNav == 'true'" class="navbar navbar-fixed-top white-background ee-builder-subnav box-shadow round-0 text-center">
   <div class="max-width-600 margin-0-auto pad-2 position-relative">
     <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.info">Seller<br><small>Info</small></a>
     <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.social">Social<br><small>Accounts</small></a>
     <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.branding">Store<br><small>Branding</small></a>
     <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="users.analytics">Recent<br><small>Analytics</small></a>
+  </div>
+</nav>
+
+<nav ng-if="skusNav == 'true'" class="navbar navbar-fixed-top white-background ee-builder-subnav box-shadow round-0 text-center">
+  <div class="max-width-600 margin-0-auto pad-2 position-relative">
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="products.pricing">Pricing<br><small>& Availability</small></a>
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="products.text">Text<br><small>& Dimensions</small></a>
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="products.properties">Style,<br><small>Color, Material</small></a>
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="products.links">External<br><small>Links</small></a>
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="products.dropbox">Dropbox<br><small>Processing</small></a>
   </div>
 </nav>
