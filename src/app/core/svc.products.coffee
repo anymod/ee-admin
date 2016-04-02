@@ -15,6 +15,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     supplier_id:  null
     order:        { order: null, title: 'Most relevant' }
     featured:     false
+    filter:       null
     categoryArray: [
       { id: 1, title: 'Artwork' },
       { id: 2, title: 'Bed & Bath' },
@@ -31,16 +32,18 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       { min: 20000, max: null   }
     ]
     orderArray: [
-      { order: 'price ASC',   html: '$-$$$' },
-      { order: 'price DESC',  html: '$$$-$' },
-      { order: 'title ASC',   html: 'A-Z' },
-      { order: 'title DESC',  html: 'Z-A' },
-      { order: '(shipping_price/baseline_price) DESC', html: 'Shipping % <i class="fa fa-sort-amount-desc"></i>' },
-      { order: '(shipping_price/baseline_price) ASC', html: 'Shipping % <i class="fa fa-sort-amount-asc"></i>' },
-      { order: '(1 - (supply_price - supply_shipping_price) / (baseline_price + shipping_price)) DESC', html: 'eeosk profit % <i class="fa fa-sort-amount-desc"></i>' },
-      { order: '(1 - (supply_price - supply_shipping_price) / (baseline_price + shipping_price)) ASC', html: 'eeosk profit % <i class="fa fa-sort-amount-asc"></i>' },
-      { order: '(regular_price - baseline_price) DESC', html: 'Seller profit $-$$$' },
-      { order: '(regular_price - baseline_price) ASC', html: 'Seller profit $$$-$' }
+      { order: 'pa',   html: '$-$$$' },
+      { order: 'pd',  html: '$$$-$' },
+      { order: 'ta',   html: 'A-Z' },
+      { order: 'td',  html: 'Z-A' },
+      { order: 'shipd', html: 'Shipping % <i class="fa fa-sort-amount-desc"></i>' },
+      { order: 'shipa', html: 'Shipping % <i class="fa fa-sort-amount-asc"></i>' },
+      { order: 'discd', html: '% off <i class="fa fa-sort-amount-desc"></i>' },
+      { order: 'disca', html: '% off <i class="fa fa-sort-amount-asc"></i>' },
+      { order: 'eeprofd', html: 'ee profit % <i class="fa fa-sort-amount-desc"></i>' },
+      { order: 'eeprofa', html: 'ee profit % <i class="fa fa-sort-amount-asc"></i>' },
+      { order: 'sellprofd', html: 'Seller profit $$-$' },
+      { order: 'sellprofa', html: 'Seller profit $-$$' }
     ]
 
   ## PRIVATE EXPORT DEFAULTS
@@ -67,14 +70,15 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     query = {}
     query.size = _data[section].inputs.perPage
     # if section is 'featured'              then query.feat         = 'true'
-    if _data[section].inputs.featured     then query.feat         = 'true'
-    if _data[section].inputs.page         then query.page         = _data[section].inputs.page
-    if _data[section].inputs.search       then query.search       = _data[section].inputs.search
-    if _data[section].inputs.range.min    then query.min_price    = _data[section].inputs.range.min
-    if _data[section].inputs.range.max    then query.max_price    = _data[section].inputs.range.max
-    if _data[section].inputs.order.order  then query.order        = _data[section].inputs.order.order
-    if _data[section].inputs.supplier_id  then query.supplier_id  = _data[section].inputs.supplier_id
-    if _data[section].inputs.category     then query.category_ids = [_data[section].inputs.category.id]
+    if _data[section].inputs.featured     then query.feat           = 'true'
+    if _data[section].inputs.page         then query.page           = _data[section].inputs.page
+    if _data[section].inputs.search       then query.search         = _data[section].inputs.search
+    if _data[section].inputs.range.min    then query.min_price      = _data[section].inputs.range.min
+    if _data[section].inputs.range.max    then query.max_price      = _data[section].inputs.range.max
+    if _data[section].inputs.order.order  then query.order          = _data[section].inputs.order.order
+    if _data[section].inputs.supplier_id  then query.supplier_id    = _data[section].inputs.supplier_id
+    if _data[section].inputs.category     then query.category_ids   = [_data[section].inputs.category.id]
+    if _data[section].inputs.filter       then query[_data[section].inputs.filter] = 'true'
     query
 
   _runQuery = (section, queryPromise) ->
@@ -146,6 +150,11 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       else
         _data[section].inputs.range.min = range.min
         _data[section].inputs.range.max = range.max
+      _runSection section
+    toggleFilter: (filter, section) ->
+      return if !filter
+      _data[section].inputs.page    = 1
+      _data[section].inputs.filter  = if filter is _data[section].inputs.filter then null else filter
       _runSection section
     toggleFeatured: (section) ->
       _data[section].inputs.page      = 1

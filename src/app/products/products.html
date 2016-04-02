@@ -1,7 +1,7 @@
 <!-- PRODUCTS -->
-<div id="products" class="container-fluid max-width-900 position-relative text-center">
+<div id="products" class="container-fluid max-width-900 position-relative text-center overflow-x-scroll">
 
-  <div ng-hide="products.ee.loading" class="margin-5 text-left">
+  <div ng-hide="products.ee.loading" class="margin-5 text-left" style="width: 870px;">
     <div class="row vert-2">
       <div class="col col-sm-6">
         <!-- Search products -->
@@ -47,7 +47,7 @@
             <div ng-repeat="order in products.ee.Products.search.inputs.orderArray"
               ng-click="products.fns.setOrder(order, 'search')"
               ng-class="{ 'btn-success': order.order == products.ee.Products.search.inputs.order.order}"
-              class="btn btn-sm btn-default" style="padding: 5px 8px;"
+              class="btn btn-sm btn-default" style="padding: 5px;"
               ng-bind-html="order.html">
             </div>
           </div>
@@ -94,13 +94,13 @@
             {{ { min: products.ee.Products.search.inputs.range.min, max: products.ee.Products.search.inputs.range.max } | rangeToText }}&nbsp;<i class="fa fa-times"></i>
           </div>
           <!-- /price -->
-          <div class="btn btn-sm btn-default">Style&nbsp;&nbsp;<span class="caret"></div>
-          <div class="btn btn-sm btn-default">Color&nbsp;&nbsp;<span class="caret"></div>
-          <div class="btn btn-sm btn-default">Material&nbsp;&nbsp;<span class="caret"></div>
-          <div class="btn btn-sm btn-default"><span class="bg-warning"> Out of stock </span></div>
-          <div class="btn btn-sm btn-default"><span class="bg-danger"> Discontinued </span></div>
-          <div class="btn btn-sm btn-default">Manual pricing</div>
-          <div class="btn btn-sm btn-default">Hidden</div>
+          <div class="btn btn-sm btn-default" disabled>Style&nbsp;&nbsp;<span class="caret"></div>
+          <div class="btn btn-sm btn-default" disabled>Color&nbsp;&nbsp;<span class="caret"></div>
+          <div class="btn btn-sm btn-default" disabled>Material&nbsp;&nbsp;<span class="caret"></div>
+          <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }" ><span class="bg-warning"> Out of stock </span></div>
+          <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }" ><span class="bg-danger"> Discontinued </span></div>
+          <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }" >Manual pricing</div>
+          <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }" >Hidden</div>
         </div>
       </div>
     </div>
