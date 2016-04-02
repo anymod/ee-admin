@@ -31,8 +31,8 @@ angular.module('products').config ($stateProvider) ->
     .state 'products.links',
       url:    '/links'
       views:  views
-    .state 'products.dropbox',
-      url:    '/dropbox'
+    .state 'products.processing',
+      url:    '/processing'
       views:  views
 
   return

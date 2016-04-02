@@ -1,12 +1,17 @@
-<!-- PRODUCTS -->
-<div id="products" class="container-fluid max-width-900 position-relative text-center overflow-x-scroll">
+<!-- Products -->
+<div id="products"
+  class="container-fluid max-width-900 position-relative text-center overflow-x-scroll"
+  ng-if="$state.current.name != 'products.processing'">
 
   <div ng-hide="products.ee.loading" class="margin-5 text-left" style="width: 870px;">
-    <div class="row vert-2">
-      <div class="col col-sm-6">
-        <!-- Search products -->
+
+    <!-- Search -->
+    <div class="full-width vert-5">
+      <small class="inline-block vert-7" style="width: 38px;">Search</small>
+      <!-- Search products -->
+      <div class="inline-block vertical-align-bottom" style="width: 400px;">
         <form ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
-          <div ng-class="{ 'input-group input-group-lg': products.ee.Products.search.inputs.searchLabel }">
+          <div ng-class="{ 'input-group': products.ee.Products.search.inputs.searchLabel }">
             <input type="text" ng-model="products.ee.Products.search.inputs.search" class="form-control" placeholder="Search product titles">
             <span ng-if="products.ee.Products.search.inputs.searchLabel" class="input-group-btn">
               <input type="submit" class="hidden"/>
@@ -16,94 +21,82 @@
             </span>
           </div>
         </form>
-        <!-- /Search products -->
       </div>
-      <div class="col col-sm-6">
-        <!-- Search ids -->
+      <!-- /Search products -->
+      <!-- Search ids -->
+      <div class="inline-block vertical-align-bottom" style="width: 400px;">
         <form ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
           <input type="text" ng-model="products.ee.Products.search.inputs.supplier_id"
             class="form-control"
             placeholder="Search by product id, sku id, or supplier id"/>
         </form>
-        <!-- <form ng-submit="products.fns.searchIds(products.ee.Products.search.inputs.search)">
-          <div ng-class="{ 'input-group input-group-lg': products.ee.Products.search.inputs.searchLabel }">
-            <input type="text" ng-model="products.ee.Products.search.inputs.search" class="form-control" placeholder="Search by product id, sku id, or supplier id">
-            <span ng-if="products.ee.Products.search.inputs.searchLabel" class="input-group-btn">
-              <input type="submit" class="hidden"/>
-              <button class="btn btn-default" type="button" ng-click="products.fns.clearSearch()">
-                <i class="fa fa-times text-muted"></i>
-              </button>
-            </span>
-          </div>
-        </form> -->
-        <!-- /Search ids -->
       </div>
+      <!-- /Search ids -->
     </div>
-    <div class="row vert-5">
-      <div class="col col-xs-12">
-        <div class="full-width">
-          <small class="inline-block vert-7" style="width: 38px;">Order</small>
-          <div class="btn-group">
-            <div ng-repeat="order in products.ee.Products.search.inputs.orderArray"
-              ng-click="products.fns.setOrder(order, 'search')"
-              ng-class="{ 'btn-success': order.order == products.ee.Products.search.inputs.order.order}"
-              class="btn btn-sm btn-default" style="padding: 5px;"
-              ng-bind-html="order.html">
-            </div>
-          </div>
+    <!-- /Search -->
+
+    <!-- Order -->
+    <div class="full-width vert-5">
+      <small class="inline-block vert-7" style="width: 38px;">Order</small>
+      <div class="btn-group">
+        <div ng-repeat="order in products.ee.Products.search.inputs.orderArray"
+          ng-click="products.fns.setOrder(order, 'search')"
+          ng-class="{ 'btn-success': order.order == products.ee.Products.search.inputs.order.order }"
+          class="btn btn-sm btn-default" style="padding: 5px;"
+          ng-bind-html="order.html">
         </div>
       </div>
     </div>
-    <div class="row vert-5">
-      <div class="col col-xs-12">
-        <div class="full-width">
-          <small class="inline-block vert-7" style="width: 38px;">Filter</small>
-          <!-- category -->
-          <div class="btn-group btn-group-sm" uib-dropdown ng-if="!products.ee.Products.search.inputs.category.id">
-            <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-              Category&nbsp;&nbsp;<span class="caret"></span>
-            </button>
-            <ul class="uib-dropdown-menu">
-              <li ng-repeat="category in products.ee.Products.search.inputs.categoryArray">
-                <a href
-                  ng-click="products.fns.setCategory(category, 'search')"
-                  ng-bind="category.title"></a>
-              </li>
-            </ul>
-          </div>
-          <div ng-if="products.ee.Products.search.inputs.category.id"
-              ng-click="products.fns.setCategory(null, 'search')"
-              class="btn btn-info btn-sm">
-            {{ products.ee.Products.search.inputs.category.title }}&nbsp;<i class="fa fa-times"></i>
-          </div>
-          <!-- /category -->
-          <!-- price -->
-          <div class="btn-group btn-group-sm" uib-dropdown ng-if="!products.ee.Products.search.inputs.range.min && !products.ee.Products.search.inputs.range.max">
-            <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
-              Price range&nbsp;&nbsp;<span class="caret"></span>
-            </button>
-            <ul class="uib-dropdown-menu">
-              <li ng-repeat="range in products.ee.Products.search.inputs.rangeArray">
-                <a href ng-click="products.fns.setRange(range, 'search')" ng-bind="range | rangeToText"></a>
-              </li>
-            </ul>
-          </div>
-          <div ng-if="products.ee.Products.search.inputs.range.min || products.ee.Products.search.inputs.range.max"
-              ng-click="products.fns.setRange(null, 'search')"
-              class="btn btn-info btn-sm">
-            {{ { min: products.ee.Products.search.inputs.range.min, max: products.ee.Products.search.inputs.range.max } | rangeToText }}&nbsp;<i class="fa fa-times"></i>
-          </div>
-          <!-- /price -->
-          <div class="btn btn-sm btn-default" disabled>Style&nbsp;&nbsp;<span class="caret"></div>
-          <div class="btn btn-sm btn-default" disabled>Color&nbsp;&nbsp;<span class="caret"></div>
-          <div class="btn btn-sm btn-default" disabled>Material&nbsp;&nbsp;<span class="caret"></div>
-          <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }" ><span class="bg-warning"> Out of stock </span></div>
-          <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }" ><span class="bg-danger"> Discontinued </span></div>
-          <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }" >Manual pricing</div>
-          <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }" >Hidden</div>
-        </div>
+    <!-- Order -->
+
+    <!-- Filter -->
+    <div class="full-width vert-5">
+      <small class="inline-block vert-7" style="width: 38px;">Filter</small>
+      <!-- category -->
+      <div class="btn-group btn-group-sm" uib-dropdown ng-if="!products.ee.Products.search.inputs.category.id">
+        <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+          Category&nbsp;&nbsp;<span class="caret"></span>
+        </button>
+        <ul class="uib-dropdown-menu">
+          <li ng-repeat="category in products.ee.Products.search.inputs.categoryArray">
+            <a href
+              ng-click="products.fns.setCategory(category, 'search')"
+              ng-bind="category.title"></a>
+          </li>
+        </ul>
       </div>
+      <div ng-if="products.ee.Products.search.inputs.category.id"
+          ng-click="products.fns.setCategory(null, 'search')"
+          class="btn btn-info btn-sm">
+        {{ products.ee.Products.search.inputs.category.title }}&nbsp;<i class="fa fa-times"></i>
+      </div>
+      <!-- /category -->
+      <!-- price -->
+      <div class="btn-group btn-group-sm" uib-dropdown ng-if="!products.ee.Products.search.inputs.range.min && !products.ee.Products.search.inputs.range.max">
+        <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
+          Price range&nbsp;&nbsp;<span class="caret"></span>
+        </button>
+        <ul class="uib-dropdown-menu">
+          <li ng-repeat="range in products.ee.Products.search.inputs.rangeArray">
+            <a href ng-click="products.fns.setRange(range, 'search')" ng-bind="range | rangeToText"></a>
+          </li>
+        </ul>
+      </div>
+      <div ng-if="products.ee.Products.search.inputs.range.min || products.ee.Products.search.inputs.range.max"
+          ng-click="products.fns.setRange(null, 'search')"
+          class="btn btn-info btn-sm">
+        {{ { min: products.ee.Products.search.inputs.range.min, max: products.ee.Products.search.inputs.range.max } | rangeToText }}&nbsp;<i class="fa fa-times"></i>
+      </div>
+      <!-- /price -->
+      <div class="btn btn-sm btn-default" disabled>Style&nbsp;&nbsp;<span class="caret"></div>
+      <div class="btn btn-sm btn-default" disabled>Color&nbsp;&nbsp;<span class="caret"></div>
+      <div class="btn btn-sm btn-default" disabled>Material&nbsp;&nbsp;<span class="caret"></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }" ><span class="bg-warning"> Out of stock </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }" ><span class="bg-danger"> Discontinued </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }" >Manual pricing</div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }" >Hidden</div>
     </div>
+    <!-- /Filter -->
 
 
     <div class="margin-10 text-center" ng-hide="products.ee.Products.search.products.length <= 0">
@@ -151,11 +144,6 @@
 
         </div>
         <!-- /Links header -->
-        <!-- Dropbox header -->
-        <div ng-if="$state.current.name == 'products.dropbox'">
-
-        </div>
-        <!-- /Dropbox header -->
       </div>
 
 
@@ -191,6 +179,16 @@
     </uib-pagination>
   </div>
 </div>
-<!-- /PRODUCTS -->
+<!-- /Products -->
+
+
+<!-- Processing -->
+<div ng-if="$state.current.name == 'products.processing'"
+  class="container text-center">
+  <div class="btn btn-default">Dropbox</div>
+  <div class="btn btn-default">Repricing</div>
+  <div class="btn btn-default">Elasticsearch</div>
+</div>
+<!-- /Processing header -->
 
 <ee-loading loading="products.ee.Products.search.reading"></ee-loading>

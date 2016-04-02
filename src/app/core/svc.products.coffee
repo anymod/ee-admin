@@ -36,12 +36,12 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       { order: 'pd',  html: '$$$-$' },
       { order: 'ta',   html: 'A-Z' },
       { order: 'td',  html: 'Z-A' },
-      { order: 'shipd', html: 'Shipping % <i class="fa fa-sort-amount-desc"></i>' },
-      { order: 'shipa', html: 'Shipping % <i class="fa fa-sort-amount-asc"></i>' },
+      { order: 'shipd', html: '% Shipping <i class="fa fa-sort-amount-desc"></i>' },
+      { order: 'shipa', html: '% Shipping <i class="fa fa-sort-amount-asc"></i>' },
       { order: 'discd', html: '% off <i class="fa fa-sort-amount-desc"></i>' },
       { order: 'disca', html: '% off <i class="fa fa-sort-amount-asc"></i>' },
-      { order: 'eeprofd', html: 'ee profit % <i class="fa fa-sort-amount-desc"></i>' },
-      { order: 'eeprofa', html: 'ee profit % <i class="fa fa-sort-amount-asc"></i>' },
+      { order: 'eeprofd', html: '% ee profit <i class="fa fa-sort-amount-desc"></i>' },
+      { order: 'eeprofa', html: '% ee profit <i class="fa fa-sort-amount-asc"></i>' },
       { order: 'sellprofd', html: 'Seller profit $$-$' },
       { order: 'sellprofa', html: 'Seller profit $-$$' }
     ]
@@ -79,6 +79,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     if _data[section].inputs.supplier_id  then query.supplier_id    = _data[section].inputs.supplier_id
     if _data[section].inputs.category     then query.category_ids   = [_data[section].inputs.category.id]
     if _data[section].inputs.filter       then query[_data[section].inputs.filter] = 'true'
+    query.uncustomized = 'true'
     query
 
   _runQuery = (section, queryPromise) ->
@@ -102,7 +103,13 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     _runQuery section, promise
 
   _searchWithTerm = (term) ->
-    _data.search.inputs.order = _data.search.inputs.orderArray[0]
+    _data.search.inputs.order = {}
+    _data.search.inputs.search = term
+    _data.search.inputs.page = 1
+    _runSection 'search'
+
+  _searchWithIdentifier = (identifier) ->
+    _data.search.inputs.order = {}
     _data.search.inputs.search = term
     _data.search.inputs.page = 1
     _runSection 'search'
