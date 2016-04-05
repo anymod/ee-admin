@@ -16,10 +16,10 @@ content_uri = 'https://content.dropboxapi.com/2'
 dropbox = {}
 
 completedPathFor = (file_path) ->
-  '/completed_successfully/_' + utils.getFilename(file_path)
+  '/completed_successfully/' + utils.timestampedFilename(file_path)
 
 archivedPathFor = (file_path) ->
-  '/archive (do not edit)/' + utils.getDatedFilename(file_path)
+  '/archive (do not edit)/' + utils.timestampedFilename(file_path, '_at_')
 
 dropbox.setPayload = (type, opts) ->
   payload =

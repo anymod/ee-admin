@@ -50,7 +50,7 @@ fns.updateFromDropbox = () ->
 
 # if argv.finish
 #   ### coffee sku_processing/runner.coffee --finish ###
-#   dropbox.finishFile '/update/artwork.csv'
+#   dropbox.finishFile '/update/kitchen_short.csv'
 #   .then (res) ->
 #     console.log 'finished', res
 #   .catch (err) ->

@@ -7,30 +7,39 @@ fns.setStatus = (section, status) ->
   console.log global.ee_status
 
 fns.timestamp = () ->
-  # 2016-03-30 00:29:47.280 +00:00
+  # 2016-03-30 03:32:47PM
   dateNow = new Date()
-  dateNow.getUTCFullYear() + '-' +
-    ('0' + (dateNow.getUTCMonth()+1)).slice(-2) + '-' +
-    ('0' + dateNow.getUTCDate()).slice(-2) + ' ' +
-    ('0' + dateNow.getUTCHours()).slice(-2) + ':' +
-    ('0' + dateNow.getUTCMinutes()).slice(-2) + ':' +
-    ('0' + dateNow.getUTCSeconds()).slice(-2) + '.' +
-    ('00' + dateNow.getUTCMilliseconds()).slice(-3) + ' ' +
-    '+00:00'
+  hours = dateNow.getHours()
+  ampm  = if hours >= 12 then 'PM' else 'AM'
+  if hours >= 12 then hours -= 12
+  dateNow.getFullYear() + '-' +
+    ('0' + (dateNow.getMonth()+1)).slice(-2) + '-' +
+    ('0' + dateNow.getDate()).slice(-2) + ' ' +
+    ('0' + hours).slice(-2) + ':' +
+    ('0' + dateNow.getMinutes()).slice(-2) + ':' +
+    ('0' + dateNow.getSeconds()).slice(-2) + ampm
+
+# fns.currentTime = () ->
+#   dateNow = new Date()
+#   hours = dateNow.getHours()
+#   ampm  = if hours >= 12 then 'PM' else 'AM'
+#   if hours >= 12 then hours -= 12
+#   '' + hours + ':' + ('0' + dateNow.getMinutes()).slice(-2) + ':' + ('0' + dateNow.getSeconds()).slice(-2) + ampm
 
 fns.fileTimestamp = () ->
-  fns.timestamp().slice(0,23).replace(/[:\.]/g,'').replace(/ /g,'_')
+  fns.timestamp().slice(0,23).replace(/[:\.]/g,'-').replace(/ /g,'_')
 
 fns.getFilename = (file_path) ->
   path_parts = file_path.split('/')
   path_parts[path_parts.length - 1]
 
-fns.getDatedFilename = (file_path) ->
+fns.timestampedFilename = (file_path, insertStr) ->
+  insertStr ||= '_'
   filename  = fns.getFilename(file_path)
   splitAt   = filename.lastIndexOf('.')
   name      = filename.substring(0, splitAt)
   extension = filename.substring(splitAt)
-  name + '_processed-' + fns.fileTimestamp() + extension
+  name + insertStr + fns.fileTimestamp() + extension
 
 fns.dollarsToCents = (dollars) ->
   dollars = parseFloat dollars
