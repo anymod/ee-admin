@@ -16,7 +16,9 @@ processFile = (path, status) ->
   utils.setStatus 'update', status
   dropbox.getFile path
   .then (file) -> csv.parseFile file
-  .then (skus) -> sku.updateSkus skus
+  .then (skus) ->
+    console.log 'skus', skus
+    sku.updateSkus skus
   .then (info) ->
     info.path = path
     file_parts = path.split(/\//g)
@@ -55,18 +57,18 @@ fns.updateFromDropbox = () ->
 #     console.log 'err', err
 #   .finally () -> process.exit()
 #
-# else if argv.update
-#   ### coffee sku_processing/runner.coffee --update ###
-#   fns.updateFromDropbox()
-#   .then (res) ->
-#     console.log 'res', res
-#   .catch (err) ->
-#     console.log 'err', err
-#   .finally () -> process.exit()
-#
-# else
-#   console.log "No scenario was matched"
-#   console.log 'NODE_ENV', process.env.NODE_ENV
-#   process.exit()
+if argv.update
+  ### coffee sku_processing/runner.coffee --update ###
+  fns.updateFromDropbox()
+  .then (res) ->
+    console.log 'res', res
+  .catch (err) ->
+    console.log 'err', err
+  .finally () -> process.exit()
+
+else
+  console.log "No scenario was matched"
+  console.log 'NODE_ENV', process.env.NODE_ENV
+  process.exit()
 
 module.exports = fns

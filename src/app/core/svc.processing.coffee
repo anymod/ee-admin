@@ -29,7 +29,7 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
   _getStatus = () ->
     eeBack.fns.processingStatusGET()
     .then (status) ->
-      if typeof status is 'string' then throw 'error getting status'
+      if typeof status is 'string' then throw 'problem getting process status'
       if status?.update then _data.status.update[attr] = status.update[attr] for attr in Object.keys(status.update)
       if status?.create then _data.status.create[attr] = status.create[attr] for attr in Object.keys(status.create)
     .catch (err) ->

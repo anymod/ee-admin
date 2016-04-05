@@ -51,6 +51,7 @@ fns.updateSkus = (reference_skus) ->
   .then () -> info
 
 fns.updateSku = (reference_sku, info) ->
+  return if !reference_sku or !reference_sku.identifier
   fns.findByIdentifierAndSupplierId reference_sku.identifier, reference_sku.supplier_id
   .then (res) ->
     sku = res[0]

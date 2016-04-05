@@ -184,7 +184,7 @@
 
 <!-- Processing -->
 <div ng-if="$state.current.name == 'products.processing'"
-  class="container text-center">
+  class="container max-width-900 text-center">
   <div class="btn btn-default" ng-click="products.processingFns.update()">Dropbox: Update</div>
   <div class="btn btn-default" disabled>Dropbox: Create</div>
   <!-- <div class="btn btn-default">Repricing</div> -->
@@ -194,9 +194,19 @@
       class="progress-striped active max-width-600 margin-0-auto" style="height: 32px;">
       <div class="pad-5">{{ products.ee.Processing.status.update.message || 'Running' }}</div>
     </uib-progressbar>
-    <small>
-      <pre class="vert-20 text-left">{{ products.ee.Processing.status | json }}</pre>
-    </small>
+    <div ng-if="products.ee.Processing.status.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
+      Error: <span ng-bind="products.ee.Processing.status.err"></span>
+    </div>
+    <div ng-if="products.ee.Processing.status.update" class="vert-20 text-left">
+      <uib-accordion>
+        <uib-accordion-group heading="Update info" ng-if="products.ee.Processing.status.update.message" is-open="true">
+          <pre><small>{{ products.ee.Processing.status.update | json }}</small></pre>
+        </uib-accordion-group>
+        <uib-accordion-group heading="Create info" ng-if="products.ee.Processing.status.create.message" is-open="true">
+          <pre><small>{{ products.ee.Processing.status.create | json }}</small></pre>
+        </uib-accordion-group>
+      </uib-accordion>
+    </div>
   </div>
 </div>
 <!-- /Processing header -->
