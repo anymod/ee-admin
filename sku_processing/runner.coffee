@@ -57,18 +57,18 @@ fns.updateFromDropbox = () ->
 #     console.log 'err', err
 #   .finally () -> process.exit()
 #
-if argv.update
-  ### coffee sku_processing/runner.coffee --update ###
-  fns.updateFromDropbox()
-  .then (res) ->
-    console.log 'res', res
-  .catch (err) ->
-    console.log 'err', err
-  .finally () -> process.exit()
-
-else
-  console.log "No scenario was matched"
-  console.log 'NODE_ENV', process.env.NODE_ENV
-  process.exit()
+# if argv.update
+#   ### coffee sku_processing/runner.coffee --update ###
+#   fns.updateFromDropbox()
+#   .then (res) ->
+#     console.log 'res', res
+#   .catch (err) ->
+#     console.log 'err', err
+#   .finally () -> process.exit()
+#
+# else
+#   console.log "No scenario was matched"
+#   console.log 'NODE_ENV', process.env.NODE_ENV
+#   process.exit()
 
 module.exports = fns
