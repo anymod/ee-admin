@@ -197,6 +197,12 @@
     <div ng-if="products.ee.Processing.status.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
       Error: <span ng-bind="products.ee.Processing.status.err"></span>
     </div>
+    <div ng-if="products.ee.Processing.status.update.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
+      Error: <span ng-bind="products.ee.Processing.status.update.err.error_summary"></span>
+    </div>
+    <div ng-if="products.ee.Processing.status.create.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
+      Error: <span ng-bind="products.ee.Processing.status.create.err.error_summary"></span>
+    </div>
     <div ng-if="products.ee.Processing.status.update" class="vert-20 text-left">
       <uib-accordion>
         <uib-accordion-group heading="Update info" ng-if="products.ee.Processing.status.update.message" is-open="true">
@@ -208,7 +214,7 @@
       </uib-accordion>
     </div>
     <br>
-    <pre class="text-left">{{ products.ee.Processing.status | json }}</pre>
+    <!-- <pre class="text-left">{{ products.ee.Processing.status | json }}</pre> -->
   </div>
 </div>
 <!-- /Processing header -->

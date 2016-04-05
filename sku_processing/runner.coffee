@@ -17,7 +17,7 @@ processFile = (path, status) ->
   dropbox.getFile path
   .then (file) -> csv.parseFile file
   .then (skus) ->
-    console.log 'skus', skus
+    # console.log 'skus', skus
     sku.updateSkus skus
   .then (info) ->
     info.path = path
@@ -43,9 +43,7 @@ fns.updateFromDropbox = () ->
     if !files or files.length < 1 then throw 'no files found in /update'
     Promise.reduce files, ((total, file) -> processFile file.path_lower, status), 0
   .then () -> status.message = 'completed ' + status.info_array.length + ' update files'
-  .catch (err) ->
-    console.log 'err', err
-    status.err = err
+  .catch (err) -> status.err = err
   .finally () ->
     status.running = false
     utils.setStatus 'update', status
