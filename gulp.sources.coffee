@@ -56,6 +56,7 @@ sources.appModule = [
   './src/app/core/svc.modal.coffee'
   './src/app/core/svc.product.coffee'
   './src/app/core/svc.products.coffee'
+  './src/app/core/svc.processing.coffee'
   './src/app/core/svc.collections.coffee'
   './src/app/core/svc.leads.coffee'
   './src/app/core/svc.user.coffee'

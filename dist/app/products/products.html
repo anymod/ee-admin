@@ -185,9 +185,19 @@
 <!-- Processing -->
 <div ng-if="$state.current.name == 'products.processing'"
   class="container text-center">
-  <div class="btn btn-default">Dropbox</div>
-  <div class="btn btn-default">Repricing</div>
-  <div class="btn btn-default">Elasticsearch</div>
+  <div class="btn btn-default" ng-click="products.processingFns.update()">Dropbox: Update</div>
+  <div class="btn btn-default" disabled>Dropbox: Create</div>
+  <!-- <div class="btn btn-default">Repricing</div> -->
+  <div class="btn btn-default" disabled>Elasticsearch: Index</div>
+  <div class="vert-10">
+    <uib-progressbar ng-if="products.ee.Processing.status.update.running && !products.ee.Processing.status.err"
+      class="progress-striped active max-width-600 margin-0-auto" style="height: 32px;">
+      <div class="pad-5">{{ products.ee.Processing.status.update.message || 'Running' }}</div>
+    </uib-progressbar>
+    <small>
+      <pre class="vert-20 text-left">{{ products.ee.Processing.status | json }}</pre>
+    </small>
+  </div>
 </div>
 <!-- /Processing header -->
 

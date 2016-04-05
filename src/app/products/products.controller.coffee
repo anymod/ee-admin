@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').controller 'productsCtrl', (eeDefiner, eeProducts, eeTaxonomies) ->
+angular.module('app.core').controller 'productsCtrl', (eeDefiner, eeProducts, eeProcessing, eeTaxonomies) ->
 
   products = this
 
@@ -13,5 +13,7 @@ angular.module('app.core').controller 'productsCtrl', (eeDefiner, eeProducts, ee
 
   products.taxonomyData = eeTaxonomies.data
   eeTaxonomies.fns.search()
+
+  products.processingFns = eeProcessing.fns
 
   return

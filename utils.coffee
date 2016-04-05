@@ -4,6 +4,7 @@ fns.setStatus = (section, status) ->
   global.ee_status ||= {}
   return unless section and status
   global.ee_status[section] = status
+  console.log global.ee_status
 
 fns.timestamp = () ->
   # 2016-03-30 00:29:47.280 +00:00
@@ -19,5 +20,20 @@ fns.timestamp = () ->
 
 fns.fileTimestamp = () ->
   fns.timestamp().slice(0,23).replace(/[:\.]/g,'').replace(/ /g,'_')
+
+fns.getFilename = (file_path) ->
+  path_parts = file_path.split('/')
+  path_parts[path_parts.length - 1]
+
+fns.getDatedFilename = (file_path) ->
+  filename  = fns.getFilename(file_path)
+  splitAt   = filename.lastIndexOf('.')
+  name      = filename.substring(0, splitAt)
+  extension = filename.substring(splitAt)
+  name + '_processed-' + fns.fileTimestamp() + extension
+
+fns.dollarsToCents = (dollars) ->
+  dollars = parseFloat dollars
+  parseInt(dollars * 100)
 
 module.exports = fns

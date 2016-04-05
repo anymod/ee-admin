@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) ->
+angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl, eeAdminUrl) ->
 
   _handleError = (deferred, data, status) ->
     if status is 0 then deferred.reject 'Connection error' else deferred.reject data
@@ -184,4 +184,16 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl) -
         url: eeBackUrl + 'admin/steps/' + step.id
         headers: authorization: token
         data: step
+      }
+
+    processingStatusGET: () ->
+      _makeRequest {
+        method: 'GET'
+        url: eeAdminUrl + 'processing/status'
+      }
+
+    processingUpdatePOST: () ->
+      _makeRequest {
+        method: 'POST'
+        url: eeAdminUrl + 'processing/update'
       }

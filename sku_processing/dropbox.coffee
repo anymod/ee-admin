@@ -2,7 +2,7 @@ request   = require 'request'
 _         = require 'lodash'
 Promise   = require 'bluebird'
 
-utils = '../utils'
+utils = require '../utils'
 
 csv   = require './csv'
 sku   = require './sku'
@@ -14,6 +14,12 @@ api_uri     = 'https://api.dropboxapi.com/2'
 content_uri = 'https://content.dropboxapi.com/2'
 
 dropbox = {}
+
+completedPathFor = (file_path) ->
+  '/completed_successfully/_' + utils.getFilename(file_path)
+
+archivedPathFor = (file_path) ->
+  '/archive (do not edit)/' + utils.getDatedFilename(file_path)
 
 dropbox.setPayload = (type, opts) ->
   payload =
@@ -31,7 +37,12 @@ dropbox.setPayload = (type, opts) ->
       payload.uri = api_uri + '/files/move'
       payload.body =
         from_path: opts.file_path
-        to_path: csv.addDateToFilename(opts.file_path)
+        to_path: completedPathFor(opts.file_path)
+    when 'archive'
+      payload.uri = api_uri + '/files/copy'
+      payload.body =
+        from_path: opts.file_path
+        to_path: archivedPathFor(opts.file_path)
   payload
 
 dropbox.makeRequest = (type, opts) ->
@@ -46,5 +57,8 @@ dropbox.getFolder = (path) ->
 dropbox.getFile = (path) ->
   dropbox.makeRequest 'download', { file_path: path }
 
+dropbox.finishFile = (path) ->
+  dropbox.makeRequest 'archive', { file_path: path }
+  .then () -> dropbox.makeRequest 'move', { file_path: path }
 
 module.exports = dropbox

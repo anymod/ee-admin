@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeDefiner', ($rootScope, eeAuth, eeProducts, eeTracks, eeCollections) ->
+angular.module('app.core').factory 'eeDefiner', ($rootScope, eeAuth, eeProducts, eeTracks, eeCollections, eeProcessing) ->
 
   ## SETUP
   _loggedIn  = eeAuth.fns.hasToken()
@@ -10,6 +10,7 @@ angular.module('app.core').factory 'eeDefiner', ($rootScope, eeAuth, eeProducts,
     Products:     eeProducts.data
     Tracks:       eeTracks.data
     Collections:  eeCollections.data
+    Processing:   eeProcessing.data
     logged_in:    _loggedIn
     loading:      {}
     blocked:      {}

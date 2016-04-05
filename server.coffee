@@ -43,18 +43,17 @@ app.all '/favicon.ico', (req, res, next) ->
   res.redirect 'https://res.cloudinary.com/eeosk/image/upload/v1458866623/favicon_lock_2.ico'
   return
 
-app.get '/processing/create', (req, res, next) ->
-  utils.setStatus 'create', 'started'
-  res.json global.ee_status
-  return
+# app.post '/v0/processing/create', (req, res, next) ->
+#   utils.setStatus 'create', { running: true }
+#   res.json global.ee_status
+#   return
 
-app.get '/processing/update', (req, res, next) ->
-  utils.setStatus 'update', 'started'
+app.post '/v0/processing/update', (req, res, next) ->
   skuRunner.updateFromDropbox()
   res.json global.ee_status
   return
 
-app.get '/processing/status', (req, res, next) ->
+app.get '/v0/processing/status', (req, res, next) ->
   utils.setStatus()
   res.json global.ee_status
   return
