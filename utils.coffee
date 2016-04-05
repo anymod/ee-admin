@@ -1,5 +1,10 @@
 fns = {}
 
+fns.setStatus = (section, status) ->
+  global.ee_status ||= {}
+  return unless section and status
+  global.ee_status[section] = status
+
 fns.timestamp = () ->
   # 2016-03-30 00:29:47.280 +00:00
   dateNow = new Date()

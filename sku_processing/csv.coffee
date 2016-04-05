@@ -2,7 +2,7 @@ _         = require 'lodash'
 Promise   = require 'bluebird'
 parse     = require 'csv-parse'
 
-utils     = require './utils'
+utils     = require '../utils'
 mappings  = require './doba.mappings'
 
 csv = {}

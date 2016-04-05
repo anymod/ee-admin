@@ -32,9 +32,9 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       { min: 20000, max: null   }
     ]
     orderArray: [
-      { order: 'pa',   html: '$-$$$' },
+      { order: 'pa',  html: '$-$$$' },
       { order: 'pd',  html: '$$$-$' },
-      { order: 'ta',   html: 'A-Z' },
+      { order: 'ta',  html: 'A-Z' },
       { order: 'td',  html: 'Z-A' },
       { order: 'shipd', html: '% Shipping <i class="fa fa-sort-amount-desc"></i>' },
       { order: 'shipa', html: '% Shipping <i class="fa fa-sort-amount-asc"></i>' },

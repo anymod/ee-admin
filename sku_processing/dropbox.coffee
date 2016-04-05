@@ -2,6 +2,8 @@ request   = require 'request'
 _         = require 'lodash'
 Promise   = require 'bluebird'
 
+utils = '../utils'
+
 csv   = require './csv'
 sku   = require './sku'
 mappings = require './doba.mappings'

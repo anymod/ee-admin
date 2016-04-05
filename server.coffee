@@ -8,12 +8,15 @@ switch process.env.NODE_ENV
     process.env.PORT = 9000
 
 express     = require 'express'
-vhost       = require 'vhost'
+# vhost       = require 'vhost'
 morgan      = require 'morgan'
 path        = require 'path'
 serveStatic = require 'serve-static'
 bodyParser  = require 'body-parser'
 compression = require 'compression'
+
+utils       = require './utils'
+skuRunner   = require './sku_processing/runner'
 
 # Parent app
 app = express()
@@ -37,21 +40,38 @@ else
   app.use morgan 'dev'
 
 app.all '/favicon.ico', (req, res, next) ->
-  res.redirect 'https://res.cloudinary.com/eeosk/image/upload/v1456514495/favicon_lock.ico'
+  res.redirect 'https://res.cloudinary.com/eeosk/image/upload/v1458866623/favicon_lock_2.ico'
+  return
+
+app.get '/processing/create', (req, res, next) ->
+  utils.setStatus 'create', 'started'
+  res.json global.ee_status
+  return
+
+app.get '/processing/update', (req, res, next) ->
+  utils.setStatus 'update', 'started'
+  skuRunner.updateFromDropbox()
+  res.json global.ee_status
+  return
+
+app.get '/processing/status', (req, res, next) ->
+  utils.setStatus()
+  res.json global.ee_status
   return
 
 app.use bodyParser.urlencoded({ extended: true })
 app.use bodyParser.json()
 
 app.use serveStatic(path.join __dirname, 'dist')
+
 app.all '/*', (req, res, next) ->
   # Send index.html to support HTML5Mode
   res.sendFile 'index.html', root: path.join __dirname, 'dist'
   return
 
-app.use vhost('ee-admin.herokuapp.com', app)
-app.use vhost('localhost', app)
-app.use vhost('192.168.1.*', app)
+# app.use vhost('ee-admin.herokuapp.com', app)
+# app.use vhost('localhost', app)
+# app.use vhost('192.168.1.*', app)
 
 app.listen process.env.PORT, ->
   console.log 'Frontend listening on port ' + process.env.PORT

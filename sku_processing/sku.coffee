@@ -2,7 +2,7 @@ _         = require 'lodash'
 Promise   = require 'bluebird'
 sequelize = require '../config/sequelize/setup'
 
-utils = require './utils'
+utils = require '../utils'
 
 fns = {}
 
