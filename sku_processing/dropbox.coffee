@@ -49,7 +49,6 @@ dropbox.makeRequest = (type, opts) ->
   new Promise (resolve, reject) ->
     payload = dropbox.setPayload type, opts
     request.post payload, (err, res, body) ->
-      console.log body
       if err then return reject body
       if body.error_summary then return reject body
       resolve body
