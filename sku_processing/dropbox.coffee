@@ -50,7 +50,9 @@ dropbox.makeRequest = (type, opts) ->
     payload = dropbox.setPayload type, opts
     request.post payload, (err, res, body) ->
       console.log body
-      if err then reject body else resolve body
+      if err then return reject body
+      if body.error_summary then return reject body
+      resolve body
 
 dropbox.getFolder = (path) ->
   dropbox.makeRequest 'list_folder', { folder_path: path }
