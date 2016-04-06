@@ -43,8 +43,8 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
     eeBack.fns.processingStatusGET()
     .then (status) ->
       if typeof status is 'string' then throw 'problem getting process status'
-      if status?.update then _data.status.update[attr] = status.update[attr] for attr in Object.keys(status.update)
-      if status?.create then _data.status.create[attr] = status.create[attr] for attr in Object.keys(status.create)
+      for section in ['create', 'update', 'elasticsearch']
+        if status?[section] then _data.status[section][attr] = status[section][attr] for attr in Object.keys(status[section])
     .catch (err) ->
       _data.status.err = err
 
