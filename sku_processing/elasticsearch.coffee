@@ -50,9 +50,10 @@ read_attrs =
     'msrp'
   ]
 
-addSkusForElasticsearch = (body, product) ->
+addSkusForElasticsearch = (body, product, count) ->
   sequelize.query 'SELECT * FROM "Skus" where product_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
   .then (skus) ->
+    count?.skus += skus.length
     product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
     body.push { index: { _index: 'products_search', _type: 'product', _id: product.id } }
     body.push product
@@ -87,13 +88,15 @@ fns.createIndex = () ->
 
 fns.bulkIndex = () ->
   bulk_body = []
-  n = 0
+  count =
+    products: 0
+    skus: 0
   sequelize.query 'SELECT * FROM "Products" limit 10000', { type: sequelize.QueryTypes.SELECT }
   .then (products) ->
-    n = products.length
-    Promise.reduce products, ((total, product) -> addSkusForElasticsearch(bulk_body, product)), 0
+    count.products = products.length
+    Promise.reduce products, ((total, product) -> addSkusForElasticsearch(bulk_body, product, count)), 0
   .then () ->
-    n
+    count
   # .then () -> elasticsearch.client.bulk body: bulk_body
 
 # fns.bulkIndex()
