@@ -1,9 +1,10 @@
 <!-- Products -->
 <div id="products"
-  class="container-fluid max-width-900 position-relative text-center overflow-x-scroll"
+  class="container-fluid position-relative text-center overflow-x-scroll"
+  style="max-width: 1080px;"
   ng-if="$state.current.name != 'products.processing'">
 
-  <div ng-hide="products.ee.loading" class="margin-5 text-left" style="width: 870px;">
+  <div ng-hide="products.ee.loading" class="margin-5 text-left" style="width: 1050px;">
 
     <!-- Search -->
     <div class="full-width vert-5">
@@ -24,7 +25,7 @@
       </div>
       <!-- /Search products -->
       <!-- Search ids -->
-      <div class="inline-block vertical-align-bottom" style="width: 400px;">
+      <div class="inline-block vertical-align-bottom" style="width: 300px;">
         <form ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
           <input type="text" ng-model="products.ee.Products.search.inputs.supplier_id"
             class="form-control"
@@ -91,10 +92,10 @@
       <div class="btn btn-sm btn-default" disabled>Style&nbsp;&nbsp;<span class="caret"></div>
       <div class="btn btn-sm btn-default" disabled>Color&nbsp;&nbsp;<span class="caret"></div>
       <div class="btn btn-sm btn-default" disabled>Material&nbsp;&nbsp;<span class="caret"></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }" ><span class="bg-warning"> Out of stock </span></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }" ><span class="bg-danger"> Discontinued </span></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }" >Manual pricing</div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }" >Hidden</div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }"><span class="bg-warning"> Out of stock </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }"><span class="bg-danger"> Discontinued </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }"><span class="bg-light-info"> Manual pricing </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }"><span class="bg-muted"> Hidden </span></div>
     </div>
     <!-- /Filter -->
 
@@ -119,8 +120,8 @@
       Edits are immediately live
     </div>
 
-    <div class="text-left overflow-x-scroll vert-10">
-      <div class="vert-5" style="width: 880px; height: 32px;">
+    <div class="text-left vert-10">
+      <div class="vert-5" style="width: 1060px; height: 32px;">
         <div class="inline-block pull-left" style="width: 76px; height: 32px;"></div>
         <!-- Pricing header -->
         <div ng-if="$state.current.name == 'products.pricing'"
