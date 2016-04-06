@@ -65,9 +65,9 @@ fns.indexElasticsearch = () ->
     utils.setStatus 'elasticsearch', status
     es.bulkIndex()
   .then (count) ->
-    keen.addElasticsearchIndexEvent count
+    keen.addElasticsearchIndexEvent { count: count }
     status.message = 'indexed ' + count.products + ' products + ' + count.skus + ' skus'
-    status.info_array.push count
+    status.info_array.push { count: count }
   .catch (err) -> status.err = err
   .finally () ->
     status.running = false
