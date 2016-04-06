@@ -1,9 +1,10 @@
 <!-- Products -->
 <div id="products"
-  class="container-fluid max-width-900 position-relative text-center overflow-x-scroll"
+  class="container-fluid position-relative text-center overflow-x-scroll"
+  style="max-width: 1080px;"
   ng-if="$state.current.name != 'products.processing'">
 
-  <div ng-hide="products.ee.loading" class="margin-5 text-left" style="width: 870px;">
+  <div ng-hide="products.ee.loading" class="margin-5 text-left" style="width: 1050px;">
 
     <!-- Search -->
     <div class="full-width vert-5">
@@ -24,7 +25,7 @@
       </div>
       <!-- /Search products -->
       <!-- Search ids -->
-      <div class="inline-block vertical-align-bottom" style="width: 400px;">
+      <div class="inline-block vertical-align-bottom" style="width: 300px;">
         <form ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
           <input type="text" ng-model="products.ee.Products.search.inputs.supplier_id"
             class="form-control"
@@ -91,10 +92,10 @@
       <div class="btn btn-sm btn-default" disabled>Style&nbsp;&nbsp;<span class="caret"></div>
       <div class="btn btn-sm btn-default" disabled>Color&nbsp;&nbsp;<span class="caret"></div>
       <div class="btn btn-sm btn-default" disabled>Material&nbsp;&nbsp;<span class="caret"></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }" ><span class="bg-warning"> Out of stock </span></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }" ><span class="bg-danger"> Discontinued </span></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }" >Manual pricing</div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }" >Hidden</div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }"><span class="bg-warning"> Out of stock </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }"><span class="bg-danger"> Discontinued </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }"><span class="bg-light-info"> Manual pricing </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }"><span class="bg-muted"> Hidden </span></div>
     </div>
     <!-- /Filter -->
 
@@ -115,17 +116,17 @@
   </div>
 
   <div ng-hide="products.ee.Products.search.reading || products.ee.loading" class="margin-0-auto">
-    <div class="alert alert-info max-width-560 margin-0-auto pad-5" ng-hide="products.compact">
+    <div class="alert alert-info max-width-600 margin-0-auto pad-5" ng-hide="products.compact">
       Edits are immediately live
     </div>
 
-    <div class="text-left overflow-x-scroll vert-10">
-      <div class="vert-5" style="width: 880px; height: 32px;">
+    <div class="text-left vert-10">
+      <div class="vert-5" style="width: 1060px; height: 32px;">
         <div class="inline-block pull-left" style="width: 76px; height: 32px;"></div>
         <!-- Pricing header -->
         <div ng-if="$state.current.name == 'products.pricing'"
           ng-repeat="heading in ['Supply<br>price', 'Supply<br>shipping', 'eeosk<br>price', 'eeosk<br>shipping', 'eeosk<br>profit', 'Seller<br>price', 'Seller<br>profit', 'Seller<br>margin', 'MSRP', '% off<br>MSRP', 'Qty<br>Avail', 'Auto<br>pricing', 'Show in<br>stores']"
-          class="inline-block text-right text-muted pull-left line-height-1 width-56"
+          class="inline-block text-right text-muted pull-left line-height-1 width-58"
           ng-bind-html="heading">
         </div>
         <!-- /Pricing header -->
@@ -190,16 +191,16 @@
   <div class="btn btn-default" disabled>Elasticsearch: Index</div>
   <div class="vert-10">
     <uib-progressbar ng-if="products.ee.Processing.status.update.running && !products.ee.Processing.status.err"
-      class="progress-striped active max-width-560 margin-0-auto" style="height: 32px;">
+      class="progress-striped active max-width-600 margin-0-auto" style="height: 32px;">
       <div class="pad-5">{{ products.ee.Processing.status.update.message || 'Running' }}</div>
     </uib-progressbar>
-    <div ng-if="products.ee.Processing.status.err" class="alert alert-info max-width-560 margin-0-auto pad-5">
+    <div ng-if="products.ee.Processing.status.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
       Error: <span ng-bind="products.ee.Processing.status.err"></span>
     </div>
-    <div ng-if="products.ee.Processing.status.update.err" class="alert alert-info max-width-560 margin-0-auto pad-5">
+    <div ng-if="products.ee.Processing.status.update.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
       Error: <span ng-bind="products.ee.Processing.status.update.err"></span>
     </div>
-    <div ng-if="products.ee.Processing.status.create.err" class="alert alert-info max-width-560 margin-0-auto pad-5">
+    <div ng-if="products.ee.Processing.status.create.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
       Error: <span ng-bind="products.ee.Processing.status.create.err"></span>
     </div>
     <div ng-if="products.ee.Processing.status.update" class="vert-20 text-left">

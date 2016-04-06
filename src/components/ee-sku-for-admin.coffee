@@ -79,7 +79,6 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
       if !!scope.sku.length   then sku.length   = scope.sku.length
       if !!scope.sku.width    then sku.width    = scope.sku.width
       if !!scope.sku.height   then sku.height   = scope.sku.height
-      console.log 'sku', sku
       eeBack.fns.skuPUT sku, eeAuth.fns.getToken()
       .then (prod) ->
         scope.sku = prod
@@ -92,17 +91,48 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
       if scope.sku[attr] isnt '' then scope.sku[attr] += ', '
       scope.sku[attr] += val
 
+    # TODO replace these methods with direct Sku update
     scope.updatePricing = () ->
       product = {
-        id: scope.sku.id
+        id: scope.sku.product_id
         skus: [scope.sku]
       }
-      eeProduct.fns.update product, [], ['baseline_price', 'shipping_price', 'regular_price', 'auto_pricing', 'hide_from_catalog']
+      eeProduct.fns.update product, [], ['baseline_price', 'shipping_price', 'regular_price', 'auto_pricing']
       .then (prod) ->
         for sku in prod.skus
           if sku.id is scope.sku.id
             scope.sku[attr] = sku[attr] for attr in Object.keys(sku)
             scope.sku.saved = true
         scope.showEdit = false
+
+    # TODO replace these methods with direct Sku update
+    scope.toggleHidden = () ->
+      scope.sku.hide_from_catalog = !scope.sku.hide_from_catalog
+      product = {
+        id: scope.sku.product_id
+        skus: [{
+          id: scope.sku.id
+          hide_from_catalog: scope.sku.hide_from_catalog
+        }]
+      }
+      eeProduct.fns.update product, [], ['hide_from_catalog']
+      .then (prod) ->
+        for sku in prod.skus
+          if sku.id is scope.sku.id
+            scope.sku[attr] = sku[attr] for attr in Object.keys(sku)
+            scope.sku.saved = true
+
+    # TODO replace these methods with direct Sku update
+    scope.updateStyleColorMaterial = () ->
+      product = {
+        id: scope.sku.product_id
+        skus: [scope.sku]
+      }
+      eeProduct.fns.update product, [], ['style', 'color', 'material']
+      .then (prod) ->
+        for sku in prod.skus
+          if sku.id is scope.sku.id
+            scope.sku[attr] = sku[attr] for attr in Object.keys(sku)
+            scope.sku.saved = true
 
     return

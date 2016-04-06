@@ -28,9 +28,6 @@ angular.module('products').config ($stateProvider) ->
     .state 'products.properties',
       url:    '/properties'
       views:  views
-    .state 'products.links',
-      url:    '/links'
-      views:  views
     .state 'products.processing',
       url:    '/processing'
       views:  views
