@@ -23,7 +23,7 @@
 
       <!-- Text -->
       <div ng-if="$state.current.name == 'products.text'">
-        <form ng-submit="update(product)" class="margin-0">
+        <form ng-submit="updateText(product)" class="margin-0">
           <table class="table table-striped table-condensed table-bordered margin-0">
             <tr ng-class="{ success: product.saved }">
               <th colspan=4>
@@ -33,7 +33,7 @@
                 <small class="text-muted">product id: <span ng-bind="product.id"></span></small>
                 <div class="pull-right">
                   <i class="fa fa-fw fa-check text-success" ng-show="product.saved"></i>
-                  <button type="submit" class="btn btn-sm btn-default">Submit</button>
+                  <button type="submit" class="btn btn-xs btn-default">Submit</button>
                 </div>
               </th>
             </tr>

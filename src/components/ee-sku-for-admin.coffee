@@ -1,6 +1,6 @@
 angular.module 'ee-sku-for-admin', []
 
-angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, eeBack, eeModal) ->
+angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, eeBack, eeProduct, eeModal) ->
   templateUrl: 'components/ee-sku-for-admin.html'
   restrict: 'EA'
   replace: true
@@ -14,6 +14,8 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
     scope.$state = $state
 
     scope.sku.updating = false
+    scope.showEdit = false
+    scope.showEditor = () -> scope.showEdit = true
 
     scope.taxonomy =
       current:
@@ -89,5 +91,18 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
       if !scope.sku[attr] then scope.sku[attr] = ''
       if scope.sku[attr] isnt '' then scope.sku[attr] += ', '
       scope.sku[attr] += val
+
+    scope.updatePricing = () ->
+      product = {
+        id: scope.sku.id
+        skus: [scope.sku]
+      }
+      eeProduct.fns.update product, [], ['baseline_price', 'shipping_price', 'regular_price', 'auto_pricing', 'hide_from_catalog']
+      .then (prod) ->
+        for sku in prod.skus
+          if sku.id is scope.sku.id
+            scope.sku[attr] = sku[attr] for attr in Object.keys(sku)
+            scope.sku.saved = true
+        scope.showEdit = false
 
     return

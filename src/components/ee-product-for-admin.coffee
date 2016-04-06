@@ -89,7 +89,7 @@ angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, e
       if scope.product[attr] isnt '' then scope.product[attr] += ', '
       scope.product[attr] += val
 
-    scope.update = (product) ->
-      eeProduct.fns.update product
+    scope.updateText = () ->
+      eeProduct.fns.update scope.product, ['title', 'content'], ['selection_text', 'length', 'width', 'height', 'weight']
 
     return

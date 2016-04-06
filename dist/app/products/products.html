@@ -115,7 +115,7 @@
   </div>
 
   <div ng-hide="products.ee.Products.search.reading || products.ee.loading" class="margin-0-auto">
-    <div class="alert alert-info max-width-600 margin-0-auto pad-5" ng-hide="products.compact">
+    <div class="alert alert-info max-width-560 margin-0-auto pad-5" ng-hide="products.compact">
       Edits are immediately live
     </div>
 
@@ -124,8 +124,8 @@
         <div class="inline-block pull-left" style="width: 76px; height: 32px;"></div>
         <!-- Pricing header -->
         <div ng-if="$state.current.name == 'products.pricing'"
-          ng-repeat="heading in ['Supply<br>price', 'Supply<br>shipping', 'eeosk<br>price', 'eeosk<br>shipping', 'eeosk<br>profit', 'Seller<br>price', 'MSRP', '% off', 'Quantity', 'Automate<br>pricing', 'Show in<br>stores']"
-          class="inline-block text-right text-muted pull-left line-height-1 width-70"
+          ng-repeat="heading in ['Supply<br>price', 'Supply<br>shipping', 'eeosk<br>price', 'eeosk<br>shipping', 'eeosk<br>profit', 'Seller<br>price', 'Seller<br>profit', 'Seller<br>margin', 'MSRP', '% off<br>MSRP', 'Qty<br>Avail', 'Auto<br>pricing', 'Show in<br>stores']"
+          class="inline-block text-right text-muted pull-left line-height-1 width-56"
           ng-bind-html="heading">
         </div>
         <!-- /Pricing header -->
@@ -145,7 +145,6 @@
         </div>
         <!-- /Links header -->
       </div>
-
 
       <!-- Results -->
       <ee-product-for-admin
@@ -191,17 +190,17 @@
   <div class="btn btn-default" disabled>Elasticsearch: Index</div>
   <div class="vert-10">
     <uib-progressbar ng-if="products.ee.Processing.status.update.running && !products.ee.Processing.status.err"
-      class="progress-striped active max-width-600 margin-0-auto" style="height: 32px;">
+      class="progress-striped active max-width-560 margin-0-auto" style="height: 32px;">
       <div class="pad-5">{{ products.ee.Processing.status.update.message || 'Running' }}</div>
     </uib-progressbar>
-    <div ng-if="products.ee.Processing.status.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
+    <div ng-if="products.ee.Processing.status.err" class="alert alert-info max-width-560 margin-0-auto pad-5">
       Error: <span ng-bind="products.ee.Processing.status.err"></span>
     </div>
-    <div ng-if="products.ee.Processing.status.update.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
-      Error: <span ng-bind="products.ee.Processing.status.update.err.error_summary"></span>
+    <div ng-if="products.ee.Processing.status.update.err" class="alert alert-info max-width-560 margin-0-auto pad-5">
+      Error: <span ng-bind="products.ee.Processing.status.update.err"></span>
     </div>
-    <div ng-if="products.ee.Processing.status.create.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
-      Error: <span ng-bind="products.ee.Processing.status.create.err.error_summary"></span>
+    <div ng-if="products.ee.Processing.status.create.err" class="alert alert-info max-width-560 margin-0-auto pad-5">
+      Error: <span ng-bind="products.ee.Processing.status.create.err"></span>
     </div>
     <div ng-if="products.ee.Processing.status.update" class="vert-20 text-left">
       <uib-accordion>

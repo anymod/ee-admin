@@ -1,36 +1,76 @@
-<div ng-class="{ 'bg-warning': sku.quantity < 1, 'bg-danger': sku.discontinued }">
+<div ng-class="{ 'bg-warning': sku.quantity < 1, 'bg-danger': sku.discontinued, 'bg-light-success': sku.saved }">
   <!-- Pricing -->
   <div ng-if="$state.current.name == 'products.pricing'"
     class="full-width text-right"
     style="width: 790px; height: 24px; border-bottom: 1px solid #eceff1;">
-    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.supply_price | centToDollar"></div>
-    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.supply_shipping_price | centToDollar"></div>
 
-    <div class="inline-block pull-left width-70">
-      <strong ng-bind="sku.baseline_price | centToDollar"></strong>
+    <!-- supply pricing -->
+    <div class="inline-block pull-left text-muted">
+      <div class="width-56 min-height-20" ng-bind="sku.supply_price | centToDollar"></div>
     </div>
-    <div class="inline-block pull-left width-70">
-      <strong ng-bind="sku.shipping_price | centToDollar"></strong>
+    <div class="inline-block pull-left text-muted">
+      <div class="width-56 min-height-20" ng-bind="sku.supply_shipping_price | centToDollar"></div>
     </div>
+    <!-- /supply pricing -->
 
-    <div class="inline-block pull-left width-70">
-      <strong ng-bind="sku.baseline_price + sku.shipping_price - sku.supply_price - sku.supply_shipping_price | centToDollar"
-        ng-class="{ 'text-danger': sku.baseline_price + sku.shipping_price - sku.supply_price - sku.supply_shipping_price < 0 }"></strong>
+    <!-- eeosk pricing -->
+    <div class="inline-block pull-left width-56">
+      <strong ng-hide="showEdit" ng-bind="sku.baseline_price | centToDollar"></strong>
+      <input type="number" ng-show="showEdit" ng-model="sku.baseline_price" class="full-width text-right pad-0" style="margin-top: -2px;"/>
     </div>
+    <div class="inline-block pull-left width-56">
+      <strong ng-hide="showEdit" ng-bind="sku.shipping_price | centToDollar"></strong>
+      <input type="number" ng-show="showEdit" ng-model="sku.shipping_price" class="full-width text-right pad-0" style="margin-top: -2px;"/>
+    </div>
+    <div class="inline-block pull-left width-56">
+      <strong ng-bind="(sku.baseline_price + sku.shipping_price - sku.supply_price - sku.supply_shipping_price) | centToDollar"
+        ng-class="{ 'text-danger': sku.baseline_price + sku.shipping_price - sku.supply_price - sku.supply_shipping_price < 0 }">
+      </strong>
+    </div>
+    <!-- /eeosk pricing -->
 
-    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.regular_price | centToDollar"></div>
-    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.msrp | centToDollar"></div>
-    <div class="inline-block pull-left text-muted width-70" ng-class="{ 'text-danger': sku.msrp < sku.regular_price }">
+    <!-- seller pricing -->
+    <div class="inline-block pull-left text-muted">
+      <div class="width-56 min-height-20">
+        <strong ng-hide="showEdit" ng-bind="sku.regular_price | centToDollar"></strong>
+        <input type="number" ng-show="showEdit" ng-model="sku.regular_price" class="full-width text-right pad-0" style="margin-top: -2px;"/>
+      </div>
+    </div>
+    <div class="inline-block pull-left text-muted">
+      <div class="width-56 min-height-20" ng-class="{ 'text-danger': sku.regular_price < sku.baseline_price }">
+        <span ng-bind="(sku.regular_price - sku.baseline_price) | centToDollar"></span>
+      </div>
+    </div>
+    <div class="inline-block pull-left text-muted">
+      <div class="width-56 min-height-20" ng-class="{ 'text-danger': sku.regular_price < sku.baseline_price }">
+        <span ng-bind="(100*(1 - sku.baseline_price/sku.regular_price)) | number:1"></span>%
+      </div>
+    </div>
+    <!-- /seller pricing -->
+
+    <!-- msrp -->
+    <div class="inline-block pull-left text-muted width-56">
+      <div class="width-56 min-height-20" ng-bind="sku.msrp | centToDollar"></div>
+    </div>
+    <div class="inline-block pull-left text-muted width-56" ng-class="{ 'text-danger': sku.msrp < sku.regular_price }">
       <span ng-bind="100*(sku.msrp - sku.regular_price)/sku.msrp | number:1"></span>%
     </div>
+    <!-- /msrp -->
 
-    <div class="inline-block pull-left text-muted width-70" ng-bind="sku.quantity"></div>
-
-    <div class="inline-block pull-left width-70">
-      <input type="checkbox" ng-checked="sku.auto_pricing">
+    <div class="inline-block pull-left text-muted">
+      <div class="width-56 min-height-20" ng-bind="sku.quantity"></div>
     </div>
-    <div class="inline-block pull-left width-70">
+
+    <div class="inline-block pull-left width-56">
+      <input type="checkbox" ng-checked="sku.auto_pricing" ng-disabled="!showEdit">
+    </div>
+    <div class="inline-block pull-left width-56">
       <i class="fa fa-fw fa-lg vert-2" ng-class="sku.hide_from_catalog ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'"></i>
+    </div>
+
+    <div class="inline-block pull-left width-56">
+      <div class="btn btn-xs btn-default" ng-click="showEditor()" ng-hide="showEdit">Edit</div>
+      <div class="btn btn-xs btn-default" ng-show="showEdit" ng-click="updatePricing()">Submit</div>
     </div>
 
   </div>
@@ -89,19 +129,17 @@
   <!-- Links -->
   <div ng-if="$state.current.name == 'products.links'">
     <!-- <pre>{{ sku | json }}</pre> -->
-    <div class="inline-block text-right width-70">
-      <span ng-bind="sku.regular_price | centToDollar"></span> +
-    </div>
-    <div class="inline-block text-right width-70">
-      <span ng-bind="sku.shipping_price | centToDollar"></span> =
-    </div>
-    <div class="inline-block text-right width-70">
+    <div class="inline-block text-right width-56" ng-bind="sku.regular_price | centToDollar"></div>
+    <div class="inline-block text-center width-56">+</div>
+    <div class="inline-block text-right width-56" ng-bind="sku.shipping_price | centToDollar"></div>
+    <div class="inline-block text-center width-56">=</div>
+    <div class="inline-block text-right width-56">
       <strong ng-bind="sku.regular_price + sku.shipping_price | centToDollar"></strong>
     </div>
 
     <div class="btn-group" style="margin-left: 20px;">
       <a href="https://www.doba.com/members/my-inventory/product/details/{{ externalId }}" target="_blank" class="btn btn-xs btn-default">doba</a>
-      <a href="https://www.doba.com/members/catalog/search?adv_filter_update%5B%5D=0&shipping_filter=all&min_qty=0&adv_filter_update%5B%5D=0&adv_filter_update%5Bout_of_stock%5D=on&adv_filter_update%5Bdiscontinued%5D=on&adv_filter_update%5Brefurbished%5D=on&terms={{ sku.identifier }}" target="_blank" class="btn btn-xs btn-default">doba</a>
+      <!-- <a href="https://www.doba.com/members/catalog/search?adv_filter_update%5B%5D=0&shipping_filter=all&min_qty=0&adv_filter_update%5B%5D=0&adv_filter_update%5Bout_of_stock%5D=on&adv_filter_update%5Bdiscontinued%5D=on&adv_filter_update%5Brefurbished%5D=on&terms={{ sku.identifier }}" target="_blank" class="btn btn-xs btn-default">doba</a> -->
       <a href="https://www.google.com/search?q={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank" class="btn btn-xs btn-default">google</a>
       <a href="http://www.amazon.com/s/?field-keywords={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank" class="btn btn-xs btn-default">amazon</a>
       <a href="http://www.wayfair.com/keyword.php?keyword={{ sku.selection_text | pluses }}" target="_blank" class="btn btn-xs btn-default">wayfair</a>
