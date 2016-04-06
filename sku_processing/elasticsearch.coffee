@@ -95,9 +95,8 @@ fns.bulkIndex = () ->
   .then (products) ->
     count.products = products.length
     Promise.reduce products, ((total, product) -> addSkusForElasticsearch(bulk_body, product, count)), 0
-  .then () ->
-    count
   .then () -> elasticsearch.client.bulk body: bulk_body
+  .then () -> count
 
 # fns.bulkIndex()
 # .then (n) ->
