@@ -54,7 +54,8 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
       _getStatus()
       .then () ->
         if _data.status.err then _stopPolling()
-        if !_data.status.update.running and !_data.status.create.running then _stopPolling()
+        for section in ['update', 'create', 'elasticsearch']
+          if !_data.status[section].running then _stopPolling()
     , 2000)
 
   _stopPolling = () ->
