@@ -26,6 +26,19 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
       _data.status.err = err
       _data.status.update.running = false
 
+  _indexElasticsearch = () ->
+    _data.status ||= {}
+    _data.status.err = null
+    _data.status.elasticsearch =
+      running: true
+    _startPolling()
+    eeBack.fns.processingElasticsearchPOST()
+    .then (status) ->
+      if status?.elasticsearch then _data.status.elasticsearch[attr] = status.elasticsearch[attr] for attr in Object.keys(status.elasticsearch)
+    .catch (err) ->
+      _data.status.err = err
+      _data.status.elasticsearch.running = false
+
   _getStatus = () ->
     eeBack.fns.processingStatusGET()
     .then (status) ->
@@ -52,3 +65,4 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
   data: _data
   fns:
     update: _update
+    indexElasticsearch:  _indexElasticsearch

@@ -188,28 +188,28 @@
   <div class="btn btn-default" ng-click="products.processingFns.update()">Dropbox: Update</div>
   <div class="btn btn-default" disabled>Dropbox: Create</div>
   <!-- <div class="btn btn-default">Repricing</div> -->
-  <div class="btn btn-default" disabled>Elasticsearch: Index</div>
+  <div class="btn btn-default" ng-click="products.processingFns.indexElasticsearch()">Elasticsearch: Index</div>
   <div class="vert-10">
-    <uib-progressbar ng-if="products.ee.Processing.status.update.running && !products.ee.Processing.status.err"
+    <uib-progressbar ng-repeat="section in ['update', 'create', 'elasticsearch']"
+      ng-if="products.ee.Processing.status[section].running && !products.ee.Processing.status.err"
       class="progress-striped active max-width-600 margin-0-auto" style="height: 32px;">
-      <div class="pad-5">{{ products.ee.Processing.status.update.message || 'Running' }}</div>
+      <div class="pad-5">{{ products.ee.Processing.status[section].message || 'Running' }}</div>
     </uib-progressbar>
     <div ng-if="products.ee.Processing.status.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
       Error: <span ng-bind="products.ee.Processing.status.err"></span>
     </div>
-    <div ng-if="products.ee.Processing.status.update.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
-      Error: <span ng-bind="products.ee.Processing.status.update.err"></span>
+    <div ng-repeat="section in ['update', 'create', 'elasticsearch']"
+      ng-if="products.ee.Processing.status[section].err"
+      class="alert alert-info max-width-600 margin-0-auto pad-5">
+      Error: <span ng-bind="products.ee.Processing.status[section].err"></span>
     </div>
-    <div ng-if="products.ee.Processing.status.create.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
-      Error: <span ng-bind="products.ee.Processing.status.create.err"></span>
-    </div>
-    <div ng-if="products.ee.Processing.status.update" class="vert-20 text-left">
+    <div class="vert-20 text-left">
       <uib-accordion>
-        <uib-accordion-group heading="Update info" ng-if="products.ee.Processing.status.update.message" is-open="true">
-          <pre><small>{{ products.ee.Processing.status.update | json }}</small></pre>
-        </uib-accordion-group>
-        <uib-accordion-group heading="Create info" ng-if="products.ee.Processing.status.create.message" is-open="true">
-          <pre><small>{{ products.ee.Processing.status.create | json }}</small></pre>
+        <uib-accordion-group
+          ng-repeat="section in ['update', 'create', 'elasticsearch']"
+          heading="{{ section }} info"
+          ng-if="products.ee.Processing.status[section].message">
+          <pre><small>{{ products.ee.Processing.status[section] | json }}</small></pre>
         </uib-accordion-group>
       </uib-accordion>
     </div>

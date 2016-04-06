@@ -5,6 +5,7 @@ argv    = require('yargs').argv
 utils   = require '../utils'
 
 dropbox = require './dropbox'
+es      = require './elasticsearch'
 csv     = require './csv'
 sku     = require './sku'
 keen    = require './keen'
@@ -47,6 +48,34 @@ fns.updateFromDropbox = () ->
   .finally () ->
     status.running = false
     utils.setStatus 'update', status
+
+fns.indexElasticsearch = () ->
+  status =
+    running: true
+    message: 'deleting existing index'
+    info_array: []
+  utils.setStatus 'elasticsearch', status
+  es.deleteIndex()
+  .then () ->
+    status.message = 'building new index'
+    utils.setStatus 'elasticsearch', status
+    es.createIndex()
+  .then () ->
+    status.message = 'populating new index'
+    utils.setStatus 'elasticsearch', status
+    es.bulkIndex()
+  .then (n) -> status.message = 'indexed ' + n + ' products'
+  .catch (err) -> status.err = err
+  .finally () ->
+    status.running = false
+    utils.setStatus 'elasticsearch', status
+
+# fns.indexElasticsearch()
+# .then (message) ->
+#   console.log 'finished ' + message
+# .catch (err) -> console.log err
+# .finally () -> process.exit()
+
 
 # if argv.finish
 #   ### coffee sku_processing/runner.coffee --finish ###

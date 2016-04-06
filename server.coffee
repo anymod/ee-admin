@@ -53,6 +53,11 @@ app.post '/v0/processing/update', (req, res, next) ->
   res.json global.ee_status
   return
 
+app.post '/v0/processing/elasticsearch', (req, res, next) ->
+  skuRunner.indexElasticsearch()
+  res.json global.ee_status
+  return
+
 app.get '/v0/processing/status', (req, res, next) ->
   utils.setStatus()
   res.json global.ee_status

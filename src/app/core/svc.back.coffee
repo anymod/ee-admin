@@ -197,3 +197,9 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl, e
         method: 'POST'
         url: eeAdminUrl + 'processing/update'
       }
+
+    processingElasticsearchPOST: () ->
+      _makeRequest {
+        method: 'POST'
+        url: eeAdminUrl + 'processing/elasticsearch'
+      }
