@@ -185,10 +185,16 @@
 <!-- Processing -->
 <div ng-if="$state.current.name == 'products.processing'"
   class="container max-width-900 text-center">
-  <div class="btn btn-default" ng-click="products.processingFns.update()">Dropbox: Update</div>
-  <div class="btn btn-default" disabled>Dropbox: Create</div>
+  <div class="btn btn-default" ng-click="products.processingFns.update()" ng-disabled="products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running">
+    Dropbox: Update
+  </div>
+  <div class="btn btn-default" ng-disabled="true || products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running">
+    Dropbox: Create
+  </div>
+  <div class="btn btn-default" ng-click="products.processingFns.indexElasticsearch()" ng-disabled="products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running">
+    Elasticsearch: Index
+  </div>
   <!-- <div class="btn btn-default">Repricing</div> -->
-  <div class="btn btn-default" ng-click="products.processingFns.indexElasticsearch()">Elasticsearch: Index</div>
   <div class="vert-10">
     <uib-progressbar ng-repeat="section in ['update', 'create', 'elasticsearch']"
       ng-if="products.ee.Processing.status[section].running && !products.ee.Processing.status.err"
