@@ -62,29 +62,31 @@ addSkusForElasticsearch = (body, product, count) ->
       body.push sku
 
 fns.deleteIndex = () ->
-  # new Promise (resolve) -> resolve true
-  elasticsearch.client.indices.delete { index: 'products_search' }
+  new Promise (resolve, reject) ->
+    elasticsearch.client.indices.delete({ index: 'products_search' })
+    .then () -> resolve true
 
 fns.createIndex = () ->
-  # new Promise (resolve) -> resolve true
-  elasticsearch.client.indices.create({
-    index: 'products_search'
-    body:
-      settings:
-        number_of_shards: 1
-        analysis:
-          analyzer: 'english'
-            # english:
-            #   tokenizer: 'standard'
-            #   filter: ['lowercase']
-      mappings:
-        product:
-          properties: index_attrs.product
-        sku:
-          _parent: type: 'product'
-          properties: index_attrs.sku
+  new Promise (resolve, reject) ->
+    elasticsearch.client.indices.create({
+      index: 'products_search'
+      body:
+        settings:
+          number_of_shards: 1
+          analysis:
+            analyzer: 'english'
+              # english:
+              #   tokenizer: 'standard'
+              #   filter: ['lowercase']
+        mappings:
+          product:
+            properties: index_attrs.product
+          sku:
+            _parent: type: 'product'
+            properties: index_attrs.sku
 
-  })
+    })
+    .then () -> resolve true
 
 fns.bulkIndex = () ->
   bulk_body = []
