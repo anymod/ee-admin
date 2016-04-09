@@ -9,6 +9,7 @@ es      = require './elasticsearch'
 csv     = require './csv'
 sku     = require './sku'
 keen    = require './keen'
+pricing = require './pricing'
 
 fns = {}
 
@@ -79,6 +80,20 @@ fns.indexElasticsearch = () ->
 # .catch (err) -> console.log err
 # .finally () -> process.exit()
 
+
+if argv.update_pricing
+  ### coffee sku_processing/runner.coffee --update_pricing ###
+  sku.findAll()
+  .then (skus) ->
+    updateSku = (s) ->
+      obj = pricing.getValues(s.supply_price, s.supply_shipping_price)
+      console.log obj
+      s[attr] = obj[attr] for attr in Object.keys(obj)
+      sku.updatePricing(s)
+    Promise.reduce skus, ((total, s) -> updateSku(s)), 0
+  .catch (err) -> console.log err
+  .finally () ->
+    process.exit()
 
 # if argv.finish
 #   ### coffee sku_processing/runner.coffee --finish ###
