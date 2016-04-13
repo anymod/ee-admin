@@ -8,19 +8,18 @@ dropbox = require './dropbox'
 es      = require './elasticsearch'
 csv     = require './csv'
 sku     = require './sku'
+product = require './product'
 keen    = require './keen'
 pricing = require './pricing'
 
 fns = {}
 
-processFile = (path, status) ->
+processPricingFile = (path, status) ->
   status?.message = 'processing ' + path
   utils.setStatus 'update', status
   dropbox.getFile path
-  .then (file) -> csv.parseFile file
-  .then (skus) ->
-    # console.log 'skus', skus
-    sku.updateSkus skus
+  .then (file) -> csv.parseSkuPricingFile file
+  .then (skus) -> sku.updateSkus skus
   .then (info) ->
     info.path = path
     file_parts = path.split(/\//g)
@@ -32,6 +31,19 @@ processFile = (path, status) ->
       utils.setStatus 'update', status
   .then () -> dropbox.finishFile path
 
+processSkuSpellingFile = (path, status) ->
+  utils.setStatus 'spelling', 'Processing skus in ' + path
+  dropbox.getFile path
+  .then (file) -> csv.parseSkuSelectionTextFile file
+  .then (skus) -> sku.updateSkusSpelling skus
+  .then () -> dropbox.finishFile path
+
+processProductSpellingFile = (path, status) ->
+  utils.setStatus 'spelling', 'Processing products in ' + path
+  dropbox.getFile path
+  .then (file) -> csv.parseProductTitleAndContentFile file
+  .then (products) -> product.updateProductsSpelling products
+  .then () -> dropbox.finishFile path
 
 fns.updateFromDropbox = () ->
   status =
@@ -43,7 +55,7 @@ fns.updateFromDropbox = () ->
   .then (rows) ->
     files = _.filter rows.entries, { '.tag': 'file' }
     if !files or files.length < 1 then throw 'no files found in /update'
-    Promise.reduce files, ((total, file) -> processFile file.path_lower, status), 0
+    Promise.reduce files, ((total, file) -> processPricingFile file.path_lower, status), 0
   .then () -> status.message = 'completed ' + status.info_array.length + ' update files'
   .catch (err) -> status.err = err
   .finally () ->
@@ -91,6 +103,30 @@ if argv.update_pricing
       s[attr] = obj[attr] for attr in Object.keys(obj)
       sku.updatePricing(s)
     Promise.reduce skus, ((total, s) -> updateSku(s)), 0
+  .catch (err) -> console.log err
+  .finally () ->
+    process.exit()
+
+else if argv.update_sku_spelling
+  ### coffee sku_processing/runner.coffee --update_sku_spelling ###
+  utils.setStatus 'spelling', 'Starting sku spelling update'
+  dropbox.getFolder '/additional/sku_spelling'
+  .then (rows) ->
+    files = _.filter rows.entries, { '.tag': 'file' }
+    if !files or files.length < 1 then throw 'no files found in /additional/sku_spelling'
+    Promise.reduce files, ((total, file) -> processSkuSpellingFile file.path_lower), 0
+  .catch (err) -> console.log err
+  .finally () ->
+    process.exit()
+
+else if argv.update_product_spelling
+  ### coffee sku_processing/runner.coffee --update_product_spelling ###
+  utils.setStatus 'spelling', 'Starting product spelling update'
+  dropbox.getFolder '/additional/product_spelling'
+  .then (rows) ->
+    files = _.filter rows.entries, { '.tag': 'file' }
+    if !files or files.length < 1 then throw 'no files found in /additional/product_spelling'
+    Promise.reduce files, ((total, file) -> processProductSpellingFile file.path_lower), 0
   .catch (err) -> console.log err
   .finally () ->
     process.exit()

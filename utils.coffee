@@ -5,6 +5,7 @@ fns.setStatus = (section, status) ->
   return unless section and status
   global.ee_status[section] = status
   console.log global.ee_status
+  global.ee_status
 
 fns.timestamp = () ->
   # 2016-03-30 03:32:47PM

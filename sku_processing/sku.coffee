@@ -87,4 +87,16 @@ fns.updateSku = (reference_sku, info) ->
       info.large_price_change_identifiers.push reference_sku.identifier
     fns.updateAttrs reference_sku
 
+fns.updateSkusSpelling = (reference_skus) ->
+  info = {}
+  Promise.reduce reference_skus, ((total, sku) -> fns.updateSkuSpelling(sku, info)), 0
+  .then () ->
+    utils.setStatus 'spelling', 'Updated ' + reference_skus.length + ' skus'
+    info
+
+fns.updateSkuSpelling = (reference_sku, info) ->
+  return if !reference_sku or !reference_sku.id or !reference_sku.selection_text
+  q = 'UPDATE "Skus" SET selection_text = ?, updated_at = ? WHERE id = ?'
+  sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [reference_sku.selection_text, utils.timestamp(), reference_sku.id] }
+
 module.exports = fns
