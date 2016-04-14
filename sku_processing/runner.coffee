@@ -86,26 +86,45 @@ fns.indexElasticsearch = () ->
     status.running = false
     utils.setStatus 'elasticsearch', status
 
+fns.runPricingAlgorithm = () ->
+  status =
+    running: true
+    message: 'reading skus'
+    manual_pricing: []
+  n_skus = 0
+  utils.setStatus 'pricing', status
+  sku.findAll()
+  .then (skus) ->
+    n_skus = skus.length
+    status.message = 'updating pricing for ' + n_skus + ' skus'
+    utils.setStatus 'pricing', status
+    updateSku = (s) ->
+      obj = pricing.getValues(s.supply_price, s.supply_shipping_price)
+      s[attr] = obj[attr] for attr in Object.keys(obj)
+      if s.auto_pricing
+        sku.updatePricing(s)
+      else
+        status.manual_pricing.push { id: s.id, identifier: s.identifier }
+    Promise.reduce skus, ((total, s) -> updateSku(s)), 0
+  .then () ->
+    status.message = 'updated pricing for ' + (n_skus - status.manual_pricing.length) + ' skus; ' + status.manual_pricing.length + ' skipped due to manual pricing'
+  .catch (err) -> status.err = err
+  .finally () ->
+    status.running = false
+    utils.setStatus 'pricing', status
+
 # fns.indexElasticsearch()
 # .then (message) ->
 #   console.log 'finished ' + message
 # .catch (err) -> console.log err
 # .finally () -> process.exit()
 
-
 if argv.update_pricing
   ### coffee sku_processing/runner.coffee --update_pricing ###
-  sku.findAll()
-  .then (skus) ->
-    updateSku = (s) ->
-      obj = pricing.getValues(s.supply_price, s.supply_shipping_price)
-      # console.log obj
-      s[attr] = obj[attr] for attr in Object.keys(obj)
-      sku.updatePricing(s)
-    Promise.reduce skus, ((total, s) -> updateSku(s)), 0
+  fns.runPricingAlgorithm()
+  .then () -> console.log 'Finished'
   .catch (err) -> console.log err
-  .finally () ->
-    process.exit()
+  .finally () -> process.exit()
 
 else if argv.update_sku_spelling
   ### coffee sku_processing/runner.coffee --update_sku_spelling ###

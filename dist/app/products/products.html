@@ -117,7 +117,7 @@
 
   <div ng-hide="products.ee.Products.search.reading || products.ee.loading" class="margin-0-auto">
     <div class="alert alert-info max-width-600 margin-0-auto pad-5" ng-hide="products.compact">
-      Run Elasticsearch: Index after edits.&nbsp;&nbsp;&nbsp;Edits are live.  
+      Run Elasticsearch: Index after edits.&nbsp;&nbsp;&nbsp;Edits are live.
     </div>
 
     <div class="text-left vert-10">
@@ -185,13 +185,16 @@
 <!-- Processing -->
 <div ng-if="$state.current.name == 'products.processing'"
   class="container max-width-900 text-center">
-  <div class="btn btn-default" ng-click="products.processingFns.update()" ng-disabled="products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running">
+  <div class="btn btn-default" ng-click="products.processingFns.update()" ng-disabled="products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running || products.ee.Processing.status.pricing.running">
     Dropbox: Update
   </div>
-  <div class="btn btn-default" ng-disabled="true || products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running">
+  <div class="btn btn-default" ng-disabled="true || products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running || products.ee.Processing.status.pricing.running">
     Dropbox: Create
   </div>
-  <div class="btn btn-default" ng-click="products.processingFns.indexElasticsearch()" ng-disabled="products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running">
+  <div class="btn btn-default" ng-click="products.processingFns.runPricingAlgorithm()" ng-disabled="products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running || products.ee.Processing.status.pricing.running">
+    Pricing: Run Algorithm
+  </div>
+  <div class="btn btn-default" ng-click="products.processingFns.indexElasticsearch()" ng-disabled="products.ee.Processing.status.update.running || products.ee.Processing.status.create.running || products.ee.Processing.status.elasticsearch.running || products.ee.Processing.status.pricing.running">
     Elasticsearch: Index
   </div>
   <!-- <div class="btn btn-default">Repricing</div> -->

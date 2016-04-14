@@ -203,3 +203,9 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl, e
         method: 'POST'
         url: eeAdminUrl + 'processing/elasticsearch'
       }
+
+    processingPricingPOST: () ->
+      _makeRequest {
+        method: 'POST'
+        url: eeAdminUrl + 'processing/pricing'
+      }
