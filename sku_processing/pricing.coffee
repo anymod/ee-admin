@@ -59,10 +59,14 @@ fns.getRegularPrice = (baseline_price) ->
 
 fns.getValues = (supply_price, supply_shipping_price) ->
   # baseline_price, regular_price, shipping_price
-  shipping_price = fns.shippingPriceGuess(supply_price, supply_shipping_price)
-  baseline_price = fns.getBaselinePrice(supply_price, supply_shipping_price, shipping_price)
+  shipping_price_guess = fns.shippingPriceGuess(supply_price, supply_shipping_price)
+  baseline_price = fns.getBaselinePrice(supply_price, supply_shipping_price, shipping_price_guess)
   regular_price  = fns.getRegularPrice(baseline_price)
   shipping_price = fns.shippingPriceLookup(regular_price, supply_shipping_price)
+  if baseline_price + shipping_price < supply_price + supply_shipping_price
+    baseline_price = fns.getBaselinePrice(supply_price, supply_shipping_price, shipping_price)
+    regular_price  = fns.getRegularPrice(baseline_price)
+    shipping_price = fns.shippingPriceLookup(regular_price, supply_shipping_price)
   {
     baseline_price: baseline_price
     regular_price:  regular_price

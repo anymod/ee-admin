@@ -99,7 +99,7 @@ if argv.update_pricing
   .then (skus) ->
     updateSku = (s) ->
       obj = pricing.getValues(s.supply_price, s.supply_shipping_price)
-      console.log obj
+      # console.log obj
       s[attr] = obj[attr] for attr in Object.keys(obj)
       sku.updatePricing(s)
     Promise.reduce skus, ((total, s) -> updateSku(s)), 0

@@ -23,7 +23,7 @@ fns.updatePricing = (sku) ->
   q = 'UPDATE "Skus" SET baseline_price = ' + parseInt(sku.baseline_price) +
     ', shipping_price = ' + parseInt(sku.shipping_price) +
     ', regular_price = ' + parseInt(sku.regular_price) +
-    ', updated_at = ' + "'" + utils.timestamp() + "' " +
+    # ', updated_at = ' + "'" + utils.timestamp() + "' " +
     ' WHERE id = ? '
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [sku.id] }
 
