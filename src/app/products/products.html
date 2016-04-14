@@ -199,7 +199,7 @@
   </div>
   <!-- <div class="btn btn-default">Repricing</div> -->
   <div class="vert-10">
-    <uib-progressbar ng-repeat="section in ['update', 'create', 'elasticsearch']"
+    <uib-progressbar ng-repeat="section in ['update', 'create', 'pricing', 'elasticsearch']"
       ng-if="products.ee.Processing.status[section].running && !products.ee.Processing.status.err"
       class="progress-striped active max-width-600 margin-0-auto" style="height: 32px;">
       <div class="pad-5">{{ products.ee.Processing.status[section].message || 'Running' }}</div>
@@ -207,7 +207,7 @@
     <div ng-if="products.ee.Processing.status.err" class="alert alert-info max-width-600 margin-0-auto pad-5">
       Error: <span ng-bind="products.ee.Processing.status.err"></span>
     </div>
-    <div ng-repeat="section in ['update', 'create', 'elasticsearch']"
+    <div ng-repeat="section in ['update', 'create', 'pricing', 'elasticsearch']"
       ng-if="products.ee.Processing.status[section].err"
       class="alert alert-info max-width-600 margin-0-auto pad-5">
       Error: <span ng-bind="products.ee.Processing.status[section].err"></span>
@@ -215,7 +215,7 @@
     <div class="vert-20 text-left">
       <uib-accordion>
         <uib-accordion-group
-          ng-repeat="section in ['update', 'create', 'elasticsearch']"
+          ng-repeat="section in ['update', 'create', 'pricing', 'elasticsearch']"
           heading="{{ section }} info"
           ng-if="products.ee.Processing.status[section].message">
           <pre><small>{{ products.ee.Processing.status[section] | json }}</small></pre>

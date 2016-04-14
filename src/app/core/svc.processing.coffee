@@ -56,7 +56,7 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
     eeBack.fns.processingStatusGET()
     .then (status) ->
       if typeof status is 'string' then throw 'problem getting process status'
-      for section in ['create', 'update', 'elasticsearch']
+      for section in ['create', 'update', 'elasticsearch', 'pricing']
         if status?[section] then _data.status[section][attr] = status[section][attr] for attr in Object.keys(status[section])
     .catch (err) ->
       _data.status.err = err
@@ -67,7 +67,7 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
       _getStatus()
       .then () ->
         if _data.status.err then _stopPolling()
-        if !_data.status.update.running and !_data.status.create.running and !_data.status.elasticsearch.running then _stopPolling()
+        if !_data.status.update.running and !_data.status.create.running and !_data.status.elasticsearch.running and !_data.status.pricing.running then _stopPolling()
     , 2000)
 
   _stopPolling = () ->
