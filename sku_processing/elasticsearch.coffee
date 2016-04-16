@@ -30,7 +30,7 @@ index_attrs =
     msrp:             type: 'integer'
     shipping_price:   type: 'integer'
     selection_text:   type: 'string'
-    subcontent:       type: 'string'
+    # subcontent:       type: 'string'
     style:            type: 'string'
     color:            type: 'string'
     material:         type: 'string'
