@@ -25,7 +25,7 @@ index_attrs =
     product_id:       type: 'integer'
     supplier_id:      type: 'integer'
     identifier:       type: 'string'
-    # baseline_price:   type: 'integer'
+    baseline_price:   type: 'integer'
     regular_price:    type: 'integer'
     msrp:             type: 'integer'
     shipping_price:   type: 'integer'
@@ -46,6 +46,7 @@ read_attrs =
   sku: [
     'id'
     'product_id'
+    'baseline_price'
     'regular_price'
     'msrp'
   ]
