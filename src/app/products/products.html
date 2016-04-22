@@ -94,7 +94,7 @@
       <div class="btn btn-sm btn-default" disabled>Material&nbsp;&nbsp;<span class="caret"></div>
       <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }"><span class="bg-warning"> Out of stock </span></div>
       <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }"><span class="bg-danger"> Discontinued </span></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }"><span class="bg-light-info"> Manual pricing </span></div>
+      <!-- <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }"><span class="bg-light-info"> Manual pricing </span></div> -->
       <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }"><span class="bg-muted"> Hidden </span></div>
     </div>
     <!-- /Filter -->
@@ -125,7 +125,7 @@
         <div class="inline-block pull-left" style="width: 76px; height: 32px;"></div>
         <!-- Pricing header -->
         <div ng-if="$state.current.name == 'products.pricing'"
-          ng-repeat="heading in ['Supply<br>price', 'Supply<br>shipping', 'eeosk<br>price', 'eeosk<br>shipping', 'eeosk<br>profit', 'Seller<br>price', 'Seller<br>profit', 'Seller<br>margin', 'MSRP', '% off<br>MSRP', 'Qty<br>Avail', 'Auto<br>pricing', 'Show in<br>stores']"
+          ng-repeat="heading in ['Supply<br>price', 'Supply<br>shipping', 'Baseline<br>price', 'Default<br>price', 'Default<br>shipping', 'Default<br>percent', 'Seller<br>profit', 'eeosk<br>profit', 'MSRP', '% off<br>MSRP', 'Qty<br>Avail', 'Show in<br>stores']"
           class="inline-block text-right text-muted pull-left line-height-1 width-58"
           ng-bind-html="heading">
         </div>

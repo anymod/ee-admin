@@ -5,6 +5,11 @@ angular.module('app.core').filter 'centToDollar', ($filter) ->
     currencyFilter = $filter('currency')
     currencyFilter Math.floor(cents)/100
 
+angular.module('app.core').filter 'percentage', ($filter) ->
+  # Usage: | percentage:2
+  (input, decimals) ->
+    $filter('number')(input * 100, decimals) + '%'
+
 resizeCloudinaryImageTo = (url, w, h) ->
   if !!url and url.indexOf("image/upload") > -1
     regex = /\/v\d{8,12}\//g

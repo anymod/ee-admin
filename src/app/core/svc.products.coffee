@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth, eeModal) ->
+angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth, eeModal, categories) ->
 
   ## SETUP
   _inputDefaults =
@@ -14,16 +14,9 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     category:     null
     supplier_id:  null
     order:        { order: null, title: 'Most relevant' }
-    featured:     false
+    # featured:     false
     filter:       null
-    categoryArray: [
-      { id: 1, title: 'Artwork' },
-      { id: 2, title: 'Bed & Bath' },
-      { id: 3, title: 'Furniture' },
-      { id: 4, title: 'Home Accents' },
-      { id: 5, title: 'Kitchen' },
-      { id: 6, title: 'Outdoor' }
-    ]
+    categoryArray: categories
     rangeArray: [
       { min: 0,     max: 2500   },
       { min: 2500,  max: 5000   },
@@ -38,12 +31,12 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       { order: 'td',  html: 'Z-A' },
       { order: 'shipd', html: '% Shipping <i class="fa fa-sort-amount-desc"></i>' },
       { order: 'shipa', html: '% Shipping <i class="fa fa-sort-amount-asc"></i>' },
-      { order: 'discd', html: '% off <i class="fa fa-sort-amount-desc"></i>' },
-      { order: 'disca', html: '% off <i class="fa fa-sort-amount-asc"></i>' },
+      # { order: 'discd', html: '% off <i class="fa fa-sort-amount-desc"></i>' },
+      # { order: 'disca', html: '% off <i class="fa fa-sort-amount-asc"></i>' },
       { order: 'eeprofd', html: '% ee profit <i class="fa fa-sort-amount-desc"></i>' },
       { order: 'eeprofa', html: '% ee profit <i class="fa fa-sort-amount-asc"></i>' },
-      { order: 'sellprofd', html: 'Seller profit $$-$' },
-      { order: 'sellprofa', html: 'Seller profit $-$$' }
+      # { order: 'sellprofd', html: 'Seller profit $$-$' },
+      # { order: 'sellprofa', html: 'Seller profit $-$$' }
     ]
 
   ## PRIVATE EXPORT DEFAULTS
@@ -70,7 +63,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     query = {}
     query.size = _data[section].inputs.perPage
     # if section is 'featured'              then query.feat         = 'true'
-    if _data[section].inputs.featured     then query.feat           = 'true'
+    # if _data[section].inputs.featured     then query.feat           = 'true'
     if _data[section].inputs.page         then query.page           = _data[section].inputs.page
     if _data[section].inputs.search       then query.search         = _data[section].inputs.search
     if _data[section].inputs.range.min    then query.min_price      = _data[section].inputs.range.min
@@ -88,8 +81,8 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     queryPromise
     .then (res) ->
       { rows, count, took } = res
-      _data[section].products      = rows
-      _data[section].count         = count
+      _data[section].products = rows
+      _data[section].count = count
       _data[section].took = took
       _data[section].inputs.searchLabel = _data[section].inputs.search
     .catch (err) -> _data[section].count = null
@@ -132,12 +125,12 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
   fns:
     runSection: _runSection
     search: _searchWithTerm
-    featured: () ->
-      section = 'storefront'
-      _clearSection section
-      _data[section].inputs.page      = 1
-      _data[section].inputs.featured  = true
-      _runSection section
+    # featured: () ->
+    #   section = 'storefront'
+    #   _clearSection section
+    #   _data[section].inputs.page      = 1
+    #   _data[section].inputs.featured  = true
+    #   _runSection section
     clearSearch: () -> _searchWithTerm ''
     setCategory: (category, section) ->
       _data[section].inputs.page      = 1
@@ -163,8 +156,8 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       _data[section].inputs.page    = 1
       _data[section].inputs.filter  = if filter is _data[section].inputs.filter then null else filter
       _runSection section
-    toggleFeatured: (section) ->
-      _data[section].inputs.page      = 1
-      _data[section].inputs.featured  = !_data[section].inputs.featured
-      _runSection section
+    # toggleFeatured: (section) ->
+    #   _data[section].inputs.page      = 1
+    #   _data[section].inputs.featured  = !_data[section].inputs.featured
+    #   _runSection section
     addProductModal: _addProductModal

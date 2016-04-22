@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) ->
+angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth, categories) ->
 
   ## SETUP
   _inputDefaults =
@@ -14,15 +14,8 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) 
     category:     null
     supplier_id:  null
     order:        { order: null, title: 'Most relevant' }
-    featured:     false
-    categoryArray: [
-      { id: 1, title: 'Artwork' },
-      { id: 2, title: 'Bed & Bath' },
-      { id: 3, title: 'Furniture' },
-      { id: 4, title: 'Home Accents' },
-      { id: 5, title: 'Kitchen' },
-      { id: 6, title: 'Outdoor' }
-    ]
+    # featured:     false
+    categoryArray: categories
     rangeArray: [
       { min: 0,     max: 2500   },
       { min: 2500,  max: 5000   },
@@ -54,7 +47,7 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) 
   _formQuery = () ->
     query = {}
     query.size = _data.inputs.perPage
-    if _data.inputs.featured     then query.feat         = 'true'
+    # if _data.inputs.featured     then query.feat         = 'true'
     if _data.inputs.page         then query.page         = _data.inputs.page
     if _data.inputs.search       then query.search       = _data.inputs.search
     if _data.inputs.range.min    then query.min_price    = _data.inputs.range.min
@@ -112,11 +105,11 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) 
   fns:
     runSection: _runSection
     # search: _searchWithTerm
-    featured: () ->
-      _clearSection()
-      _data.inputs.page      = 1
-      _data.inputs.featured  = true
-      _runSection()
+    # featured: () ->
+    #   _clearSection()
+    #   _data.inputs.page      = 1
+    #   _data.inputs.featured  = true
+    #   _runSection()
     # clearSearch: () -> _searchWithTerm ''
     setCategory: (category) ->
       _data.inputs.page      = 1
@@ -137,8 +130,8 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth) 
         _data.inputs.range.min = range.min
         _data.inputs.range.max = range.max
       _runSection()
-    toggleFeatured: () ->
-      _data.inputs.page      = 1
-      _data.inputs.featured  = !_data.inputs.featured
-      _runSection()
+    # toggleFeatured: () ->
+    #   _data.inputs.page      = 1
+    #   _data.inputs.featured  = !_data.inputs.featured
+    #   _runSection()
     addTrackModal: _addTrackModal

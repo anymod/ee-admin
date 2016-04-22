@@ -2,7 +2,7 @@
 
 module = angular.module 'ee-storefront-header', []
 
-module.directive "eeStorefrontHeader", ($rootScope, $state, $window) ->
+module.directive "eeStorefrontHeader", ($rootScope, $state, $window, categories) ->
   templateUrl: 'components/ee-storefront-header.html'
   restrict: 'EA'
   scope:
@@ -22,15 +22,7 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window) ->
     scope.state       = $state.current.name
     # scope.cart        = eeCart.cart
     scope.showScrollButton = false
-
-    scope.categories = [
-      { id: 1, title: 'Artwork' }
-      { id: 2, title: 'Bed & Bath' }
-      { id: 3, title: 'Furniture' }
-      { id: 4, title: 'Home Accents' }
-      { id: 5, title: 'Kitchen' }
-      { id: 6, title: 'Outdoor' }
-    ]
+    scope.categories = categories
 
     if scope.showScrollnav
       trigger = 75

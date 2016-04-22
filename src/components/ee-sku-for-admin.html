@@ -13,40 +13,40 @@
     </div>
     <!-- /supply pricing -->
 
-    <!-- eeosk pricing -->
-    <div class="inline-block pull-left width-58">
+    <!-- baseline & default pricing -->
+    <div class="inline-block pull-left width-58 text-muted">
       <strong ng-hide="showEdit" ng-bind="sku.baseline_price | centToDollar"></strong>
       <input type="number" ng-show="showEdit" ng-model="sku.baseline_price" class="full-width text-right pad-0" style="margin-top: -2px;"/>
+    </div>
+    <div class="inline-block pull-left">
+      <div class="width-58 min-height-20">
+        <strong ng-bind="sku.price | centToDollar"></strong>
+      </div>
     </div>
     <div class="inline-block pull-left width-58">
       <strong ng-hide="showEdit" ng-bind="sku.shipping_price | centToDollar"></strong>
       <input type="number" ng-show="showEdit" ng-model="sku.shipping_price" class="full-width text-right pad-0" style="margin-top: -2px;"/>
     </div>
-    <div class="inline-block pull-left width-58">
-      <strong ng-bind="(sku.baseline_price + sku.shipping_price - sku.supply_price - sku.supply_shipping_price) | centToDollar"
+    <div class="inline-block pull-left text-muted">
+      <div class="width-58 min-height-20"
+        ng-class="{ 'text-danger': sku.price < sku.baseline_price }"
+        ng-bind="sku.percentage | percentage:0">
+      </div>
+    </div>
+    <div class="inline-block pull-left text-muted">
+      <div class="width-58 min-height-20"
+        ng-bind="sku.price * sku.percentage + 1 | centToDollar">
+      </div>
+    </div>
+    <!-- /baseline & default pricing -->
+
+    <!-- eeosk profit -->
+    <div class="inline-block pull-left width-58 text-muted">
+      <strong ng-bind="(sku.price * (1 - sku.percentage)) + sku.shipping_price - sku.supply_price - sku.supply_shipping_price | centToDollar"
         ng-class="{ 'text-danger': sku.baseline_price + sku.shipping_price - sku.supply_price - sku.supply_shipping_price < 0 }">
       </strong>
     </div>
-    <!-- /eeosk pricing -->
-
-    <!-- seller pricing -->
-    <div class="inline-block pull-left text-muted">
-      <div class="width-58 min-height-20">
-        <strong ng-hide="showEdit" ng-bind="sku.regular_price | centToDollar"></strong>
-        <input type="number" ng-show="showEdit" ng-model="sku.regular_price" class="full-width text-right pad-0" style="margin-top: -2px;"/>
-      </div>
-    </div>
-    <div class="inline-block pull-left text-muted">
-      <div class="width-58 min-height-20" ng-class="{ 'text-danger': sku.regular_price < sku.baseline_price }">
-        <span ng-bind="(sku.regular_price - sku.baseline_price) | centToDollar"></span>
-      </div>
-    </div>
-    <div class="inline-block pull-left text-muted">
-      <div class="width-58 min-height-20" ng-class="{ 'text-danger': sku.regular_price < sku.baseline_price }">
-        <span ng-bind="(100*(1 - sku.baseline_price/sku.regular_price)) | number:1"></span>%
-      </div>
-    </div>
-    <!-- /seller pricing -->
+    <!-- /eeosk profit -->
 
     <!-- msrp -->
     <div class="inline-block pull-left text-muted width-58">
@@ -61,9 +61,9 @@
       <div class="width-45 min-height-20" ng-bind="sku.quantity"></div>
     </div>
 
-    <div class="inline-block pull-left width-45">
+    <!-- <div class="inline-block pull-left width-45">
       <input type="checkbox" ng-model="sku.auto_pricing" ng-disabled="!showEdit">
-    </div>
+    </div> -->
     <div class="inline-block pull-left width-58">
       <i class="fa fa-fw fa-lg vert-2 hover-pointer"
         ng-class="sku.hide_from_catalog ? 'fa-toggle-off text-danger' : 'fa-toggle-on text-success'"
