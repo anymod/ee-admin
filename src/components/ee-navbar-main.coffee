@@ -4,6 +4,7 @@ angular.module('ee-navbar-main').directive "eeNavbarMain", ($state, eeDefiner) -
   templateUrl: 'components/ee-navbar-main.html'
   restrict: 'E'
   scope:
+    tracksNav: '@'
     usersNav: '@'
     skusNav: '@'
   link: (scope, ele, attrs) ->

@@ -67,6 +67,7 @@ sources.appModule = [
   './src/app/core/svc.tracks.coffee'
   './src/app/core/svc.activity.coffee'
   './src/app/core/svc.step.coffee'
+  './src/app/core/svc.steps.coffee'
   # Product modal
   './src/app/products/product.modal.controller.coffee'
 ]

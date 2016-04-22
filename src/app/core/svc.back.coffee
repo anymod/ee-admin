@@ -186,6 +186,13 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl, e
         data: step
       }
 
+    stepsGET: (token, query) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'admin/steps' + _formQueryString(query)
+        headers: authorization: token
+      }
+
     processingStatusGET: () ->
       _makeRequest {
         method: 'GET'

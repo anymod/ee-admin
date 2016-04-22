@@ -15,7 +15,7 @@ angular.module('tracks').config ($stateProvider) ->
           templateUrl: 'app/tracks/tracks.html'
       data:
         pageTitle: 'Tracks'
-        padTop:    '50px'
+        padTop:    '111px'
 
     .state 'track',
       url: '/tracks/:id/:title'
@@ -28,6 +28,19 @@ angular.module('tracks').config ($stateProvider) ->
           templateUrl: 'app/tracks/track.html'
       data:
         pageTitle: 'Track'
-        padTop:    '50px'
+        padTop:    '111px'
+
+    .state 'links',
+      url: '/links'
+      views:
+        header:
+          # controller: 'tracksCtrl as tracks'
+          templateUrl: 'app/tracks/tracks.header.html'
+        top:
+          controller: 'tracksCtrl as tracks'
+          templateUrl: 'app/tracks/tracks.links.html'
+      data:
+        pageTitle: 'Tracks'
+        padTop:    '111px'
 
   return

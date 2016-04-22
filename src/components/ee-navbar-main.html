@@ -1,10 +1,11 @@
 <!--
+  tracksNav: when true show the sub-navbar for tracks
   usersNav: when true show the sub-navbar for users
   skusNav: when true show the sub-navbar for skus
 //-->
 
 <nav class="navbar navbar-default white-background main-navbar navbar-fixed-top margin-0 round-0 no-side-border"
-  ng-class="{ 'box-shadow': !usersNav && !skusNav }">
+  ng-class="{ 'box-shadow': !usersNav && !skusNav && !tracksNav }">
   <div class="container-fluid pad-5">
     <a ui-sref="analytics" ui-sref-active="active" class="btn btn-default">Analytics</a>
     <a ui-sref="tracks" ui-sref-active="active" class="btn btn-default">Tracks</a>
@@ -16,6 +17,13 @@
       <div ui-sref="login" ng-hide="ee.logged_in" class="btn btn-default">Login</div>
       <div ui-sref="logout" ng-show="ee.logged_in" class="btn btn-danger">Logout</div>
     </div>
+  </div>
+</nav>
+
+<nav ng-if="tracksNav == 'true'" class="navbar navbar-fixed-top white-background ee-builder-subnav box-shadow round-0 text-center">
+  <div class="max-width-600 margin-0-auto pad-2 position-relative">
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="tracks">Edit<br><small>Tracks</small></a>
+    <a class="builder-subnav-btn-primary vert-8 no-underline" ui-sref-active="active" ui-sref="links">Active<br><small>Links</small></a>
   </div>
 </nav>
 

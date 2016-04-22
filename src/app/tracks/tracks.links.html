@@ -1,0 +1,31 @@
+<div class="container-fluid max-width-900" ng-hide="tracks.data.reading">
+  <div class="well white-background box-shadow">
+    <input type="text" ng-model="searchText.url" class="form-control vert-10" style="max-width: 300px;" placeholder="Match text">
+    <table class="text-left">
+      <thead>
+        <tr>
+          <th>Track</th>
+          <th>Step</th>
+          <th>Link</th>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="href in tracks.data.hrefs | filter:searchText | orderBy:'url_title'">
+          <td><a ui-sref="track({ id: href.track_id })" ng-bind="href.track_id"></a></td>
+          <td ng-bind="href.step_id"></td>
+          <td style="max-width: 500px; white-space: nowrap;" class="overflow-hidden">
+            <a ng-href="{{ href.url }}" target="_blank" ng-bind="href.url_title"></a>
+          </td>
+          <td ng-bind="href.title" class="overflow-hidden text-muted" style="max-width: 250px; white-space: nowrap;"></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div>
+      <strong ng-bind="href.title"></strong>
+      <div ng-bind="href.url"></div>
+    </div> -->
+  </div>
+</div>
+
+<ee-loading loading="tracks.data.reading"></ee-loading>
