@@ -41,6 +41,7 @@ angular.module('app.core').factory 'eeSteps', (eeBack, eeAuth) ->
       hrefs = step.html.match(/href="[^"]+"/ig)
       for href, i in hrefs
         _data.hrefs.push {
+          i: i
           track_id: step.track_id,
           step_id: step.id,
           title: step.title,

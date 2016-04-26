@@ -52,7 +52,7 @@ read_attrs =
   ]
 
 addSkusForElasticsearch = (body, product, count) ->
-  sequelize.query 'SELECT * FROM "Skus" where product_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
+  sequelize.query 'SELECT * FROM "Skus" where product_id = ? AND discontinued is not true AND quantity > 0', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
   .then (skus) ->
     count?.skus += skus.length
     product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
