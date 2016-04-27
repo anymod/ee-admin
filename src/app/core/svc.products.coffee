@@ -14,7 +14,6 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     category:     null
     supplier_id:  null
     order:        { order: null, title: 'Most relevant' }
-    # featured:     false
     filter:       null
     categoryArray: categories
     rangeArray: [
@@ -62,8 +61,6 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
   _formQuery = (section) ->
     query = {}
     query.size = _data[section].inputs.perPage
-    # if section is 'featured'              then query.feat         = 'true'
-    # if _data[section].inputs.featured     then query.feat           = 'true'
     if _data[section].inputs.page         then query.page           = _data[section].inputs.page
     if _data[section].inputs.search       then query.search         = _data[section].inputs.search
     if _data[section].inputs.range.min    then query.min_price      = _data[section].inputs.range.min
@@ -125,12 +122,6 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
   fns:
     runSection: _runSection
     search: _searchWithTerm
-    # featured: () ->
-    #   section = 'storefront'
-    #   _clearSection section
-    #   _data[section].inputs.page      = 1
-    #   _data[section].inputs.featured  = true
-    #   _runSection section
     clearSearch: () -> _searchWithTerm ''
     setCategory: (category, section) ->
       _data[section].inputs.page      = 1
@@ -156,8 +147,4 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       _data[section].inputs.page    = 1
       _data[section].inputs.filter  = if filter is _data[section].inputs.filter then null else filter
       _runSection section
-    # toggleFeatured: (section) ->
-    #   _data[section].inputs.page      = 1
-    #   _data[section].inputs.featured  = !_data[section].inputs.featured
-    #   _runSection section
     addProductModal: _addProductModal

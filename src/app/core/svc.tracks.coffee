@@ -14,7 +14,6 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth, 
     category:     null
     supplier_id:  null
     order:        { order: null, title: 'Most relevant' }
-    # featured:     false
     categoryArray: categories
     rangeArray: [
       { min: 0,     max: 2500   },
@@ -47,7 +46,6 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth, 
   _formQuery = () ->
     query = {}
     query.size = _data.inputs.perPage
-    # if _data.inputs.featured     then query.feat         = 'true'
     if _data.inputs.page         then query.page         = _data.inputs.page
     if _data.inputs.search       then query.search       = _data.inputs.search
     if _data.inputs.range.min    then query.min_price    = _data.inputs.range.min
@@ -105,12 +103,6 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth, 
   fns:
     runSection: _runSection
     # search: _searchWithTerm
-    # featured: () ->
-    #   _clearSection()
-    #   _data.inputs.page      = 1
-    #   _data.inputs.featured  = true
-    #   _runSection()
-    # clearSearch: () -> _searchWithTerm ''
     setCategory: (category) ->
       _data.inputs.page      = 1
       _data.inputs.category  = category
@@ -130,8 +122,4 @@ angular.module('app.core').factory 'eeTracks', ($rootScope, $q, eeBack, eeAuth, 
         _data.inputs.range.min = range.min
         _data.inputs.range.max = range.max
       _runSection()
-    # toggleFeatured: () ->
-    #   _data.inputs.page      = 1
-    #   _data.inputs.featured  = !_data.inputs.featured
-    #   _runSection()
     addTrackModal: _addTrackModal

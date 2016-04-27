@@ -52,8 +52,8 @@
     <div class="inline-block pull-left text-muted width-58">
       <div class="width-58 min-height-20" ng-bind="sku.msrp | centToDollar"></div>
     </div>
-    <div class="inline-block pull-left text-muted width-58" ng-class="{ 'text-danger': sku.msrp < sku.regular_price }">
-      <span ng-bind="100*(sku.msrp - sku.regular_price)/sku.msrp | number:1"></span>%
+    <div class="inline-block pull-left text-muted width-58" ng-class="{ 'text-danger': sku.msrp < sku.price }">
+      <span ng-bind="100*(sku.msrp - sku.price)/sku.msrp | number:1"></span>%
     </div>
     <!-- /msrp -->
 

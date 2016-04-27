@@ -12,8 +12,6 @@ index_attrs =
     id:                 type: 'integer'
     image:              type: 'string'
     external_identity:  type: 'string'
-    discontinued:       type: 'boolean'
-    hide_from_catalog:  type: 'boolean'
     additional_images:  type: 'string'
     title:              type: 'string', analyzer: 'english' #, fields: { english: { type: 'string', analyzer: 'english' } }
     content:            type: 'string', analyzer: 'english' #, fields: { english: { type: 'string', analyzer: 'english' } }
@@ -26,11 +24,9 @@ index_attrs =
     supplier_id:      type: 'integer'
     identifier:       type: 'string'
     baseline_price:   type: 'integer'
-    regular_price:    type: 'integer'
     msrp:             type: 'integer'
     shipping_price:   type: 'integer'
     selection_text:   type: 'string'
-    # subcontent:       type: 'string'
     style:            type: 'string'
     color:            type: 'string'
     material:         type: 'string'
@@ -47,7 +43,6 @@ read_attrs =
     'id'
     'product_id'
     'baseline_price'
-    'regular_price'
     'msrp'
   ]
 

@@ -97,7 +97,7 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
         id: scope.sku.product_id
         skus: [scope.sku]
       }
-      eeProduct.fns.update product, [], ['baseline_price', 'shipping_price', 'regular_price', 'auto_pricing']
+      eeProduct.fns.update product, [], ['baseline_price', 'shipping_price', 'auto_pricing']
       .then (prod) ->
         for sku in prod.skus
           if sku.id is scope.sku.id

@@ -1,5 +1,5 @@
 <div class="gray-border inline-block text-left border-none vertical-align-top pad-2 margin-0"
-    ng-class="{ 'opacity-05': product.updating, 'bg-danger': product.discontinued }"
+    ng-class="{ 'opacity-05': product.updating }"
     style="width: 1060px;">
   <div class="media overflow-visible">
     <div class="media-left overflow-visible">
@@ -13,6 +13,7 @@
     <div class="media-body overflow-visible">
 
       <!-- <div class="media-heading" ng-if="compact">
+        TODO redo with sku.hide_from_catalog
         <span class="inline-block line-height-1 text-info hover-pointer hover-underline overflow-hidden" style="max-height: 37px;"
           ng-click="open()"
           ng-bind="product.title"
@@ -39,7 +40,7 @@
             </tr>
             <tr>
               <td colspan=6 class="pad-0">
-                <ee-sku-for-admin ng-repeat="sku in product.skus | orderBy:'regular_price'" sku="sku"></ee-sku-for-admin>
+                <ee-sku-for-admin ng-repeat="sku in product.skus | orderBy:'price'" sku="sku"></ee-sku-for-admin>
               </td>
             </tr>
             <tr>
@@ -54,7 +55,7 @@
 
       <ee-sku-for-admin
         ng-if="$state.current.name != 'products.text'"
-        ng-repeat="sku in product.skus | orderBy:'regular_price'"
+        ng-repeat="sku in product.skus | orderBy:'price'"
         sku="sku"
         external-id="product.external_identity.split('.')[1]"
         styles="styles"

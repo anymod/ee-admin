@@ -19,11 +19,9 @@ fns.findByIdentifierAndSupplierId = (identifier, supplier_id) ->
 #   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, discontinued FROM "Skus" where identifier IN (' + identifiers + ')', { type: sequelize.QueryTypes.SELECT }
 
 fns.updatePricing = (sku) ->
-  return unless sku? and sku.id? and sku.baseline_price? and sku.shipping_price? and sku.regular_price?
+  return unless sku? and sku.id? and sku.baseline_price? and sku.shipping_price?
   q = 'UPDATE "Skus" SET baseline_price = ' + parseInt(sku.baseline_price) +
     ', shipping_price = ' + parseInt(sku.shipping_price) +
-    ', regular_price = ' + parseInt(sku.regular_price) +
-    # ', updated_at = ' + "'" + utils.timestamp() + "' " +
     ' WHERE id = ? '
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [sku.id] }
 

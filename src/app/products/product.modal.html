@@ -17,7 +17,6 @@
     <div class="col col-sm-5">
       <div ng-hide="catalog.catalogData.loading">
         <div class="full-width text-right">
-          <p ng-if="modal.product.hide_from_catalog" class="pull-left label label-danger">Hidden</p>
           <div class="btn btn-sm btn-default" ng-click="$close()">Close</div>&nbsp;
           <div class="btn btn-sm btn-default" ng-click="modal.save(modal.product)" ng-disabled="modal.product.saving">Save</div>
         </div>

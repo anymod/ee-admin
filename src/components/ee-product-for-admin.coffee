@@ -55,14 +55,15 @@ angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, e
       .catch (err) -> console.error err
       .finally () ->  scope.product.reading = false
 
-    scope.setHidden = (bool) ->
-      scope.product.reading = true
-      eeBack.fns.productPUT { id: scope.product.id, hide_from_catalog: bool }, eeAuth.fns.getToken()
-      .then (prod) -> scope.product.hide_from_catalog = bool
-      .catch (err) ->
-        console.error err
-        scope.product.hide_from_catalog = !bool
-      .finally () ->  scope.product.reading = false
+    # TODO redo with sku.hide_from_catalog
+    # scope.setHidden = (bool) ->
+    #   scope.product.reading = true
+    #   eeBack.fns.productPUT { id: scope.product.id, hide_from_catalog: bool }, eeAuth.fns.getToken()
+    #   .then (prod) -> scope.product.hide_from_catalog = bool
+    #   .catch (err) ->
+    #     console.error err
+    #     scope.product.hide_from_catalog = !bool
+    #   .finally () ->  scope.product.reading = false
 
     scope.updateTaxonomy = () ->
       scope.product.updating = true
