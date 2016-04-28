@@ -13,7 +13,13 @@ index_attrs =
     image:              type: 'string'
     external_identity:  type: 'string'
     additional_images:  type: 'string'
-    title:              type: 'string', analyzer: 'english' #, fields: { english: { type: 'string', analyzer: 'english' } }
+    title:
+      type: 'string'
+      analyzer: 'english'
+      fields:
+        raw:
+          type: 'string'
+          index: 'not_analyzed'
     content:            type: 'string', analyzer: 'english' #, fields: { english: { type: 'string', analyzer: 'english' } }
     category_id:        type: 'integer'
     created_at:         type: 'date'
@@ -134,7 +140,7 @@ fns.createNestedIndex = () ->
         settings:
           number_of_shards: 1
           analysis:
-            analyzer: 'english'
+            analyzer: 'standard'
         mappings:
           product:
             properties: product_properties
@@ -153,12 +159,12 @@ fns.bulkNestedIndex = () ->
   .then () -> elasticsearch.client.bulk body: bulk_body
   .then () -> count
 
-fns.deleteNestedIndex()
-.then () -> fns.createNestedIndex()
-.then () -> fns.bulkNestedIndex()
-.then (count) ->
-  console.log 'Finished ' + count.products + ' products + ' + count.skus + ' skus'
-.catch (err) -> console.log err
-.finally () -> process.exit()
+# fns.deleteNestedIndex()
+# .then () -> fns.createNestedIndex()
+# .then () -> fns.bulkNestedIndex()
+# .then (count) ->
+#   console.log 'Finished ' + count.products + ' products + ' + count.skus + ' skus'
+# .catch (err) -> console.log err
+# .finally () -> process.exit()
 
 module.exports = fns

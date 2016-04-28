@@ -68,15 +68,15 @@ fns.indexElasticsearch = () ->
     message: 'deleting existing index'
     info_array: []
   utils.setStatus 'elasticsearch', status
-  es.deleteIndex()
+  es.deleteNestedIndex()
   .then () ->
     status.message = 'building new index'
     utils.setStatus 'elasticsearch', status
-    es.createIndex()
+    es.createNestedIndex()
   .then () ->
     status.message = 'populating new index'
     utils.setStatus 'elasticsearch', status
-    es.bulkIndex()
+    es.bulkNestedIndex()
   .then (count) ->
     keen.addElasticsearchIndexEvent { count: count }
     status.message = 'indexed ' + count.products + ' products + ' + count.skus + ' skus'

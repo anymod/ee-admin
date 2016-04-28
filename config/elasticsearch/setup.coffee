@@ -9,12 +9,12 @@ host = if process.env.NODE_ENV is 'test' then 'https://user:pass@foobar.com' els
 es.client = new elasticsearch.Client({
     host: host,
     log: 'warning' # error, warning, info, debug, trace
-    apiVersion: '1.5'
+    apiVersion: '1.7' # was 1.5
   })
 
 if process.env.NODE_ENV is 'test'
   factories = require '../../test/factories/index'
-  es.client.search = () ->
-    new Promise (resolve, reject) -> resolve factories.elasticsearch.random_products([1..48])
+  es.client.search = (opts) ->
+    new Promise (resolve, reject) -> resolve factories.elasticsearch.dummy_search(60, opts.body)
 
 module.exports = es
