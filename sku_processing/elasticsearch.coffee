@@ -44,62 +44,121 @@ read_attrs =
     'product_id'
     'baseline_price'
     'msrp'
+    'shipping_price'
+    'style'
+    'color'
+    'material'
+    'length'
+    'width'
+    'height'
+    'weight'
+    'size'
   ]
 
-addSkusForElasticsearch = (body, product, count) ->
+# addSkusForElasticsearch = (body, product, count) ->
+#   sequelize.query 'SELECT * FROM "Skus" where product_id = ? AND discontinued is not true AND quantity > 0', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
+#   .then (skus) ->
+#     count?.skus += skus.length
+#     product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
+#     body.push { index: { _index: 'products_search', _type: 'product', _id: product.id } }
+#     body.push product
+#     for sku in skus
+#       body.push { index: { _index: 'products_search', _type: 'sku', _id: sku.id, _parent: product.id } }
+#       body.push sku
+#
+# fns.deleteIndex = () ->
+#   new Promise (resolve, reject) ->
+#     elasticsearch.client.indices.delete({ index: 'products_search' })
+#     .then () -> resolve true
+#
+# fns.createIndex = () ->
+#   new Promise (resolve, reject) ->
+#     elasticsearch.client.indices.create({
+#       index: 'products_search'
+#       body:
+#         settings:
+#           number_of_shards: 1
+#           analysis:
+#             analyzer: 'english'
+#               # english:
+#               #   tokenizer: 'standard'
+#               #   filter: ['lowercase']
+#         mappings:
+#           product:
+#             properties: index_attrs.product
+#           sku:
+#             _parent: type: 'product'
+#             properties: index_attrs.sku
+#
+#     })
+#     .then () -> resolve true
+#
+# fns.bulkIndex = () ->
+#   bulk_body = []
+#   count =
+#     products: 0
+#     skus: 0
+#   sequelize.query 'SELECT * FROM "Products" limit 10000', { type: sequelize.QueryTypes.SELECT }
+#   .then (products) ->
+#     count.products = products.length
+#     Promise.reduce products, ((total, product) -> addSkusForElasticsearch(bulk_body, product, count)), 0
+#   .then () -> elasticsearch.client.bulk body: bulk_body
+#   .then () -> count
+
+### NESTING ###
+
+addProductWithNesting = (body, product, count) ->
   sequelize.query 'SELECT * FROM "Skus" where product_id = ? AND discontinued is not true AND quantity > 0', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
   .then (skus) ->
+    return if skus.length is 0
+    count.products++
     count?.skus += skus.length
     product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
-    body.push { index: { _index: 'products_search', _type: 'product', _id: product.id } }
+    body.push { index: { _index: 'nested_search', _type: 'product', _id: product.id } }
     body.push product
-    for sku in skus
-      body.push { index: { _index: 'products_search', _type: 'sku', _id: sku.id, _parent: product.id } }
-      body.push sku
 
-fns.deleteIndex = () ->
+fns.deleteNestedIndex = () ->
   new Promise (resolve, reject) ->
-    elasticsearch.client.indices.delete({ index: 'products_search' })
+    elasticsearch.client.indices.delete({ index: 'nested_search' })
     .then () -> resolve true
 
-fns.createIndex = () ->
+fns.createNestedIndex = () ->
+  product_properties = index_attrs.product
+  product_properties.skus =
+    type: 'nested'
+    properties: index_attrs.sku
   new Promise (resolve, reject) ->
     elasticsearch.client.indices.create({
-      index: 'products_search'
+      index: 'nested_search'
       body:
         settings:
           number_of_shards: 1
           analysis:
             analyzer: 'english'
-              # english:
-              #   tokenizer: 'standard'
-              #   filter: ['lowercase']
         mappings:
           product:
-            properties: index_attrs.product
-          sku:
-            _parent: type: 'product'
-            properties: index_attrs.sku
+            properties: product_properties
 
     })
     .then () -> resolve true
 
-fns.bulkIndex = () ->
+fns.bulkNestedIndex = () ->
   bulk_body = []
   count =
     products: 0
     skus: 0
   sequelize.query 'SELECT * FROM "Products" limit 10000', { type: sequelize.QueryTypes.SELECT }
   .then (products) ->
-    count.products = products.length
-    Promise.reduce products, ((total, product) -> addSkusForElasticsearch(bulk_body, product, count)), 0
+    Promise.reduce products, ((total, product) -> addProductWithNesting(bulk_body, product, count)), 0
   .then () -> elasticsearch.client.bulk body: bulk_body
   .then () -> count
 
-# fns.bulkIndex()
-# .then (n) ->
-#   console.log 'finished ' + n
-# .catch (err) -> console.log err
-# .finally () -> process.exit()
+fns.deleteNestedIndex()
+.then () -> fns.createNestedIndex()
+.then () -> fns.bulkNestedIndex()
+.then (count) ->
+  console.log 'Finished ' + count.products + ' products + ' + count.skus + ' skus'
+.catch (err) -> console.log err
+.finally () -> process.exit()
 
 module.exports = fns
