@@ -21,6 +21,20 @@ completedPathFor = (file_path) ->
 archivedPathFor = (file_path) ->
   '/archive (do not edit)/' + utils.timestampedFilename(file_path, '_at_')
 
+dropbox.categoryMappings =
+  artwork:      1
+  bed_bath:     2
+  furniture:    3
+  home_accents: 4
+  kitchen:      5
+  outdoor:      6
+
+dropbox.getCategoryFromPath = (path) ->
+  throw 'No path in dropbox.getCategoryFromPath' unless path?
+  for key in Object.keys(dropbox.categoryMappings)
+    if path is ('/create/' + key + '.csv') then return dropbox.categoryMappings[key]
+  throw 'No category in dropbox.getCategoryFromPath'
+
 dropbox.setPayload = (type, opts) ->
   payload =
     json: true

@@ -6,6 +6,13 @@ utils = require '../utils'
 
 fns = {}
 
+fns.findOrCreate = (data) ->
+  throw 'No external_identity' unless data?.external_identity?
+  q = 'SELECT * FROM "Products" WHERE external_identity = ?'
+  sequelize.query q, { type: sequelize.QueryTypes.SELECT, replacements: [data.external_identity] }
+  .then (res) ->
+    console.log res
+
 fns.updateProductsSpelling = (reference_products) ->
   info = {}
   Promise.reduce reference_products, ((total, product) -> fns.updateProductSpelling(product, info)), 0

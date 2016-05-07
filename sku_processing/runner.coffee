@@ -14,6 +14,16 @@ pricing = require './pricing'
 
 fns = {}
 
+processCreateFile = (path, status) ->
+  dropbox.getFile path
+  .then (file) ->
+    category_id = dropbox.getCategoryFromPath(path)
+    console.log path, category_id
+    console.log file
+  #   files = _.filter rows.entries, { '.tag': 'file' }
+  #   category_id = dropbox.getCategoryFromPath(files[0].path_lower)
+  #   console.log files[0].path_lower, category_id
+
 processPricingFile = (path, status) ->
   status?.message = 'processing ' + path
   utils.setStatus 'update', status
@@ -44,6 +54,15 @@ processProductSpellingFile = (path, status) ->
   .then (file) -> csv.parseProductTitleAndContentFile file
   .then (products) -> product.updateProductsSpelling products
   .then () -> dropbox.finishFile path
+
+fns.createFromDropbox = () ->
+  dropbox.getFolder '/create'
+  .then (rows) ->
+    files = _.filter rows.entries, { '.tag': 'file' }
+    processCreateFile files[0].path_lower
+  # new Promise (resolve, reject) ->
+  #   console.log 'running'
+  #   resolve true
 
 fns.updateFromDropbox = () ->
   status =
@@ -113,57 +132,66 @@ fns.runPricingAlgorithm = () ->
     status.running = false
     utils.setStatus 'pricing', status
 
-# fns.indexElasticsearch()
-# .then (message) ->
-#   console.log 'finished ' + message
-# .catch (err) -> console.log err
-# .finally () -> process.exit()
 
-if argv.update_pricing
-  ### coffee sku_processing/runner.coffee --update_pricing ###
-  fns.runPricingAlgorithm()
-  .then () -> console.log 'Finished'
-  .catch (err) -> console.log err
+if argv.create
+  ### coffee sku_processing/runner.coffee --create ###
+  fns.createFromDropbox()
+  .then (res) ->
+    console.log 'res', res
+  .catch (err) ->
+    console.log 'err', err
   .finally () -> process.exit()
-
-else if argv.update_sku_spelling
-  ### coffee sku_processing/runner.coffee --update_sku_spelling ###
-  utils.setStatus 'spelling', 'Starting sku spelling update'
-  dropbox.getFolder '/additional/sku_spelling'
-  .then (rows) ->
-    files = _.filter rows.entries, { '.tag': 'file' }
-    if !files or files.length < 1 then throw 'no files found in /additional/sku_spelling'
-    Promise.reduce files, ((total, file) -> processSkuSpellingFile file.path_lower), 0
-  .catch (err) -> console.log err
-  .finally () ->
-    process.exit()
-
-else if argv.update_product_spelling
-  ### coffee sku_processing/runner.coffee --update_product_spelling ###
-  utils.setStatus 'spelling', 'Starting product spelling update'
-  dropbox.getFolder '/additional/product_spelling'
-  .then (rows) ->
-    files = _.filter rows.entries, { '.tag': 'file' }
-    if !files or files.length < 1 then throw 'no files found in /additional/product_spelling'
-    Promise.reduce files, ((total, file) -> processProductSpellingFile file.path_lower), 0
-  .catch (err) -> console.log err
-  .finally () ->
-    process.exit()
-
-# if argv.finish
-#   ### coffee sku_processing/runner.coffee --finish ###
-#   dropbox.finishFile '/update/kitchen_short.csv'
-#   .then (res) ->
-#     console.log 'finished', res
-#   .catch (err) ->
-#     console.log 'err', err
-#   .finally () -> process.exit()
 #
 # if argv.update
 #   ### coffee sku_processing/runner.coffee --update ###
 #   fns.updateFromDropbox()
 #   .then (res) ->
 #     console.log 'res', res
+#   .catch (err) ->
+#     console.log 'err', err
+#   .finally () -> process.exit()
+# if argv.update_pricing
+#   ### coffee sku_processing/runner.coffee --update_pricing ###
+#   fns.runPricingAlgorithm()
+#   .then () -> console.log 'Finished'
+#   .catch (err) -> console.log err
+#   .finally () -> process.exit()
+#
+# else if argv.update_sku_spelling
+#   ### coffee sku_processing/runner.coffee --update_sku_spelling ###
+#   utils.setStatus 'spelling', 'Starting sku spelling update'
+#   dropbox.getFolder '/additional/sku_spelling'
+#   .then (rows) ->
+#     files = _.filter rows.entries, { '.tag': 'file' }
+#     if !files or files.length < 1 then throw 'no files found in /additional/sku_spelling'
+#     Promise.reduce files, ((total, file) -> processSkuSpellingFile file.path_lower), 0
+#   .catch (err) -> console.log err
+#   .finally () ->
+#     process.exit()
+#
+# else if argv.update_product_spelling
+#   ### coffee sku_processing/runner.coffee --update_product_spelling ###
+#   utils.setStatus 'spelling', 'Starting product spelling update'
+#   dropbox.getFolder '/additional/product_spelling'
+#   .then (rows) ->
+#     files = _.filter rows.entries, { '.tag': 'file' }
+#     if !files or files.length < 1 then throw 'no files found in /additional/product_spelling'
+#     Promise.reduce files, ((total, file) -> processProductSpellingFile file.path_lower), 0
+#   .catch (err) -> console.log err
+#   .finally () ->
+#     process.exit()
+#
+# fns.indexElasticsearch()
+# .then (message) ->
+#   console.log 'finished ' + message
+# .catch (err) -> console.log err
+# .finally () -> process.exit()
+#
+# if argv.finish
+#   ### coffee sku_processing/runner.coffee --finish ###
+#   dropbox.finishFile '/update/kitchen_short.csv'
+#   .then (res) ->
+#     console.log 'finished', res
 #   .catch (err) ->
 #     console.log 'err', err
 #   .finally () -> process.exit()

@@ -16,6 +16,35 @@ csv = {}
 #         rows.shift()
 #         resolve rows
 
+csv.parseSkuCreateFile = (data) ->
+  # Read csv and return array of objects:
+  # {
+  #   product: {
+  #     title
+  #     content
+  #     external_identity
+  #     image
+  #     additional_images
+  #     category_id
+  #   }
+  #   sku: {
+  #     identifier
+  #     msrp
+  #     selection_text
+  #     quantity
+  #     discontinued
+  #     supplier_id
+  #     supplier_name
+  #     manufacturer_name
+  #     brand_name
+  #     meta
+  #     other
+  #     supply_shipping_price
+  #     supply_price
+  #   }
+  # }
+  return
+
 csv.parseSkuPricingFile = (data) ->
   # Read csv and return array of objects:
   # {
