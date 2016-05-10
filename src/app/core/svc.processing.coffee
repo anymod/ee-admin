@@ -9,22 +9,21 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
   _data =
     status:
       err: null
-      update: {}
-      create: {}
+      dropbox: {}
 
   ## PRIVATE FUNCTIONS
-  _update = () ->
+  _processDropbox = () ->
     _data.status ||= {}
     _data.status.err = null
-    _data.status.update =
+    _data.status.dropbox =
       running: true
     _startPolling()
-    eeBack.fns.processingUpdatePOST()
+    eeBack.fns.processingDropboxPOST()
     .then (status) ->
-      if status?.update then _data.status.update[attr] = status.update[attr] for attr in Object.keys(status.update)
+      if status?.dropbox then _data.status.dropbox[attr] = status.dropbox[attr] for attr in Object.keys(status.dropbox)
     .catch (err) ->
       _data.status.err = err
-      _data.status.update.running = false
+      _data.status.dropbox.running = false
 
   _indexElasticsearch = () ->
     _data.status ||= {}
@@ -56,7 +55,7 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
     eeBack.fns.processingStatusGET()
     .then (status) ->
       if typeof status is 'string' then throw 'problem getting process status'
-      for section in ['create', 'update', 'elasticsearch', 'pricing']
+      for section in ['dropbox', 'elasticsearch', 'pricing']
         if status?[section] then _data.status[section][attr] = status[section][attr] for attr in Object.keys(status[section])
     .catch (err) ->
       _data.status.err = err
@@ -67,7 +66,7 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
       _getStatus()
       .then () ->
         if _data.status.err then _stopPolling()
-        if !_data.status.update.running and !_data.status.create.running and !_data.status.elasticsearch.running and !_data.status.pricing.running then _stopPolling()
+        if !_data.status.dropbox.running and !_data.status.elasticsearch.running and !_data.status.pricing.running then _stopPolling()
     , 2000)
 
   _stopPolling = () ->
@@ -77,6 +76,6 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
   ## EXPORTS
   data: _data
   fns:
-    update: _update
+    processDropbox: _processDropbox
     indexElasticsearch:  _indexElasticsearch
     runPricingAlgorithm:  _runPricingAlgorithm

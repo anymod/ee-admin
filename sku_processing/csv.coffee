@@ -16,17 +16,10 @@ csv = {}
 #         rows.shift()
 #         resolve rows
 
-csv.parseSkuCreateFile = (data) ->
+csv.parseSkuCreateFile = (data, category_id) ->
+  throw 'parseSkuCreateFile missing category_id' unless category_id?
   # Read csv and return array of objects:
   # {
-  #   product: {
-  #     title
-  #     content
-  #     external_identity
-  #     image
-  #     additional_images
-  #     category_id
-  #   }
   #   sku: {
   #     identifier
   #     msrp
@@ -37,13 +30,89 @@ csv.parseSkuCreateFile = (data) ->
   #     supplier_name
   #     manufacturer_name
   #     brand_name
-  #     meta
-  #     other
   #     supply_shipping_price
   #     supply_price
+  #     meta: {}
+  #     other: {}
+  #   },
+  #   product: {
+  #     title
+  #     content
+  #     external_identity -> 'DOBA.' + product_id
+  #     image
+  #     additional_images: []
+  #     category_id
   #   }
   # }
-  return
+  new Promise (resolve, reject) ->
+    parse data, {}, (err, rows) ->
+      if err then reject err
+      columns = rows.shift()
+      sku_attrs = [
+        'item_sku'
+        'msrp'
+        'item_name'
+        'qty_avail'
+        'stock'
+        'supplier_id'
+        'supplier_name'
+        'manufacturer'
+        'brand_name'
+        'ship_cost'
+        'price'
+        # meta
+        'warranty'
+        'condition'
+        'ship_weight'
+        'attributes'
+        # other
+        'product_id'
+        'product_sku'
+        'product_last_update'
+        'item_id'
+        'upc'
+        'item_last_update'
+        'categories'
+        'image_file'
+        'additional_images'
+      ]
+      product_attrs = [
+        'title'
+        'description'
+        'product_id' # 'DOBA.' + product_id
+        'image_file'
+        'additional_images'
+        # category_id added manually
+      ]
+      sku_indices = {}
+      sku_indices[attr] = columns.indexOf(attr) for attr in sku_attrs
+      product_indices = {}
+      product_indices[attr] = columns.indexOf(attr) for attr in product_attrs
+      parsed_rows = []
+      for row in rows
+        sku =
+          meta: {}
+          other: {}
+        product = {}
+        # Handle sku
+        for attr in sku_attrs
+          if mappings.sku[attr].indexOf('meta.') is 0
+            sku.meta[mappings.sku[attr].replace('meta.','')] = row[sku_indices[attr]]
+          else if mappings.sku[attr].indexOf('other.') is 0
+            sku.other[mappings.sku[attr].replace('other.','')] = row[sku_indices[attr]]
+          else
+            sku[mappings.sku[attr]] = row[sku_indices[attr]]
+        sku.discontinued = (sku.discontinued is 'discontinued')
+        sku[attr] = utils.dollarsToCents(sku[attr]) for attr in ['supply_price', 'supply_shipping_price', 'msrp']
+        sku.quantity = parseInt sku.quantity
+        # Handle product
+        for attr in product_attrs
+          product[mappings.product[attr]] = row[product_indices[attr]]
+        product.category_id = category_id
+        product.external_identity = 'DOBA.' + product.external_identity
+        product.additional_images = if product.additional_images isnt '' then product.additional_images.split('|') else []
+        parsed_rows.push { sku: sku, product: product }
+      resolve parsed_rows
 
 csv.parseSkuPricingFile = (data) ->
   # Read csv and return array of objects:

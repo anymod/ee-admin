@@ -48,8 +48,8 @@ app.all '/favicon.ico', (req, res, next) ->
 #   res.json global.ee_status
 #   return
 
-app.post '/v0/processing/update', (req, res, next) ->
-  skuRunner.updateFromDropbox()
+app.post '/v0/processing/dropbox', (req, res, next) ->
+  skuRunner.processDropbox()
   res.json global.ee_status
   return
 

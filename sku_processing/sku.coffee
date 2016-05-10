@@ -15,6 +15,22 @@ fns.findByIdentifierAndSupplierId = (identifier, supplier_id) ->
   if supplier_id then supplier_id = parseInt(supplier_id)
   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued FROM "Skus" where identifier = ? AND supplier_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [identifier, supplier_id] }
 
+fns.createFrom = (data, info) ->
+  data ||= {}
+  info ||= {}
+  q = 'INSERT INTO "Skus" ("product_id", "identifier", "baseline_price", "shipping_price", "msrp", "selection_text", "quantity", "discontinued", "supplier_id", "supplier_name", "manufacturer_name", "brand_name", "supply_shipping_price", "supply_price", "meta", "other", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *'
+  sequelize.query q, { type: sequelize.QueryTypes.INSERT, replacements: [data.product_id, data.identifier, data.baseline_price, data.shipping_price, data.msrp, data.selection_text, data.quantity, data.discontinued, data.supplier_id, data.supplier_name, data.manufacturer_name, data.brand_name, data.supply_shipping_price, data.supply_price, JSON.stringify(data.meta), JSON.stringify(data.other), utils.timestamp(), utils.timestamp()] }
+  .then (res) ->
+    info.skus?.created++
+    info.skus?.created_ids?.push res[0].id
+    res[0]
+
+  # if data.additional_images?.length > 0
+  #   additional_images = 'ARRAY[\'' + data.additional_images.join("\',\'") + '\']::VARCHAR(255)[]'
+  #   q = q.replace('ARRAY[]::VARCHAR(255)[]', additional_images)
+  # sequelize.query q, { type: sequelize.QueryTypes.INSERT, replacements: [data.title, data.content, data.external_identity, data.image, data.category_id, utils.timestamp(), utils.timestamp()] }
+  # .then (res) -> res[0]
+
 # fns.findByIdentifiers = (identifiers) ->
 #   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, discontinued FROM "Skus" where identifier IN (' + identifiers + ')', { type: sequelize.QueryTypes.SELECT }
 
@@ -48,7 +64,7 @@ fns.updateSkus = (reference_skus) ->
   # }
   info =
     count:
-      total: reference_skus.length
+      total: 0
       updated:
         total: 0
       unchanged: 0
@@ -62,27 +78,28 @@ fns.updateSkus = (reference_skus) ->
 
 fns.updateSku = (reference_sku, info) ->
   return if !reference_sku or !reference_sku.identifier
+  info ||= {}
   fns.findByIdentifierAndSupplierId reference_sku.identifier, reference_sku.supplier_id
   .then (res) ->
     sku = res[0]
     # Handle not_found
     if !sku or !sku.id
-      info.count.not_found++
-      info.not_found_identifiers.push reference_sku.identifier
+      info.skus?.not_found++
+      info.skus?.not_found_ids?.push reference_sku.identifier
       return 'not_found'
     toUpdate = []
     for attr in fns.editableAttrs
       if reference_sku[attr] isnt sku[attr] then toUpdate.push attr
     # Handle unchanged
     if toUpdate.length is 0
-      info.count.unchanged++
+      info.skus?.unchanged++
       return 'unchanged'
     # Handle updates
-    info.count.updated.total++
-    info.count.updated[attr]++ for attr in toUpdate
+    info.skus?.updated++
+    info.skus?.updated_attrs[attr]++ for attr in toUpdate
     if (reference_sku.supply_price > sku.supply_price * 1.2) or (reference_sku.supply_shipping_price > sku.supply_shipping_price * 1.2)
-      info.count.large_price_change++
-      info.large_price_change_identifiers.push reference_sku.identifier
+      info.skus?.large_price_change++
+      info.skus?.large_price_change_ids?.push reference_sku.id
     fns.updateAttrs reference_sku
 
 fns.updateSkusSpelling = (reference_skus) ->

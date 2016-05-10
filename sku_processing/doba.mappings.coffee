@@ -50,5 +50,8 @@ mappings =
   product:
     title: 'title'
     description: 'content'
+    product_id: 'external_identity' # external_identity = 'DOBA.' + product_id
+    image_file: 'image'
+    additional_images: 'additional_images'
 
 module.exports = mappings

@@ -199,10 +199,10 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl, e
         url: eeAdminUrl + 'processing/status'
       }
 
-    processingUpdatePOST: () ->
+    processingDropboxPOST: () ->
       _makeRequest {
         method: 'POST'
-        url: eeAdminUrl + 'processing/update'
+        url: eeAdminUrl + 'processing/dropbox'
       }
 
     processingElasticsearchPOST: () ->

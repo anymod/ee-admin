@@ -32,7 +32,7 @@ dropbox.categoryMappings =
 dropbox.getCategoryFromPath = (path) ->
   throw 'No path in dropbox.getCategoryFromPath' unless path?
   for key in Object.keys(dropbox.categoryMappings)
-    if path is ('/create/' + key + '.csv') then return dropbox.categoryMappings[key]
+    if path.indexOf('/files_to_process/' + key) is 0 then return dropbox.categoryMappings[key]
   throw 'No category in dropbox.getCategoryFromPath'
 
 dropbox.setPayload = (type, opts) ->

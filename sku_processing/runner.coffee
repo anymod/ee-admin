@@ -11,35 +11,52 @@ sku     = require './sku'
 product = require './product'
 keen    = require './keen'
 pricing = require './pricing'
+grammar = require './grammar'
 
 fns = {}
 
-processCreateFile = (path, status) ->
+processDropboxFile = (path, status) ->
+  status?.message = 'processing ' + path
+  utils.setStatus 'dropbox', status
   dropbox.getFile path
   .then (file) ->
     category_id = dropbox.getCategoryFromPath(path)
-    console.log path, category_id
-    console.log file
-  #   files = _.filter rows.entries, { '.tag': 'file' }
-  #   category_id = dropbox.getCategoryFromPath(files[0].path_lower)
-  #   console.log files[0].path_lower, category_id
-
-processPricingFile = (path, status) ->
-  status?.message = 'processing ' + path
-  utils.setStatus 'update', status
-  dropbox.getFile path
-  .then (file) -> csv.parseSkuPricingFile file
-  .then (skus) -> sku.updateSkus skus
+    csv.parseSkuCreateFile file, category_id
+  .then (data) ->
+    grammar.cleanPairs data
+    product.createOrUpdatePairs data
   .then (info) ->
-    info.path = path
-    file_parts = path.split(/\//g)
-    info.type = file_parts[1]
-    info.filename = file_parts[file_parts.length - 1]?.replace('.csv', '')
     keen.addSkuEvent info
     if status?.info_array?
       status.info_array.push info
-      utils.setStatus 'update', status
-  .then () -> dropbox.finishFile path
+      utils.setStatus 'dropbox', status
+    # dropbox.finishFile path
+  # .then () ->
+    if status?.info_array?
+      {
+        skus_created:       _.sum(_.map(status.info_array, (el) -> el.skus.created))
+        skus_updated:       _.sum(_.map(status.info_array, (el) -> el.skus.updated))
+        skus_unchanged:     _.sum(_.map(status.info_array, (el) -> el.skus.unchanged))
+        products_created:   _.sum(_.map(status.info_array, (el) -> el.products.created))
+        products_unchanged: _.sum(_.map(status.info_array, (el) -> el.products.unchanged))
+      }
+
+# processPricingFile = (path, status) ->
+#   status?.message = 'processing ' + path
+#   utils.setStatus 'update', status
+#   dropbox.getFile path
+#   .then (file) -> csv.parseSkuPricingFile file
+#   .then (skus) -> sku.updateSkus skus
+#   .then (info) ->
+#     info.path = path
+#     file_parts = path.split(/\//g)
+#     info.type = file_parts[1]
+#     info.filename = file_parts[file_parts.length - 1]?.replace('.csv', '')
+#     keen.addSkuEvent info
+#     if status?.info_array?
+#       status.info_array.push info
+#       utils.setStatus 'update', status
+#   .then () -> dropbox.finishFile path
 
 processSkuSpellingFile = (path, status) ->
   utils.setStatus 'spelling', 'Processing skus in ' + path
@@ -55,31 +72,43 @@ processProductSpellingFile = (path, status) ->
   .then (products) -> product.updateProductsSpelling products
   .then () -> dropbox.finishFile path
 
-fns.createFromDropbox = () ->
-  dropbox.getFolder '/create'
-  .then (rows) ->
-    files = _.filter rows.entries, { '.tag': 'file' }
-    processCreateFile files[0].path_lower
-  # new Promise (resolve, reject) ->
-  #   console.log 'running'
-  #   resolve true
-
-fns.updateFromDropbox = () ->
+fns.processDropbox = () ->
   status =
     running: true
-    message: 'fetching update folder'
+    message: 'fetching dropbox folder'
     info_array: []
-  utils.setStatus 'update', status
-  dropbox.getFolder '/update'
+  utils.setStatus 'dropbox', status
+  dropbox.getFolder '/files_to_process'
   .then (rows) ->
     files = _.filter rows.entries, { '.tag': 'file' }
-    if !files or files.length < 1 then throw 'no files found in /update'
-    Promise.reduce files, ((total, file) -> processPricingFile file.path_lower, status), 0
-  .then () -> status.message = 'completed ' + status.info_array.length + ' update files'
+    if !files or files.length < 1 then throw 'no files found in /create'
+    Promise.reduce files, ((total, file) -> processDropboxFile file.path_lower, status), 0
+  .then (message) ->
+    status.message = 'completed ' + status.info_array.length + ' files '
+    if message
+      status.message += '(sku: ' + message.skus_created + ' created; ' + message.skus_updated + ' updated; ' + message.skus_unchanged + ' unchanged) '
+      status.message += '(product: ' + message.products_created + ' created; ' + message.products_unchanged + ' unchanged)'
   .catch (err) -> status.err = err
   .finally () ->
     status.running = false
-    utils.setStatus 'update', status
+    utils.setStatus 'dropbox', status
+
+# fns.updateFromDropbox = () ->
+#   status =
+#     running: true
+#     message: 'fetching update folder'
+#     info_array: []
+#   utils.setStatus 'update', status
+#   dropbox.getFolder '/update'
+#   .then (rows) ->
+#     files = _.filter rows.entries, { '.tag': 'file' }
+#     if !files or files.length < 1 then throw 'no files found in /update'
+#     Promise.reduce files, ((total, file) -> processPricingFile file.path_lower, status), 0
+#   .then () -> status.message = 'completed ' + status.info_array.length + ' update files'
+#   .catch (err) -> status.err = err
+#   .finally () ->
+#     status.running = false
+#     utils.setStatus 'update', status
 
 fns.indexElasticsearch = () ->
   status =
@@ -132,19 +161,16 @@ fns.runPricingAlgorithm = () ->
     status.running = false
     utils.setStatus 'pricing', status
 
-
-if argv.create
-  ### coffee sku_processing/runner.coffee --create ###
-  fns.createFromDropbox()
-  .then (res) ->
-    console.log 'res', res
-  .catch (err) ->
-    console.log 'err', err
+if argv.dropbox
+  ### coffee sku_processing/runner.coffee --dropbox ###
+  fns.processDropbox()
+  .then (res) -> console.log res
+  .catch (err) -> console.log 'err', err
   .finally () -> process.exit()
 #
 # if argv.update
 #   ### coffee sku_processing/runner.coffee --update ###
-#   fns.updateFromDropbox()
+#   fns.processDropbox()
 #   .then (res) ->
 #     console.log 'res', res
 #   .catch (err) ->
