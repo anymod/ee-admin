@@ -30,8 +30,8 @@ processDropboxFile = (path, status) ->
     if status?.info_array?
       status.info_array.push info
       utils.setStatus 'dropbox', status
-    # dropbox.finishFile path
-  # .then () ->
+    dropbox.finishFile path
+  .then () ->
     if status?.info_array?
       {
         skus_created:       _.sum(_.map(status.info_array, (el) -> el.skus.created))
