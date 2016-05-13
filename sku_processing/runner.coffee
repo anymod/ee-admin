@@ -4,14 +4,15 @@ argv    = require('yargs').argv
 
 utils   = require '../utils'
 
-dropbox = require './dropbox'
-es      = require './elasticsearch'
-csv     = require './csv'
-sku     = require './sku'
-product = require './product'
-keen    = require './keen'
-pricing = require './pricing'
-grammar = require './grammar'
+dropbox     = require './dropbox'
+cloudinary  = require './cloudinary'
+es          = require './elasticsearch'
+csv         = require './csv'
+sku         = require './sku'
+product     = require './product'
+keen        = require './keen'
+pricing     = require './pricing'
+grammar     = require './grammar'
 
 fns = {}
 
@@ -71,6 +72,33 @@ processProductSpellingFile = (path, status) ->
   .then (file) -> csv.parseProductTitleAndContentFile file
   .then (products) -> product.updateProductsSpelling products
   .then () -> dropbox.finishFile path
+
+processDobaImages = (prod) ->
+  additional_images = []
+  options =
+    public_id: prod.id
+    tags: ['product', 'main_image']
+    upload_preset: 'product_image'
+  new Promise (resolve, reject) ->
+    if !prod? or !prod.image? then resolve false
+    cloudinary.uploadAsync prod.image, options
+    .then (res) ->
+      prod.image = res.secure_url
+      uploadAdditionalImage = (url) ->
+        i = prod.additional_images.indexOf(url) + 1
+        options.tags[1] = 'additional_image'
+        options.public_id = [prod.id, i].join('-')
+        cloudinary.uploadAsync url, options
+        .then (res) ->
+          additional_images.push res.secure_url
+      Promise.reduce prod.additional_images, ((total, url) -> uploadAdditionalImage url), 0
+    .then () ->
+      if additional_images.length > 0 then prod.additional_images = additional_images
+      product.overwriteImagesFor prod
+    .then () ->
+      console.log prod
+      resolve prod
+    .catch (err) -> reject err
 
 fns.processDropbox = () ->
   status =
@@ -161,13 +189,35 @@ fns.runPricingAlgorithm = () ->
     status.running = false
     utils.setStatus 'pricing', status
 
+# fns.setCloudinaryImages = () ->
+#   url = 'http://images.doba.com/products/3797/img_bloemliving_27060_6.jpg'
+#   options =
+#     public_id: 5153
+#     tags: ['test', 'foobarbaz']
+#     # format: 'jpg'
+#     upload_preset: 'product_image'
+#   cloudinary.uploadAsync(url, options)
+#   .then (res) -> res.secure_url
+
 if argv.dropbox
   ### coffee sku_processing/runner.coffee --dropbox ###
   fns.processDropbox()
   .then (res) -> console.log res
   .catch (err) -> console.log 'err', err
   .finally () -> process.exit()
-#
+
+else if argv.cloudinary
+  ### coffee sku_processing/runner.coffee --cloudinary ###
+  products = []
+  product.findAllWithDobaImage()
+  .then (res) ->
+    console.log '' + res.length + ' products remaining'
+    products = _.slice res, 0, 100
+    Promise.reduce products, ((total, prod) -> processDobaImages(prod)), 0
+  .then () -> console.log 'Finished:', products
+  .catch (err) -> console.log 'err', err
+  .finally () -> process.exit()
+
 # if argv.update
 #   ### coffee sku_processing/runner.coffee --update ###
 #   fns.processDropbox()

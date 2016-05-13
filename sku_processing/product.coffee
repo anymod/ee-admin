@@ -32,6 +32,17 @@ fns.findOrCreate = (data, info) ->
       return res[0]
     fns.createFrom data, info
 
+fns.findAllWithDobaImage = () ->
+  sequelize.query 'SELECT id, image, additional_images FROM "Products" WHERE image ilike \'%images.doba.com%\'', { type: sequelize.QueryTypes.SELECT }
+
+fns.overwriteImagesFor = (reference_product) ->
+  return if !reference_product or !reference_product.id or !reference_product.image
+  q = 'UPDATE "Products" SET image = ?, additional_images = ARRAY[]::VARCHAR(255)[], updated_at = ? WHERE id = ?'
+  if reference_product.additional_images?.length > 0
+    additional_images = 'ARRAY[\'' + reference_product.additional_images.join("\',\'") + '\']::VARCHAR(255)[]'
+    q = q.replace('ARRAY[]::VARCHAR(255)[]', additional_images)
+  sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [reference_product.image, utils.timestamp(), reference_product.id] }
+
 fns.updateProductsSpelling = (reference_products) ->
   info = {}
   Promise.reduce reference_products, ((total, product) -> fns.updateProductSpelling(product, info)), 0

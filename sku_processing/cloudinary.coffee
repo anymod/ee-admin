@@ -22,7 +22,7 @@ mockCloudinaryResponse = () ->
     etag: 'a0c8141c262536fe442d9b5dcbc2ec11'
   }
 
-fns.cloudinaryUploadAsync = (url, options) ->
+fns.uploadAsync = (url, options) ->
   new Promise (resolve, reject) ->
     if process.env.NODE_ENV is 'test'
       resolve mockCloudinaryResponse()
