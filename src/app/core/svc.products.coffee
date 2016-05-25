@@ -24,6 +24,8 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       { min: 20000, max: null   }
     ]
     orderArray: [
+      { order: 'cd',  html: 'Newest' },
+      { order: 'ud',  html: 'Updated' },
       { order: 'pa',  html: '$-$$$' },
       { order: 'pd',  html: '$$$-$' },
       { order: 'ta',  html: 'A-Z' },
