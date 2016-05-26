@@ -40,7 +40,11 @@
             </tr>
             <tr>
               <td colspan=6 class="pad-0">
-                <ee-sku-for-admin ng-repeat="sku in product.skus | orderBy:'price'" sku="sku"></ee-sku-for-admin>
+                <ee-sku-for-admin
+                  ng-repeat="sku in product.skus | orderBy:'price'"
+                  sku="sku"
+                  external-id="product.external_identity.split('.')[1]">
+                </ee-sku-for-admin>
               </td>
             </tr>
             <tr>
@@ -53,14 +57,11 @@
       </div>
       <!-- /Text -->
 
-      <pre>{{ product.external_identity.split('.')[1] | json }}</pre>
-
       <ee-sku-for-admin
-        ng-if="$state.current.name != 'products.text'"
+        ng-if="$state.current.name != 'products.text' && product.external_identity"
         ng-repeat="sku in product.skus | orderBy:'price'"
         sku="sku"
         external-id="product.external_identity.split('.')[1]"
-        product="product"
         styles="styles"
         colors="colors"
         materials="materials">

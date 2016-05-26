@@ -9,10 +9,8 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
     styles:     '='
     colors:     '='
     materials:  '='
-    product:    '='
     externalId: '='
   link: (scope, ele, attrs) ->
-    console.log scope.externalId, scope.product
     scope.$state = $state
 
     scope.sku.updating = false
