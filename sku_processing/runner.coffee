@@ -144,11 +144,11 @@ fns.indexElasticsearch = () ->
     message: 'deleting existing index'
     info_array: []
   utils.setStatus 'elasticsearch', status
-  es.deleteNestedIndex()
-  .then () ->
-    status.message = 'building new index'
-    utils.setStatus 'elasticsearch', status
-    es.createNestedIndex()
+  # es.deleteNestedIndex()
+  # .then () ->
+  status.message = 'building new index'
+  utils.setStatus 'elasticsearch', status
+  es.createNestedIndex()
   .then () ->
     status.message = 'populating new index'
     utils.setStatus 'elasticsearch', status
