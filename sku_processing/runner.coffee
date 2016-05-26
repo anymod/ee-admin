@@ -109,7 +109,7 @@ fns.processDropbox = () ->
   dropbox.getFolder '/files_to_process'
   .then (rows) ->
     files = _.filter rows.entries, { '.tag': 'file' }
-    if !files or files.length < 1 then throw 'no files found in /create'
+    if !files or files.length < 1 then throw 'no files found in /files_to_process'
     Promise.reduce files, ((total, file) -> processDropboxFile file.path_lower, status), 0
   .then (message) ->
     status.message = 'completed ' + status.info_array.length + ' files '
@@ -118,7 +118,7 @@ fns.processDropbox = () ->
       status.message += '(product: ' + message.products_created + ' created; ' + message.products_unchanged + ' unchanged)'
   .catch (err) -> status.err = err
   .finally () ->
-    status.running = false
+    status?.running = false
     utils.setStatus 'dropbox', status
 
 # fns.updateFromDropbox = () ->
@@ -135,7 +135,7 @@ fns.processDropbox = () ->
 #   .then () -> status.message = 'completed ' + status.info_array.length + ' update files'
 #   .catch (err) -> status.err = err
 #   .finally () ->
-#     status.running = false
+#     status?.running = false
 #     utils.setStatus 'update', status
 
 fns.indexElasticsearch = () ->
@@ -159,7 +159,7 @@ fns.indexElasticsearch = () ->
     status.info_array.push { count: count }
   .catch (err) -> status.err = err
   .finally () ->
-    status.running = false
+    status?.running = false
     utils.setStatus 'elasticsearch', status
 
 fns.runPricingAlgorithm = () ->
@@ -186,7 +186,7 @@ fns.runPricingAlgorithm = () ->
     status.message = 'updated pricing for ' + (n_skus - status.manual_pricing.length) + ' skus; ' + status.manual_pricing.length + ' skipped due to manual pricing'
   .catch (err) -> status.err = err
   .finally () ->
-    status.running = false
+    status?.running = false
     utils.setStatus 'pricing', status
 
 # fns.setCloudinaryImages = () ->

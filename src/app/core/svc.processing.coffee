@@ -20,7 +20,8 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
     _startPolling()
     eeBack.fns.processingDropboxPOST()
     .then (status) ->
-      if status?.dropbox then _data.status.dropbox[attr] = status.dropbox[attr] for attr in Object.keys(status.dropbox)
+      if status?.dropbox
+        _data.status.dropbox[attr] = status.dropbox[attr] for attr in Object.keys(status.dropbox)
     .catch (err) ->
       _data.status.err = err
       _data.status.dropbox.running = false
@@ -46,7 +47,8 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
     _startPolling()
     eeBack.fns.processingPricingPOST()
     .then (status) ->
-      if status?.pricing then _data.status.pricing[attr] = status.pricing[attr] for attr in Object.keys(status.pricing)
+      if status?.pricing
+        _data.status.pricing[attr] = status.pricing[attr] for attr in Object.keys(status.pricing)
     .catch (err) ->
       _data.status.err = err
       _data.status.pricing.running = false
@@ -66,7 +68,7 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
       _getStatus()
       .then () ->
         if _data.status.err then _stopPolling()
-        if !_data.status.dropbox.running and !_data.status.elasticsearch.running and !_data.status.pricing.running then _stopPolling()
+        if !_data.status.dropbox?.running and !_data.status.elasticsearch?.running and !_data.status.pricing?.running then _stopPolling()
     , 2000)
 
   _stopPolling = () ->
