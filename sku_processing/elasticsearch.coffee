@@ -43,25 +43,27 @@ index_attrs =
     size:             type: 'string'
     quantity:         type: 'integer'
     discontinued:     type: 'boolean'
+    supply_price:     type: 'integer'
+    supply_shipping_price: type: 'integer'
 
-indexable_attrs =
-  sku: [
-    'id'
-    'product_id'
-    'baseline_price'
-    'msrp'
-    'shipping_price'
-    'style'
-    'color'
-    'material'
-    'length'
-    'width'
-    'height'
-    'weight'
-    'size'
-    'supply_price'
-    'supply_shipping_price'
-  ]
+# indexable_attrs =
+#   sku: [
+#     'id'
+#     'product_id'
+#     'baseline_price'
+#     'msrp'
+#     'shipping_price'
+#     'style'
+#     'color'
+#     'material'
+#     'length'
+#     'width'
+#     'height'
+#     'weight'
+#     'size'
+#     'supply_price'
+#     'supply_shipping_price'
+#   ]
 
 read_attrs =
   sku: [
@@ -84,7 +86,7 @@ read_attrs =
 #   sequelize.query 'SELECT * FROM "Skus" where product_id = ? AND discontinued is not true AND quantity > 0', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
 #   .then (skus) ->
 #     count?.skus += skus.length
-#     product.skus = _.map(skus, (sku) -> _.pick(sku, indexable_attrs.sku ))
+#     product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
 #     body.push { index: { _index: 'products_search', _type: 'product', _id: product.id } }
 #     body.push product
 #     for sku in skus
@@ -138,7 +140,7 @@ addProductWithNesting = (body, product, count) ->
     return if skus.length is 0
     count.products++
     count?.skus += skus.length
-    product.skus = _.map(skus, (sku) -> _.pick(sku, indexable_attrs.sku ))
+    product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
     body.push { index: { _index: 'nested_search', _type: 'product', _id: product.id } }
     body.push product
 
@@ -146,6 +148,7 @@ fns.deleteNestedIndex = () ->
   new Promise (resolve, reject) ->
     elasticsearch.client.indices.delete({ index: 'nested_search' })
     .then () -> resolve true
+    .catch (err) -> resolve err
 
 fns.createNestedIndex = () ->
   product_properties = index_attrs.product
