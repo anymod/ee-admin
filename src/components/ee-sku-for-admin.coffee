@@ -1,6 +1,6 @@
 angular.module 'ee-sku-for-admin', []
 
-angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, eeBack, eeProduct, eeModal) ->
+angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $state, eeAuth, eeBack, eeProduct, eeModal) ->
   templateUrl: 'components/ee-sku-for-admin.html'
   restrict: 'EA'
   replace: true
@@ -9,6 +9,7 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
     styles:     '='
     colors:     '='
     materials:  '='
+    content:    '='
     externalId: '='
   link: (scope, ele, attrs) ->
     scope.$state = $state
@@ -24,6 +25,15 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
       options:
         lwh: ['in.','ft','yds','mm','cm','m']
         weight: ['lbs','oz','g','kg']
+
+    scope.dimensionGuesses = []
+    dimensionString = '' + scope.content + ' | ' + scope.sku.selection_text
+    matches = dimensionString.replace(/ +/g, '').match(/\d[\d\.\- \/]*/g) || [] #/
+    for match in matches
+      m = parseFloat(match)
+      if m < 1000 and m > 0 and scope.dimensionGuesses.indexOf(m) is -1
+        scope.dimensionGuesses.push m
+    scope.setDimension = (dim, guess) -> scope.sku[dim] = guess
 
     convertLengths = (ratio) ->
       scope.sku.length  = if scope.sku.length is '' then null else ratio * scope.sku.length
@@ -47,6 +57,16 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($state, eeAuth, e
         if scope.taxonomy.current.weight is 'kg'  then convertWeight 0.0283495
         scope.taxonomy.current.weight = 'lbs'
 
+    scope.swapDimensions = (a, b) ->
+      c = angular.copy scope.sku[a]
+      scope.sku[a] = scope.sku[b]
+      scope.sku[b] = c
+
+    scope.copySku = () -> $rootScope.$broadcast 'copy:sku', scope.sku
+    scope.$on 'copy:sku', (e, data) -> scope.copiedSku = data
+    scope.pasteSkuDimensions = () ->
+      if scope.copiedSku
+        scope.sku[attr] = scope.copiedSku[attr] for attr in ['length', 'width', 'height', 'weight']
 
     scope.setTaxonomyDropdownLWH    = (opt) -> scope.taxonomy.current.lwh = opt
     scope.setTaxonomyDropdownWeight = (opt) -> scope.taxonomy.current.weight = opt

@@ -39,6 +39,7 @@ sources.adminVendorUnmin = [
   './src/bower_components/blueimp-file-upload/js/jquery.fileupload.js' # for cloudinary image upload
   './src/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js' # for cloudinary image upload
   './src/bower_components/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.js' # for cloudinary image upload
+  './src/bower_components/angular-elastic/elastic.js' # for auto-resizing text areas, NOT elasticsearch
 ]
 
 ### MODULE ###

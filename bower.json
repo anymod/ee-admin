@@ -26,6 +26,7 @@
     "cloudinary-core": "~2.0.4",
     "cloudinary-jquery": "~2.0.4",
     "cloudinary-jquery-file-upload": "~2.0.4",
-    "jquery-ui": "~1.11.4"
+    "jquery-ui": "~1.11.4",
+    "angular-elastic": "~2.5.1"
   }
 }

@@ -93,8 +93,8 @@
   <!-- Dimension -->
   <div ng-if="$state.current.name == 'products.text'" class="pad-5">
     <input type="text" ng-model="sku.selection_text" style="width: 420px;" placeholder="Sku description">
-    &nbsp;<small>sku id: <span ng-bind="sku.id"></span></small>
-    <div class="pull-right text-right" style="width: 400px;">
+    &nbsp;<small>sku id: <span ng-bind="sku.id"></span></small>&nbsp;
+    <div class="pull-right text-right" style="width: 450px;">
       <!-- Links -->
       <div class="inline-block">
         <div class="btn-group" style="margin-left: 20px;">
@@ -106,10 +106,31 @@
         </div>
       </div>&nbsp;
       <!-- /Links -->
-      <input type="text" ng-model="sku.length" style="width: 34px" placeholder="L">
-      <input type="text" ng-model="sku.width" style="width: 34px" placeholder="W">
-      <input type="text" ng-model="sku.height" style="width: 34px" placeholder="H">&nbsp;in.&nbsp;&nbsp;
+      <span uib-dropdown is-open="openDropdowns" ng-repeat="dim in ['length', 'width', 'height']">
+        <input type="text" ng-model="sku[dim]" style="width: 34px" placeholder="{{ dim[0].toUpperCase() }}" uib-dropdown-toggle>
+        <ul class="dropdown-menu" style="min-width: 34px;" uib-dropdown-menu>
+          <li ng-repeat="guess in dimensionGuesses">
+            <a href style="padding: 2px 5px !important;" ng-click="setDimension(dim, guess)">{{ guess }}</a>
+          </li>
+        </ul>
+      </span>
+      <!-- <input type="text" ng-model="sku.length" style="width: 34px" placeholder="L"> -->
+      <!-- <input type="text" ng-model="sku.width" style="width: 34px" placeholder="W"> -->
+      <!-- <input type="text" ng-model="sku.height" style="width: 34px" placeholder="H"> -->
+      &nbsp;in.&nbsp;
       <input type="text" ng-model="sku.weight" style="width: 34px" placeholder="Weight">&nbsp;lbs.
+    </div>
+    <div class="text-right">
+      <div class="inline-block" style="margin-right: 32px;">
+        <i class="fa fa-copy hover-pointer" ng-click="copySku()" uib-tooltip="Copy Dimensions"></i>&nbsp;
+        <i class="fa fa-paste hover-pointer" ng-click="pasteSkuDimensions()" uib-tooltip="Paste Dimensions"></i>
+      </div>
+      <div class="inline-block" style="margin-right: 118px;">
+        <i class="fa fa-fw fa-exchange hover-pointer" ng-click="swapDimensions('length', 'width')" uib-tooltip="Swap L & W"></i>
+        &nbsp;&nbsp;&nbsp;
+        <i class="fa fa-fw fa-exchange hover-pointer" ng-click="swapDimensions('width', 'height')" uib-tooltip="Swap W & H"></i>
+      </div>
+
     </div>
   </div>
   <!-- /Dimension -->

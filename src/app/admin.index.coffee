@@ -7,6 +7,7 @@ angular.module 'eeAdmin', [
   'ngCookies'
   'ngSanitize'
   'summernote'
+  'monospaced.elastic'
 
   # core
   'app.core'

@@ -43,13 +43,14 @@
                 <ee-sku-for-admin
                   ng-repeat="sku in product.skus | orderBy:'price'"
                   sku="sku"
+                  content="product.content"
                   external-id="product.external_identity.split('.')[1]">
                 </ee-sku-for-admin>
               </td>
             </tr>
             <tr>
               <td colspan=6>
-                <textarea ng-model="product.content" class="full-width gray-border" rows="5" style="font-size: 12px;"></textarea>
+                <textarea msd-elastic ng-model="product.content" class="full-width gray-border" style="font-size: 12px;"></textarea>
               </td>
             </tr>
           </table>
