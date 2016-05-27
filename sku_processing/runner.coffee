@@ -118,7 +118,7 @@ fns.processDropbox = () ->
       status.message += '(product: ' + message.products_created + ' created; ' + message.products_unchanged + ' unchanged)'
   .catch (err) -> status.err = err
   .finally () ->
-    status?.running = false
+    # status?.running = false
     utils.setStatus 'dropbox', status
 
 # fns.updateFromDropbox = () ->
@@ -160,7 +160,7 @@ fns.indexElasticsearch = () ->
     status.info_array.push { count: count }
   .catch (err) -> status.err = err
   .finally () ->
-    status?.running = false
+    # status?.running = false
     utils.setStatus 'elasticsearch', status
 
 fns.runPricingAlgorithm = () ->
@@ -187,7 +187,7 @@ fns.runPricingAlgorithm = () ->
     status.message = 'updated pricing for ' + (n_skus - status.manual_pricing.length) + ' skus; ' + status.manual_pricing.length + ' skipped due to manual pricing'
   .catch (err) -> status.err = err
   .finally () ->
-    status?.running = false
+    # status?.running = false
     utils.setStatus 'pricing', status
 
 # fns.setCloudinaryImages = () ->
