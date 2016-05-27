@@ -122,13 +122,14 @@
     </div>
     <div class="text-right">
       <div class="inline-block" style="margin-right: 32px;">
-        <i class="fa fa-copy hover-pointer" ng-click="copySku()" uib-tooltip="Copy Dimensions"></i>&nbsp;
-        <i class="fa fa-paste hover-pointer" ng-click="pasteSkuDimensions()" uib-tooltip="Paste Dimensions"></i>
+        <i class="fa fa-copy hover-pointer" ng-click="copySku()" uib-tooltip="Copy Dimensions" tooltip-placement="bottom"></i>&nbsp;
+        <i class="fa fa-paste hover-pointer" ng-click="pasteSkuDimensions()" uib-tooltip="Paste Dimensions" tooltip-placement="bottom"></i>&nbsp;
+        <i class="fa fa-magic hover-pointer" ng-click="guessDimensions()" uib-tooltip="Guess Dimensions" tooltip-placement="bottom"></i>
       </div>
       <div class="inline-block" style="margin-right: 112px;">
-        <i class="fa fa-fw fa-exchange hover-pointer" ng-click="swapDimensions('length', 'width')" uib-tooltip="Swap L & W"></i>
+        <i class="fa fa-fw fa-exchange hover-pointer" ng-click="swapDimensions('length', 'width')" uib-tooltip="Swap L & W" tooltip-placement="bottom"></i>
         &nbsp;&nbsp;
-        <i class="fa fa-fw fa-exchange hover-pointer" ng-click="swapDimensions('width', 'height')" uib-tooltip="Swap W & H"></i>
+        <i class="fa fa-fw fa-exchange hover-pointer" ng-click="swapDimensions('width', 'height')" uib-tooltip="Swap W & H" tooltip-placement="bottom"></i>
       </div>
 
     </div>
