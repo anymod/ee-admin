@@ -27,7 +27,10 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $stat
         weight: ['lbs','oz','g','kg']
 
     scope.dimensionGuesses = []
-    dimensionString = '' + scope.content + ' | ' + scope.sku.selection_text
+    dimensionString = ('' + scope.content + ' | ' + scope.sku.selection_text)
+      .replace(/-/g, '').replace(/inch(es)?/g, '"').replace(/center/g, '')
+      .replace(/1\/4/g, '.25').replace(/1\/2/g, '.5').replace(/3\/4/g, '.75')
+      .replace(/1\/8/g, '.125').replace(/3\/8/g, '.375').replace(/5\/8/g, '.625').replace(/7\/8/g, '.875')
     matches = dimensionString.replace(/ +/g, '').match(/\d[\d\.\- \/]*/g) || [] #/
     for match in matches
       m = parseFloat(match)
@@ -69,22 +72,22 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $stat
         scope.sku[attr] = scope.copiedSku[attr] for attr in ['length', 'width', 'height', 'weight']
 
     scope.guessDimensions = () ->
-      text = scope.sku.selection_text
-      matchL = /\d[\d\.\- ]+.{0,5}([ "(]*[LlDd])/g
-      matchW = /\d[\d\.\- ]+.{0,5}([ "(]*[Ww])/g
-      matchH = /\d[\d\.\- ]+.{0,5}([ "(]*[Hh])/g
+      matchL = /\d[\d\.\- ]+.{0,3}([ "(]*[LlDd][^b])/g
+      matchW = /\d[\d\.\- ]+.{0,3}([ "(]*[Ww])/g
+      matchH = /\d[\d\.\- ]+.{0,3}([ "(]*[Hh])/g
       guessL = parseFloat(dimensionString.match(matchL)?[0].replace(/[^\d\.-]/g, ''))
       guessW = parseFloat(dimensionString.match(matchW)?[0].replace(/[^\d\.-]/g, ''))
       guessH = parseFloat(dimensionString.match(matchH)?[0].replace(/[^\d\.-]/g, ''))
-      if guessL > 0 then scope.sku.length = guessL
-      if guessW > 0 then scope.sku.width  = guessW
-      if guessH > 0 then scope.sku.height = guessH
-      if !scope.sku.length? && !scope.sku.width && !scope.sku.height
-        matchLWH = /\d.*[xX].*[xX].*\d/g
-        guessLWH = dimensionString.match(matchLWH)?[0].replace(/[^\d\.-x]/g, '').split(/x/g)
-        scope.sku.length = guessLWH[0]
-        scope.sku.width  = guessLWH[1]
-        scope.sku.height = guessLWH[2]
+      if guessL > 1 then scope.sku.length = guessL
+      if guessW > 1 then scope.sku.width  = guessW
+      if guessH > 1 then scope.sku.height = guessH
+      return if scope.sku.length? || scope.sku.width? || scope.sku.height?
+      matchLWH = /\d.*[xX].*[xX].*\d/g
+      guessLWH = dimensionString.match(matchLWH)?[0].replace(/[^\d\.-x]/g, '').split(/x/g)
+      if guessLWH?.length > 0
+        scope.sku.length = parseFloat(guessLWH[0]?.replace(/[^\d\.-]/g, ''))
+        scope.sku.width  = parseFloat(guessLWH[1]?.replace(/[^\d\.-]/g, ''))
+        scope.sku.height = parseFloat(guessLWH[2]?.replace(/[^\d\.-]/g, ''))
       return
 
     scope.setTaxonomyDropdownLWH    = (opt) -> scope.taxonomy.current.lwh = opt
