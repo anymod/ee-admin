@@ -71,7 +71,7 @@ else if argv.onitiva
       title = style + ' Throw Blanket'
       content = 'This blanket measures 61 by 86.6 inches. Suitable for home or travel. Soft materials and high tenacity; Fine and concentrated stitches; Machine washable and dryable. Exquisitely soft, and effortlessly warm! You have to feel this throw to believe the softness. Front: 100% Coral Fleece, Back: Plush. Fashionable and elegant blanket, perfect for your bedroom.\n\nThis Throw Blanket measures 61 by 86.6 inches. Comfort, warmth and stylish designs. Whether you are adding the final touch to your bedroom or rec-room these patterns will add a little whimsy to your decor. This Coral Fleece Patchwork throw blanket will make a fun additional to any room and are beautiful draped over a sofa, chair, bottom of your bed and handy to grab and snuggle up in when there is a chill in the air. They are the perfect gift for any occasion! Keep one in your car for staying warm at outdoor sporting events. Place one on your couch or favorite upholstered chair. Have extras on hand for sleepovers and overnight guests. Machine wash and tumble dry for easy care. Will look and feel as good as new after multiple washings!'
       setProductTitleAndContent prod.id, title, content
-      .then () -> setSkuDimensionsForProduct prod.id, 78.7, 59, null
+      .then () -> setSkuDimensionsForProduct prod.id, 86.6, 61, null
     Promise.reduce products, ((total, product) -> updateProduct2(product)), 0
   .then () ->
     sequelize.query q3, { type: sequelize.QueryTypes.SELECT }

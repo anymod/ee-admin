@@ -107,7 +107,8 @@
       </div>&nbsp;
       <!-- /Links -->
       <span uib-dropdown is-open="openDropdowns" ng-repeat="dim in ['length', 'width', 'height']">
-        <input type="text" ng-model="sku[dim]" style="width: 34px" placeholder="{{ dim[0].toUpperCase() }}" uib-dropdown-toggle>
+        <input type="text" ng-model="sku[dim]" style="width: 34px" placeholder="{{ dim[0].toUpperCase() }}" uib-dropdown-toggle
+          ng-class="(!sku.length && !sku.width && !sku.height) ? 'red-border' : ''">
         <ul class="dropdown-menu" style="min-width: 34px;" uib-dropdown-menu>
           <li ng-repeat="guess in dimensionGuesses">
             <a href style="padding: 2px 5px !important;" ng-click="setDimension(dim, guess)">{{ guess }}</a>
