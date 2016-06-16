@@ -92,13 +92,13 @@
       <div class="btn btn-sm btn-default" disabled>Style&nbsp;&nbsp;<span class="caret"></div>
       <div class="btn btn-sm btn-default" disabled>Color&nbsp;&nbsp;<span class="caret"></div>
       <div class="btn btn-sm btn-default" disabled>Material&nbsp;&nbsp;<span class="caret"></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }"><span class="bg-warning"> Out of stock </span></div>
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }"><span class="bg-danger"> Discontinued </span></div>
+      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('no_dimensions', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'no_dimensions' }"><span class="bg-muted"> No Dimensions </span></div>
+      <!-- <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('out_of_stock', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'out_of_stock' }"><span class="bg-warning"> Out of stock </span></div> -->
+      <!-- <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('discontinued', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'discontinued' }"><span class="bg-danger"> Discontinued </span></div> -->
       <!-- <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('manual_pricing', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'manual_pricing' }"><span class="bg-light-info"> Manual pricing </span></div> -->
-      <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }"><span class="bg-muted"> Hidden </span></div>
+      <!-- <div class="btn btn-sm btn-default" ng-click="products.fns.toggleFilter('hide_from_catalog', 'search')" ng-class="{ active: products.ee.Products.search.inputs.filter == 'hide_from_catalog' }"><span class="bg-muted"> Hidden </span></div> -->
     </div>
     <!-- /Filter -->
-
 
     <div class="margin-10 text-center" ng-hide="products.ee.Products.search.products.length <= 0">
       <uib-pagination
