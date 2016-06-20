@@ -81,6 +81,9 @@ read_attrs =
     'height'
     'weight'
     'size'
+    'quantity'
+    'discontinued'
+    'hide_from_catalog'
   ]
 
 # addSkusForElasticsearch = (body, product, count) ->
