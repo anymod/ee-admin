@@ -1,4 +1,4 @@
-<div ng-class="{ 'bg-light-info': !sku.auto_pricing, 'bg-warning': sku.quantity < 1, 'bg-danger': sku.discontinued, 'bg-light-success': sku.saved }">
+<div ng-class="{ 'bg-light-info': !sku.auto_pricing, 'bg-warning': sku.quantity < 1, 'bg-danger': sku.discontinued || sku.hide_from_catalog, 'bg-light-success': sku.saved }">
   <!-- Pricing -->
   <div ng-if="$state.current.name == 'products.pricing'"
     class="full-width text-right"
