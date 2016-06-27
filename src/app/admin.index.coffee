@@ -14,6 +14,7 @@ angular.module 'eeAdmin', [
 
   # admin
   'analytics'
+  'customers'
   'tracks'
   'users'
   'products'

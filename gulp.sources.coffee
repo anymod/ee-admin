@@ -89,6 +89,10 @@ sources.adminModule = [
   './src/app/analytics/analytics.module.coffee'
   './src/app/analytics/analytics.route.coffee'
   './src/app/analytics/analytics.controller.coffee'
+  # Module - customers
+  './src/app/customers/customers.module.coffee'
+  './src/app/customers/customers.route.coffee'
+  './src/app/customers/customers.controller.coffee'
   # Module - tracks
   './src/app/tracks/tracks.module.coffee'
   './src/app/tracks/tracks.route.coffee'

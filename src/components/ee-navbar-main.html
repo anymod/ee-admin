@@ -7,15 +7,16 @@
 <nav class="navbar navbar-default white-background main-navbar navbar-fixed-top margin-0 round-0 no-side-border"
   ng-class="{ 'box-shadow': !usersNav && !skusNav && !tracksNav }">
   <div class="container-fluid pad-5">
-    <a ui-sref="analytics" ui-sref-active="active" class="btn btn-default">Analytics</a>
-    <a ui-sref="tracks" ui-sref-active="active" class="btn btn-default">Tracks</a>
-    <a ui-sref="products.pricing" ng-class="{ active: state.indexOf('products.') > -1 }" class="btn btn-default">Products</a>
-    <a ui-sref="collections" ui-sref-active="active" class="btn btn-default">Collections</a>
-    <a ui-sref="users.info" ng-class="{ active: state.indexOf('users.') > -1 }" class="btn btn-default">Users</a>
-    <!-- <a ui-sref="taxonomy" ui-sref-active="active" class="btn btn-default">Taxonomy</a> -->
+    <a ui-sref="analytics" ui-sref-active="active" class="btn btn-sm btn-default">Seller Data</a>
+    <a ui-sref="customers" ui-sref-active="active" class="btn btn-sm btn-default">SR Data</a>
+    <a ui-sref="tracks" ui-sref-active="active" class="btn btn-sm btn-default">Tracks</a>
+    <a ui-sref="products.pricing" ng-class="{ active: state.indexOf('products.') > -1 }" class="btn btn-sm btn-default">Products</a>
+    <a ui-sref="collections" ui-sref-active="active" class="btn btn-sm btn-default">Collections</a>
+    <a ui-sref="users.info" ng-class="{ active: state.indexOf('users.') > -1 }" class="btn btn-sm btn-default">Users</a>
+    <!-- <a ui-sref="taxonomy" ui-sref-active="active" class="btn btn-sm btn-default">Taxonomy</a> -->
     <div class="pull-right">
-      <div ui-sref="login" ng-hide="ee.logged_in" class="btn btn-default">Login</div>
-      <div ui-sref="logout" ng-show="ee.logged_in" class="btn btn-danger">Logout</div>
+      <div ui-sref="login" ng-hide="ee.logged_in" class="btn btn-sm btn-default">Login</div>
+      <div ui-sref="logout" ng-show="ee.logged_in" class="btn btn-sm btn-danger">Logout</div>
     </div>
   </div>
 </nav>
