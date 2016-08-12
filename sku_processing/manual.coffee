@@ -16,6 +16,24 @@ setSkuDimensionsForProduct = (product_id, length, width, height) ->
   q = "UPDATE \"Skus\" SET length = ?, width = ?, height = ? WHERE product_id = ?"
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [length, width, height, product_id] }
 
+setSkuDimensions = (id, length, width, height) ->
+  q = "UPDATE \"Skus\" SET length = ?, width = ?, height = ? WHERE id = ?"
+  sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [length, width, height, id] }
+
+
+updateIfDimensioned = (sku) ->
+  return unless sku?.meta?.attributes?
+  pairs = _.map sku.meta.attributes.split(/\|\|/g)
+  attrs = {}
+  for pair in pairs
+    if pair.split(':=')[0] is 'Product1 D (in)' then sku.length = parseFloat(pair.split(':=')[1]) || null
+    if pair.split(':=')[0] is 'Product1 W (in)' then sku.width  = parseFloat(pair.split(':=')[1]) || null
+    if pair.split(':=')[0] is 'Product1 H (in)' then sku.height = parseFloat(pair.split(':=')[1]) || null
+  if sku.length? or sku.width? or sku.height?
+    setSkuDimensions sku.id, sku.length, sku.width, sku.height
+  else
+    Promise.resolve true
+
 if argv.bedding_vermicelli
   ### coffee sku_processing/manual.coffee --bedding_vermicelli ###
   product_count = 0
@@ -86,4 +104,13 @@ else if argv.onitiva
     Promise.reduce products, ((total, product) -> updateProduct3(product)), 0
   .then (res) ->  console.log 'finished ' + product_count + ' products'
   .catch (err) -> console.log 'err', err
+  .finally () -> process.exit()
+
+else if argv.sku_dimensions
+  ### coffee sku_processing/manual.coffee --sku_dimensions ###
+  q = "SELECT id, meta FROM \"Skus\" WHERE length IS NULL AND width IS NULL AND height IS NULL AND meta IS NOT NULL"
+  sequelize.query q, { type: sequelize.QueryTypes.SELECT }
+  .then (skus) ->
+    console.log skus.length
+    Promise.reduce skus, ((total, sku) -> updateIfDimensioned(sku)), 0
   .finally () -> process.exit()
