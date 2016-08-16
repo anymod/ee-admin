@@ -88,59 +88,9 @@ read_attrs =
     'tags'
   ]
 
-# addSkusForElasticsearch = (body, product, count) ->
-#   sequelize.query 'SELECT * FROM "Skus" where product_id = ? AND discontinued is not true AND quantity > 0', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
-#   .then (skus) ->
-#     count?.skus += skus.length
-#     product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
-#     body.push { index: { _index: 'products_search', _type: 'product', _id: product.id } }
-#     body.push product
-#     for sku in skus
-#       body.push { index: { _index: 'products_search', _type: 'sku', _id: sku.id, _parent: product.id } }
-#       body.push sku
-#
-# fns.deleteIndex = () ->
-#   new Promise (resolve, reject) ->
-#     elasticsearch.client.indices.delete({ index: 'products_search' })
-#     .then () -> resolve true
-#
-# fns.createIndex = () ->
-#   new Promise (resolve, reject) ->
-#     elasticsearch.client.indices.create({
-#       index: 'products_search'
-#       body:
-#         settings:
-#           number_of_shards: 1
-#           analysis:
-#             analyzer: 'english'
-#               # english:
-#               #   tokenizer: 'standard'
-#               #   filter: ['lowercase']
-#         mappings:
-#           product:
-#             properties: index_attrs.product
-#           sku:
-#             _parent: type: 'product'
-#             properties: index_attrs.sku
-#
-#     })
-#     .then () -> resolve true
-#
-# fns.bulkIndex = () ->
-#   bulk_body = []
-#   count =
-#     products: 0
-#     skus: 0
-#   sequelize.query 'SELECT * FROM "Products" limit 10000', { type: sequelize.QueryTypes.SELECT }
-#   .then (products) ->
-#     count.products = products.length
-#     Promise.reduce products, ((total, product) -> addSkusForElasticsearch(bulk_body, product, count)), 0
-#   .then () -> elasticsearch.client.bulk body: bulk_body
-#   .then () -> count
-
 ### NESTING ###
 
-es_index = 'test_search' # 'nested_search'
+es_index = 'nested_search' # 'test_search'
 
 addProductWithNesting = (body, product, count) ->
   sequelize.query 'SELECT * FROM "Skus" where product_id = ? AND discontinued is not true AND quantity > 0', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }

@@ -117,10 +117,13 @@ else if argv.sku_dimensions
   .finally () -> process.exit()
 
 else if argv.test_elasticsearch
+  # Change es_index first
   ### coffee sku_processing/manual.coffee --test_elasticsearch ###
   es.deleteNestedIndex()
   .then () -> es.createNestedIndex()
   .then () -> es.bulkNestedIndex()
   .then (count) -> console.log 'count', count
   .catch (err) -> console.log 'err', err
-  .finally () -> console.log 'finished'
+  .finally () ->
+    console.log 'finished'
+    process.exit()
