@@ -5,6 +5,7 @@ argv      = require('yargs').argv
 
 sku     = require './sku'
 pricing = require './pricing'
+es      = require './elasticsearch'
 
 utils   = require '../utils'
 
@@ -114,3 +115,10 @@ else if argv.sku_dimensions
     console.log skus.length
     Promise.reduce skus, ((total, sku) -> updateIfDimensioned(sku)), 0
   .finally () -> process.exit()
+
+else if argv.test_elasticsearch
+  ### coffee sku_processing/manual.coffee --test_elasticsearch ###
+  es.bulkNestedIndex()
+  .then (count) -> console.log 'count', count
+  .catch (err) -> console.log 'err', err
+  .finally () -> console.log 'finished'

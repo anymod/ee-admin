@@ -46,7 +46,7 @@ index_attrs =
     supply_price:     type: 'integer'
     supply_shipping_price: type: 'integer'
     hide_from_catalog: type: 'boolean'
-    # tags:             type: 'array'
+    tags:             type: 'string'
 
 # indexable_attrs =
 #   sku: [
@@ -85,7 +85,6 @@ read_attrs =
     'quantity'
     'discontinued'
     'hide_from_catalog'
-    # TODO split tags before adding to elasticsearch?
     'tags'
   ]
 
@@ -141,6 +140,8 @@ read_attrs =
 
 ### NESTING ###
 
+es_index = 'test_search' # 'nested_search'
+
 addProductWithNesting = (body, product, count) ->
   sequelize.query 'SELECT * FROM "Skus" where product_id = ? AND discontinued is not true AND quantity > 0', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
   .then (skus) ->
@@ -149,12 +150,12 @@ addProductWithNesting = (body, product, count) ->
     count?.skus += skus.length
     console.log skus[0]?.id, skus[0]?.tags
     product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
-    body.push { index: { _index: 'nested_search', _type: 'product', _id: product.id } }
+    body.push { index: { _index: es_index, _type: 'product', _id: product.id } }
     body.push product
 
 fns.deleteNestedIndex = () ->
   new Promise (resolve, reject) ->
-    elasticsearch.client.indices.delete({ index: 'nested_search' })
+    elasticsearch.client.indices.delete({ index: es_index })
     .then () -> resolve true
     .catch (err) -> resolve err
 
@@ -165,7 +166,7 @@ fns.createNestedIndex = () ->
     properties: index_attrs.sku
   new Promise (resolve, reject) ->
     elasticsearch.client.indices.create({
-      index: 'nested_search'
+      index: es_index
       body:
         settings:
           number_of_shards: 1
