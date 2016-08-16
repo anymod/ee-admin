@@ -85,6 +85,7 @@ read_attrs =
     'quantity'
     'discontinued'
     'hide_from_catalog'
+    # TODO split tags before adding to elasticsearch?
     # 'tags'
   ]
 
@@ -147,6 +148,7 @@ addProductWithNesting = (body, product, count) ->
     count.products++
     count?.skus += skus.length
     product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
+    console.log product.skus[0]?.id, product.skus[0]?.tags
     body.push { index: { _index: 'nested_search', _type: 'product', _id: product.id } }
     body.push product
 
