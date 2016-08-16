@@ -46,7 +46,7 @@ index_attrs =
     supply_price:     type: 'integer'
     supply_shipping_price: type: 'integer'
     hide_from_catalog: type: 'boolean'
-    # tags:             type: 'string'
+    tags:             type: 'string'
 
 # indexable_attrs =
 #   sku: [

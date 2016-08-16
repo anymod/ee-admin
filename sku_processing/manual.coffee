@@ -118,9 +118,9 @@ else if argv.sku_dimensions
 
 else if argv.test_elasticsearch
   ### coffee sku_processing/manual.coffee --test_elasticsearch ###
-  fns.deleteNestedIndex()
-  .then () -> fns.createNestedIndex()
-  .then () -> fns.bulkNestedIndex()
+  es.deleteNestedIndex()
+  .then () -> es.createNestedIndex()
+  .then () -> es.bulkNestedIndex()
   .then (count) -> console.log 'count', count
   .catch (err) -> console.log 'err', err
   .finally () -> console.log 'finished'
