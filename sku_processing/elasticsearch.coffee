@@ -147,8 +147,8 @@ addProductWithNesting = (body, product, count) ->
     return if skus.length is 0
     count.products++
     count?.skus += skus.length
-    product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
     console.log product.skus[0]?.id, product.skus[0]?.tags
+    product.skus = _.map(skus, (sku) -> _.pick(sku, read_attrs.sku ))
     body.push { index: { _index: 'nested_search', _type: 'product', _id: product.id } }
     body.push product
 
