@@ -121,4 +121,5 @@ fns.processSkuTags = (reference_sku) ->
   q = 'UPDATE "Skus" SET tags = ' + arr + ', updated_at = ? WHERE id = ?'
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [utils.timestamp(), reference_sku.id] }
 
+
 module.exports = fns
