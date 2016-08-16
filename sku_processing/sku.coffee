@@ -9,7 +9,7 @@ fns = {}
 fns.editableAttrs = ['supply_price', 'supply_shipping_price', 'quantity', 'msrp', 'discontinued']
 
 fns.findAll = () ->
-  sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued FROM "Skus"', { type: sequelize.QueryTypes.SELECT }
+  sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued, other FROM "Skus"', { type: sequelize.QueryTypes.SELECT }
 
 fns.findByIdentifierAndSupplierId = (identifier, supplier_id) ->
   if supplier_id then supplier_id = parseInt(supplier_id)
@@ -113,5 +113,12 @@ fns.updateSkuSpelling = (reference_sku, info) ->
   return if !reference_sku or !reference_sku.id or !reference_sku.selection_text
   q = 'UPDATE "Skus" SET selection_text = ?, updated_at = ? WHERE id = ?'
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [reference_sku.selection_text, utils.timestamp(), reference_sku.id] }
+
+fns.processSkuTags = (reference_sku) ->
+  return if !reference_sku?.id? or reference_sku.tags?.length > 0 or !reference_sku.other?.categories?
+  tags = reference_sku.other.categories.replace(/'/g, "''").split(/\|\|/g)
+  arr = 'ARRAY[\'' + tags.join("\',\'") + '\']::VARCHAR(255)[]'
+  q = 'UPDATE "Skus" SET tags = ' + arr + ', updated_at = ? WHERE id = ?'
+  sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [utils.timestamp(), reference_sku.id] }
 
 module.exports = fns

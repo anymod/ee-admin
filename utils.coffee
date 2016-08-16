@@ -2,7 +2,7 @@ fns = {}
 
 fns.setStatus = (section, status) ->
   global.ee_status ||= {}
-  return unless section and status
+  return unless section? and status?
   global.ee_status[section] = status
   console.log global.ee_status
   global.ee_status

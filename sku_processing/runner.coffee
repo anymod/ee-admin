@@ -194,6 +194,27 @@ fns.runPricingAlgorithm = () ->
     status.running = false
     utils.setStatus 'pricing', status
 
+fns.setTags = () ->
+  status =
+    running: true
+    message: 'reading skus'
+  n_skus = 0
+  utils.setStatus 'tags', status
+  sku.findAll()
+  .then (skus) ->
+    n_skus = skus.length
+    status.message = 'adding tags for ' + n_skus + ' skus'
+    utils.setStatus 'tags', status
+    Promise.reduce skus, ((total, s) -> sku.processSkuTags(s)), 0
+  .then () ->
+    status.message = 'added new tags'
+  .catch (err) -> status.err = err
+  .finally () ->
+    status ||= {}
+    status.running = false
+    utils.setStatus 'tags', status
+
+
 # fns.setCloudinaryImages = () ->
 #   url = 'http://images.doba.com/products/3797/img_bloemliving_27060_6.jpg'
 #   options =
@@ -220,6 +241,13 @@ else if argv.cloudinary
     products = _.slice res, 0, 100
     Promise.reduce products, ((total, prod) -> processDobaImages(prod)), 0
   .then () -> console.log 'Finished:', products
+  .catch (err) -> console.log 'err', err
+  .finally () -> process.exit()
+
+else if argv.tags
+  ### coffee sku_processing/runner.coffee --tags ###
+  fns.setTags()
+  .then (res) -> console.log res
   .catch (err) -> console.log 'err', err
   .finally () -> process.exit()
 
