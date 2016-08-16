@@ -86,7 +86,7 @@ read_attrs =
     'discontinued'
     'hide_from_catalog'
     # TODO split tags before adding to elasticsearch?
-    # 'tags'
+    'tags'
   ]
 
 # addSkusForElasticsearch = (body, product, count) ->
