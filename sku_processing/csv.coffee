@@ -16,8 +16,8 @@ csv = {}
 #         rows.shift()
 #         resolve rows
 
-csv.parseSkuCreateFile = (data, category_id) ->
-  throw 'parseSkuCreateFile missing category_id' unless category_id?
+csv.parseDobaFile = (data, category_id) ->
+  throw 'parseDobaFile missing category_id' unless category_id?
   # Read csv and return array of objects:
   # {
   #   sku: {

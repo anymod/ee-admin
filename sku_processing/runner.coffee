@@ -19,13 +19,16 @@ fns = {}
 processDropboxFile = (path, status) ->
   status?.message = 'processing ' + path
   utils.setStatus 'dropbox', status
+  category_id = dropbox.getCategoryFromPath(path)
   dropbox.getFile path
   .then (file) ->
-    category_id = dropbox.getCategoryFromPath(path)
-    csv.parseSkuCreateFile file, category_id
+    csv.parseDobaFile file, category_id
   .then (data) ->
-    grammar.cleanPairs data
-    product.createOrUpdatePairs data
+    if category_id is 0 # set if removal
+      sku.removeSkusFromPairs data
+    else
+      grammar.cleanPairs data
+      product.createOrUpdatePairs data
   .then (info) ->
     keen.addSkuEvent info
     if status?.info_array?
@@ -33,11 +36,13 @@ processDropboxFile = (path, status) ->
       utils.setStatus 'dropbox', status
     dropbox.finishFile path
   .then () ->
+    console.log 'status.info_array', status.info_array
     if status?.info_array?
       {
         skus_created:       _.sum(_.map(status.info_array, (el) -> el.skus.created))
         skus_updated:       _.sum(_.map(status.info_array, (el) -> el.skus.updated))
         skus_unchanged:     _.sum(_.map(status.info_array, (el) -> el.skus.unchanged))
+        skus_hidden:        _.sum(_.map(status.info_array, (el) -> el.skus.hidden))
         products_created:   _.sum(_.map(status.info_array, (el) -> el.products.created))
         products_unchanged: _.sum(_.map(status.info_array, (el) -> el.products.unchanged))
       }
@@ -114,7 +119,7 @@ fns.processDropbox = () ->
   .then (message) ->
     status.message = 'completed ' + status.info_array.length + ' files '
     if message
-      status.message += '(sku: ' + message.skus_created + ' created; ' + message.skus_updated + ' updated; ' + message.skus_unchanged + ' unchanged) '
+      status.message += '(sku: ' + message.skus_created + ' created; ' + message.skus_updated + ' updated; ' + message.skus_hidden + ' hidden; ' + message.skus_unchanged + ' unchanged) '
       status.message += '(product: ' + message.products_created + ' created; ' + message.products_unchanged + ' unchanged)'
   .catch (err) -> status.err = err
   .finally () ->

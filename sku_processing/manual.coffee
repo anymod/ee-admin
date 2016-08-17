@@ -1,3 +1,4 @@
+fs        = require 'fs'
 _         = require 'lodash'
 Promise   = require 'bluebird'
 sequelize = require '../config/sequelize/setup'
@@ -21,7 +22,6 @@ setSkuDimensions = (id, length, width, height) ->
   q = "UPDATE \"Skus\" SET length = ?, width = ?, height = ? WHERE id = ?"
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [length, width, height, id] }
 
-
 updateIfDimensioned = (sku) ->
   return unless sku?.meta?.attributes?
   pairs = _.map sku.meta.attributes.split(/\|\|/g)
@@ -34,6 +34,34 @@ updateIfDimensioned = (sku) ->
     setSkuDimensions sku.id, sku.length, sku.width, sku.height
   else
     Promise.resolve true
+
+formTagTree = () ->
+  # write tag tree to tree.txt
+  tree = {}
+  toWrite = ''
+  sku.findAll()
+  .then (skus) ->
+    for sku in skus
+      if sku.tags?.length > 0
+        for tag, i in sku.tags
+          if tag? and tag isnt ''
+            switch i
+              when 0
+                if tree[tag]? then tree[tag].count += 1 else tree[tag] = { count: 1 }
+              when 1
+                if tree[sku.tags[0]][tag]? then tree[sku.tags[0]][tag].count += 1 else tree[sku.tags[0]][tag] = { count: 1 }
+              when 2
+                if tree[sku.tags[0]][sku.tags[1]][tag]? then tree[sku.tags[0]][sku.tags[1]][tag].count += 1 else tree[sku.tags[0]][sku.tags[1]][tag] = { count: 1 }
+    for key in Object.keys tree
+      toWrite += key + ' (' + tree[key].count + ')\n'
+      for subkey in Object.keys tree[key]
+        if subkey isnt 'count'
+          toWrite += '\t- ' + subkey + ' (' + tree[key][subkey].count + ')\n'
+          for subsubkey in Object.keys tree[key][subkey]
+            if subsubkey isnt 'count'
+              toWrite += '\t\t- ' + subsubkey + ' (' + tree[key][subkey][subsubkey].count + ')\n'
+    console.log toWrite
+    fs.writeFileSync 'tree.txt', toWrite
 
 if argv.bedding_vermicelli
   ### coffee sku_processing/manual.coffee --bedding_vermicelli ###
@@ -123,6 +151,14 @@ else if argv.test_elasticsearch
   .then () -> es.createNestedIndex()
   .then () -> es.bulkNestedIndex()
   .then (count) -> console.log 'count', count
+  .catch (err) -> console.log 'err', err
+  .finally () ->
+    console.log 'finished'
+    process.exit()
+
+else if argv.form_tag_tree
+  ### coffee sku_processing/manual.coffee --form_tag_tree ###
+  formTagTree()
   .catch (err) -> console.log 'err', err
   .finally () ->
     console.log 'finished'

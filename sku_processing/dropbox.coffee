@@ -31,6 +31,7 @@ dropbox.categoryMappings =
 
 dropbox.getCategoryFromPath = (path) ->
   throw 'No path in dropbox.getCategoryFromPath' unless path?
+  if path.indexOf('removal') > -1 then return 0
   for key in Object.keys(dropbox.categoryMappings)
     if path.indexOf('/files_to_process/' + key) is 0 then return dropbox.categoryMappings[key]
   throw 'No category in dropbox.getCategoryFromPath'

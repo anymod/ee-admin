@@ -9,7 +9,7 @@ fns = {}
 fns.editableAttrs = ['supply_price', 'supply_shipping_price', 'quantity', 'msrp', 'discontinued']
 
 fns.findAll = () ->
-  sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued, other FROM "Skus"', { type: sequelize.QueryTypes.SELECT }
+  sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued, other, tags FROM "Skus"', { type: sequelize.QueryTypes.SELECT }
 
 fns.findByIdentifierAndSupplierId = (identifier, supplier_id) ->
   if supplier_id then supplier_id = parseInt(supplier_id)
@@ -31,8 +31,9 @@ fns.createFrom = (data, info) ->
   # sequelize.query q, { type: sequelize.QueryTypes.INSERT, replacements: [data.title, data.content, data.external_identity, data.image, data.category_id, utils.timestamp(), utils.timestamp()] }
   # .then (res) -> res[0]
 
-# fns.findByIdentifiers = (identifiers) ->
-#   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, discontinued FROM "Skus" where identifier IN (' + identifiers + ')', { type: sequelize.QueryTypes.SELECT }
+fns.removeByIdentifierAndSupplierId = (identifier, supplier_id) ->
+  if supplier_id then supplier_id = parseInt(supplier_id)
+  sequelize.query 'UPDATE "Skus" SET hide_from_catalog = true WHERE identifier = ? AND supplier_id = ? AND hide_from_catalog IS NOT true', { type: sequelize.QueryTypes.UPDATE, replacements: [identifier, supplier_id] }
 
 fns.updatePricing = (sku) ->
   return unless sku? and sku.id? and sku.baseline_price? and sku.shipping_price?
@@ -113,6 +114,42 @@ fns.updateSkuSpelling = (reference_sku, info) ->
   return if !reference_sku or !reference_sku.id or !reference_sku.selection_text
   q = 'UPDATE "Skus" SET selection_text = ?, updated_at = ? WHERE id = ?'
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [reference_sku.selection_text, utils.timestamp(), reference_sku.id] }
+
+fns.removeSkusFromPairs = (pairs) ->
+  skus_to_remove = _.map pairs, 'sku'
+  throw 'Missing skus to remove' unless skus_to_remove?.length > 0
+  info =
+    products:
+      created: 0
+      unchanged: 0
+      created_ids: []
+    skus:
+      created: 0
+      updated: 0
+      updated_attrs: {}
+      unchanged: 0
+      hidden: 0
+      not_found: 0
+      large_price_change: 0
+      created_ids: []
+      large_price_change_ids: []
+      not_found_ids: []
+      hidden_ids: []
+  initial_count = 0
+  sequelize.query 'SELECT count(*) FROM "Skus" WHERE hide_from_catalog IS true', { type: sequelize.QueryTypes.COUNT }
+  .then (res) ->
+    initial_count = parseInt(res[0][0].count)
+    Promise.reduce skus_to_remove, ((total, sku) -> fns.removeSku(sku)), 0
+  .then () ->
+    sequelize.query 'SELECT count(*) FROM "Skus" WHERE hide_from_catalog IS true', { type: sequelize.QueryTypes.COUNT }
+  .then (res) ->
+    info.skus.hidden = parseInt(res[0][0].count) - initial_count
+    console.log 'info.skus.hidden', info.skus.hidden
+    info
+
+fns.removeSku = (sku_to_remove) ->
+  return if !sku_to_remove?.identifier? or !sku_to_remove.supplier_id
+  fns.removeByIdentifierAndSupplierId sku_to_remove.identifier, sku_to_remove.supplier_id
 
 fns.processSkuTags = (reference_sku) ->
   return if !reference_sku?.id? or reference_sku.tags?.length > 0 or !reference_sku.other?.categories?

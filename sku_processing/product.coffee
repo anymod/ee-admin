@@ -83,11 +83,13 @@ fns.createOrUpdatePairs = (pairs) ->
       updated: 0
       updated_attrs: {}
       unchanged: 0
+      hidden: 0
       not_found: 0
       large_price_change: 0
       created_ids: []
       large_price_change_ids: []
       not_found_ids: []
+      hidden_ids: []
   info.skus.updated_attrs[attr] = 0 for attr in sku.editableAttrs
   Promise.reduce pairs, ((total, pair) -> fns.findOrUpdateProductAndSku(pair, info)), 0
   .then () -> info
