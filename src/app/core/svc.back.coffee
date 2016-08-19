@@ -216,3 +216,15 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl, eeTidyUrl, e
         method: 'POST'
         url: eeAdminUrl + 'processing/pricing'
       }
+
+    processingCloudinaryPOST: () ->
+      _makeRequest {
+        method: 'POST'
+        url: eeAdminUrl + 'processing/cloudinary'
+      }
+
+    processingTagsPOST: () ->
+      _makeRequest {
+        method: 'POST'
+        url: eeAdminUrl + 'processing/tags'
+      }

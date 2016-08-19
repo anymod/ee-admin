@@ -199,7 +199,30 @@ fns.runPricingAlgorithm = () ->
     status.running = false
     utils.setStatus 'pricing', status
 
-fns.setTags = () ->
+fns.runCloudinary = () ->
+  status =
+    running: true
+    message: 'processing cloudinary images'
+    info_array: []
+  utils.setStatus 'cloudinary', status
+  products = []
+  remaining_count = 0
+  product.findAllWithDobaImage()
+  .then (res) ->
+    products = _.slice res, 0, 100
+    remaining_count = if products.length < res.length then res.length - products.length else res.length
+    status.message = 'processing batch of ' + products.length + ' products; ' + remaining_count + ' remaining'
+    utils.setStatus 'cloudinary', status
+    Promise.reduce products, ((total, prod) -> processDobaImages(prod)), 0
+  .then () ->
+    status.message = 'finished updating images for ' + products.length + ' products; ' + remaining_count + ' remaining'
+  .catch (err) -> status.err = err
+  .finally () ->
+    status ||= {}
+    status.running = false
+    utils.setStatus 'cloudinary', status
+
+fns.runTags = () ->
   status =
     running: true
     message: 'reading skus'
@@ -251,7 +274,7 @@ else if argv.cloudinary
 
 else if argv.tags
   ### coffee sku_processing/runner.coffee --tags ###
-  fns.setTags()
+  fns.runTags()
   .then (res) -> console.log res
   .catch (err) -> console.log 'err', err
   .finally () -> process.exit()

@@ -63,6 +63,16 @@ app.post '/v0/processing/pricing', (req, res, next) ->
   res.json global.ee_status
   return
 
+app.post '/v0/processing/cloudinary', (req, res, next) ->
+  skuRunner.runCloudinary()
+  res.json global.ee_status
+  return
+
+app.post '/v0/processing/tags', (req, res, next) ->
+  skuRunner.runTags()
+  res.json global.ee_status
+  return
+
 app.get '/v0/processing/status', (req, res, next) ->
   utils.setStatus()
   res.json global.ee_status
