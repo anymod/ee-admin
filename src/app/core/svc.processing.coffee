@@ -74,7 +74,7 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
         _data.status.tags[attr] = status.tags[attr] for attr in Object.keys(status.tags)
     .catch (err) ->
       _data.status.err = err
-      _setRunning 'false', true
+      _setRunning 'tags', false
 
   _getStatus = () ->
     eeBack.fns.processingStatusGET()
