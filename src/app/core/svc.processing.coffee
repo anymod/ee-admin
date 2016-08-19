@@ -90,7 +90,7 @@ angular.module('app.core').factory 'eeProcessing', ($q, $interval, eeBack) ->
     _polling = $interval(() ->
       _getStatus()
       .then () ->
-        if _data.status.err or !_data.status.running then _stopPolling()
+        if _data.status.err or !_data.status.running? then _stopPolling()
     , 2000)
 
   _stopPolling = () ->

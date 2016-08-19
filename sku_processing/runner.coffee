@@ -235,7 +235,7 @@ fns.runTags = () ->
     utils.setStatus 'tags', status
     Promise.reduce skus, ((total, s) -> sku.processSkuTags(s)), 0
   .then () ->
-    status.message = 'added new tags'
+    status.message = 'added new tags for ' + n_skus + ' skus'
   .catch (err) -> status.err = err
   .finally () ->
     status ||= {}
