@@ -144,8 +144,8 @@ else if argv.onitiva
 
 else if argv.sku_dimensions
   ### coffee sku_processing/manual.coffee --sku_dimensions ###
-  # q = "SELECT id, meta FROM \"Skus\" WHERE length IS NULL AND width IS NULL AND height IS NULL AND meta IS NOT NULL"
-  q = "SELECT id, meta FROM \"Skus\" WHERE width IS NULL AND meta IS NOT NULL"
+  q = "SELECT id, meta FROM \"Skus\" WHERE length IS NULL AND width IS NULL AND height IS NULL AND meta IS NOT NULL"
+  # q = "SELECT id, meta FROM \"Skus\" WHERE width IS NULL AND meta IS NOT NULL"
   sequelize.query q, { type: sequelize.QueryTypes.SELECT }
   .then (skus) ->
     console.log skus.length
