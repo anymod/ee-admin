@@ -9,7 +9,7 @@ sku   = require './sku'
 mappings = require './doba.mappings'
 
 token       = 'Bearer 5LTVvc5TbysAAAAAAAAAESnWQj7UXc7aRyojSnPzRbM6BDcCQaY05wCYlWwKlGGC'
-api_v1_uri  = 'https://api.dropboxapi.com/1'
+# api_v1_uri  = 'https://api.dropboxapi.com/1'
 api_uri     = 'https://api.dropboxapi.com/2'
 content_uri = 'https://content.dropboxapi.com/2'
 

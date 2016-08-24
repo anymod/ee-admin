@@ -97,12 +97,11 @@
     <div class="pull-right text-right" style="width: 450px;">
       <!-- Links -->
       <div class="inline-block">
-        <div class="btn-group" style="margin-left: 20px;">
-          <a href="https://www.doba.com/members/my-inventory/product/details/{{ externalId }}" target="_blank" class="btn btn-xs btn-default">doba</a>
-          <!-- <a href="https://www.doba.com/members/catalog/search?adv_filter_update%5B%5D=0&shipping_filter=all&min_qty=0&adv_filter_update%5B%5D=0&adv_filter_update%5Bout_of_stock%5D=on&adv_filter_update%5Bdiscontinued%5D=on&adv_filter_update%5Brefurbished%5D=on&terms={{ sku.identifier }}" target="_blank" class="btn btn-xs btn-default">doba</a> -->
-          <a href="https://www.google.com/search?q={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank" class="btn btn-xs btn-default">goog</a>
-          <a href="http://www.amazon.com/s/?field-keywords={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank" class="btn btn-xs btn-default">amzn</a>
-          <a href="http://www.wayfair.com/keyword.php?keyword={{ sku.selection_text | pluses }}" target="_blank" class="btn btn-xs btn-default">wayfr</a>
+        <small>Dimensions</small>
+        <div class="btn-group" style="margin-left: 5px;">
+          <div ng-click="copySku()" class="btn btn-default btn-xs"><i class="fa fa-fw fa-copy hover-pointer"></i></div>
+          <div ng-click="pasteSkuDimensions()" class="btn btn-default btn-xs"><i class="fa fa-fw fa-paste hover-pointer"></i></div>
+          <div ng-click="guessDimensions()" class="btn btn-default btn-xs"><i class="fa fa-fw fa-magic hover-pointer"></i></div>
         </div>
       </div>&nbsp;
       <!-- /Links -->
@@ -121,13 +120,15 @@
       &nbsp;in.&nbsp;
       <input type="text" ng-model="sku.weight" style="width: 34px" placeholder="Weight">&nbsp;lbs.
     </div>
-    <div class="text-right">
-      <div class="inline-block" style="margin-right: 32px;">
-        <i class="fa fa-copy hover-pointer" ng-click="copySku()" uib-tooltip="Copy Dimensions" tooltip-placement="bottom"></i>&nbsp;
-        <i class="fa fa-paste hover-pointer" ng-click="pasteSkuDimensions()" uib-tooltip="Paste Dimensions" tooltip-placement="bottom"></i>&nbsp;
-        <i class="fa fa-magic hover-pointer" ng-click="guessDimensions()" uib-tooltip="Guess Dimensions" tooltip-placement="bottom"></i>
+    <div>
+      <div class="inline-block pad-2">
+        <a href="https://www.doba.com/members/my-inventory/product/details/{{ externalId }}" target="_blank">doba</a>&nbsp
+        <!-- <a href="https://www.doba.com/members/catalog/search?adv_filter_update%5B%5D=0&shipping_filter=all&min_qty=0&adv_filter_update%5B%5D=0&adv_filter_update%5Bout_of_stock%5D=on&adv_filter_update%5Bdiscontinued%5D=on&adv_filter_update%5Brefurbished%5D=on&terms={{ sku.identifier }}" target="_blank" class="btn btn-xs btn-default">doba</a> -->
+        <a href="https://www.google.com/search?q={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank">goog</a>&nbsp
+        <a href="http://www.amazon.com/s/?field-keywords={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank">amzn</a>&nbsp
+        <a href="http://www.wayfair.com/keyword.php?keyword={{ sku.selection_text | pluses }}" target="_blank">wayfr</a>
       </div>
-      <div class="inline-block" style="margin-right: 112px;">
+      <div class="inline-block pull-right" style="margin-right: 120px;">
         <i class="fa fa-fw fa-exchange hover-pointer" ng-click="swapDimensions('length', 'width')" uib-tooltip="Swap L & W" tooltip-placement="bottom"></i>
         &nbsp;&nbsp;
         <i class="fa fa-fw fa-exchange hover-pointer" ng-click="swapDimensions('width', 'height')" uib-tooltip="Swap W & H" tooltip-placement="bottom"></i>
