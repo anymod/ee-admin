@@ -33,9 +33,10 @@ updateIfDimensioned = (sku) ->
     if pair.split(':=')[0] is 'Dimensions'
       dimensions = pair.split(':=')[1].replace(/ /g,'').split('x')
       for dim in dimensions
-        if dim.slice(-1) is 'L' then sku.length = parseFloat(dim.slice(0,-1))
-        if dim.slice(-1) is 'W' then sku.width = parseFloat(dim.slice(0,-1))
-        if dim.slice(-1) is 'H' then sku.height = parseFloat(dim.slice(0,-1))
+        switch dim.slice(-1)
+          when 'L' then sku.length = parseFloat(dim.slice(0,-1))
+          when 'W', 'D' then sku.width = parseFloat(dim.slice(0,-1))
+          when 'H' then sku.height = parseFloat(dim.slice(0,-1))
   if sku.length? or sku.width? or sku.height?
     setSkuDimensions sku.id, sku.length, sku.width, sku.height
   else
@@ -143,7 +144,8 @@ else if argv.onitiva
 
 else if argv.sku_dimensions
   ### coffee sku_processing/manual.coffee --sku_dimensions ###
-  q = "SELECT id, meta FROM \"Skus\" WHERE length IS NULL AND width IS NULL AND height IS NULL AND meta IS NOT NULL"
+  # q = "SELECT id, meta FROM \"Skus\" WHERE length IS NULL AND width IS NULL AND height IS NULL AND meta IS NOT NULL"
+  q = "SELECT id, meta FROM \"Skus\" WHERE width IS NULL AND meta IS NOT NULL"
   sequelize.query q, { type: sequelize.QueryTypes.SELECT }
   .then (skus) ->
     console.log skus.length
