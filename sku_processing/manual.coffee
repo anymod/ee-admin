@@ -30,6 +30,12 @@ updateIfDimensioned = (sku) ->
     if pair.split(':=')[0] is 'Product1 D (in)' then sku.length = parseFloat(pair.split(':=')[1]) || null
     if pair.split(':=')[0] is 'Product1 W (in)' then sku.width  = parseFloat(pair.split(':=')[1]) || null
     if pair.split(':=')[0] is 'Product1 H (in)' then sku.height = parseFloat(pair.split(':=')[1]) || null
+    if pair.split(':=')[0] is 'Dimensions'
+      dimensions = pair.split(':=')[1].replace(/ /g,'').split('x')
+      for dim in dimensions
+        if dim.slice(-1) is 'L' then sku.length = parseFloat(dim.slice(0,-1))
+        if dim.slice(-1) is 'W' then sku.width = parseFloat(dim.slice(0,-1))
+        if dim.slice(-1) is 'H' then sku.height = parseFloat(dim.slice(0,-1))
   if sku.length? or sku.width? or sku.height?
     setSkuDimensions sku.id, sku.length, sku.width, sku.height
   else
