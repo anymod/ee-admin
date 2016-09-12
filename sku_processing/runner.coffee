@@ -112,7 +112,7 @@ reprocessDobaImagesFor = (product_id) ->
     throw 'No skus found' if skus.length is 0
     sku = skus[0]
     throw 'Images not found' unless sku?.id? and sku.other?.image?.indexOf('doba') > -1
-    additional_images = if sku.other.additional_images.length > 0 then sku.other.additional_images.split(',') else []
+    additional_images = if sku.other.additional_images.length > 0 then sku.other.additional_images.split('|') else []
     prod =
       id: parseInt product_id
       image: sku.other.image
