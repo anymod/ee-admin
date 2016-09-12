@@ -11,6 +11,9 @@ fns.editableAttrs = ['supply_price', 'supply_shipping_price', 'quantity', 'msrp'
 fns.findAll = () ->
   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued, other, tags FROM "Skus"', { type: sequelize.QueryTypes.SELECT }
 
+fns.findAllByProductId = (product_id) ->
+  sequelize.query 'SELECT * FROM "Skus" WHERE product_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [product_id] }
+
 fns.findByIdentifierAndSupplierId = (identifier, supplier_id) ->
   if supplier_id then supplier_id = parseInt(supplier_id)
   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued FROM "Skus" where identifier = ? AND supplier_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [identifier, supplier_id] }

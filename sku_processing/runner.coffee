@@ -105,6 +105,19 @@ processDobaImages = (prod) ->
       resolve prod
     .catch (err) -> reject err
 
+reprocessDobaImagesFor = (product_id) ->
+  throw 'Missing product id' unless product_id
+  sku.findAllByProductId product_id
+  .then (skus) ->
+    throw 'No skus found' if skus.length is 0
+    sku = skus[0]
+    throw 'Images not found' unless sku?.id? and sku.other?.image?.indexOf('doba') > -1
+    prod =
+      id: parseInt product_id
+      image: sku.other.image
+      additional_images: sku.other.additional_images || []
+    processDobaImages prod
+
 fns.processDropbox = () ->
   status =
     running: true
@@ -276,6 +289,13 @@ else if argv.tags
   ### coffee sku_processing/runner.coffee --tags ###
   fns.runTags()
   .then (res) -> console.log res
+  .catch (err) -> console.log 'err', err
+  .finally () -> process.exit()
+
+else if argv.reprocess_doba_images
+  ### coffee sku_processing/runner.coffee --reprocess_doba_images --product_id=7010 ###
+  reprocessDobaImagesFor argv.product_id
+  .then (res) -> console.log 'Finished: product ' + argv.product_id
   .catch (err) -> console.log 'err', err
   .finally () -> process.exit()
 
