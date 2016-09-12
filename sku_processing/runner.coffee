@@ -113,7 +113,7 @@ reprocessDobaImagesFor = (product_id) ->
     throw 'No skus found' if skus.length is 0
     sku = skus[0]
     throw 'Images not found' unless sku?.id? and sku.other?.image?.indexOf('doba') > -1
-    additional_images = if sku.other.additional_images.length > 0 then sku.other.additional_images.split('|') else []
+    additional_images = if sku.other.additional_images?.length > 0 then sku.other.additional_images.split('|') else []
     prod =
       id: parseInt product_id
       image: sku.other.image
@@ -295,7 +295,7 @@ else if argv.tags
   .finally () -> process.exit()
 
 else if argv.reprocess_doba_images
-  ### coffee sku_processing/runner.coffee --reprocess_doba_images --product_id=7131 ###
+  ### coffee sku_processing/runner.coffee --reprocess_doba_images --product_id=7021 ###
   reprocessDobaImagesFor argv.product_id
   .then (res) -> console.log 'Finished: product ' + argv.product_id
   .catch (err) -> console.log 'err', err
