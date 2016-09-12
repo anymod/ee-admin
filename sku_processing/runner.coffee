@@ -84,6 +84,7 @@ processDobaImages = (prod) ->
     public_id: prod.id
     tags: ['product', 'main_image']
     upload_preset: 'product_image'
+    invalidate: true
   new Promise (resolve, reject) ->
     if !prod? or !prod.image? then resolve false
     cloudinary.uploadAsync prod.image, options
