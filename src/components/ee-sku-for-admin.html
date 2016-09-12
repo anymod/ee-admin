@@ -75,16 +75,19 @@
       <div class="btn btn-xs btn-default" ng-show="showEdit" ng-click="updatePricing()">Submit</div>
     </div>
 
+    <div class="inline-block pull-left" style="margin-left: 20px;">
+      <small>product {{ sku.product_id }}, sku {{ sku.id }}</small>
+    </div>
+
     <!-- Links -->
-    <div class="inline-block pull-left">
+    <!-- <div class="inline-block pull-left">
       <div class="btn-group" style="margin-left: 20px;">
         <a href="https://www.doba.com/members/my-inventory/product/details/{{ externalId }}" target="_blank" class="btn btn-xs btn-default">doba</a>
-        <!-- <a href="https://www.doba.com/members/catalog/search?adv_filter_update%5B%5D=0&shipping_filter=all&min_qty=0&adv_filter_update%5B%5D=0&adv_filter_update%5Bout_of_stock%5D=on&adv_filter_update%5Bdiscontinued%5D=on&adv_filter_update%5Brefurbished%5D=on&terms={{ sku.identifier }}" target="_blank" class="btn btn-xs btn-default">doba</a> -->
         <a href="https://www.google.com/search?q={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank" class="btn btn-xs btn-default">goog</a>
         <a href="http://www.amazon.com/s/?field-keywords={{ (sku.identifier + ' ' + sku.selection_text) | pluses }}" target="_blank" class="btn btn-xs btn-default">amzn</a>
         <a href="http://www.wayfair.com/keyword.php?keyword={{ sku.selection_text | pluses }}" target="_blank" class="btn btn-xs btn-default">wayfr</a>
       </div>
-    </div>
+    </div> -->
     <!-- /Links -->
 
   </div>
