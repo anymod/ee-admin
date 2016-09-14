@@ -14,7 +14,7 @@ angular.module('app.core').factory 'eeProduct', ($q, eeAuth, eeBack) ->
     sku_attrs ||= []
     return product unless attrs.length > 0 or sku_attrs.length > 0
     for attr in Object.keys(product)
-      delete product[attr] if attr isnt 'skus' and attr isnt 'id' and attrs.indexOf(attr) < 0
+      delete product[attr] if attr isnt 'skus' and attr isnt 'id' and attr isnt 'category_id' and attrs.indexOf(attr) < 0
     if sku_attrs and product.skus and product.skus.length > 0
       for sku, i in product.skus
         for sku_attr in Object.keys(product.skus[i])
