@@ -97,6 +97,16 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $stat
     scope.setTaxonomyDropdownLWH    = (opt) -> scope.taxonomy.current.lwh = opt
     scope.setTaxonomyDropdownWeight = (opt) -> scope.taxonomy.current.weight = opt
 
+    scope.addTag = (tag) ->
+      add = true
+      for t in scope.sku.tags
+        if t is tag then add = false
+      if add then scope.sku.tags.push tag
+
+    scope.removeTag = (tag) ->
+      for t, i in scope.sku.tags
+        if t is tag then return scope.sku.tags.splice(i, 1)
+
     scope.open = () ->
       scope.sku.reading = true
       eeBack.fns.skuGET scope.sku.id, eeAuth.fns.getToken()
