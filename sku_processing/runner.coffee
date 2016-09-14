@@ -243,7 +243,7 @@ fns.runTags = () ->
     message: 'reading skus'
   n_skus = 0
   utils.setStatus 'tags', status
-  sku.findAll()
+  sku.findAllWithoutTags()
   .then (skus) ->
     n_skus = skus.length
     status.message = 'adding tags for ' + n_skus + ' skus'
@@ -295,7 +295,7 @@ else if argv.tags
   .finally () -> process.exit()
 
 else if argv.reprocess_doba_images
-  ### coffee sku_processing/runner.coffee --reprocess_doba_images --product_id=7021 ###
+  ### coffee sku_processing/runner.coffee --reprocess_doba_images --product_id=398 ###
   reprocessDobaImagesFor argv.product_id
   .then (res) -> console.log 'Finished: product ' + argv.product_id
   .catch (err) -> console.log 'err', err

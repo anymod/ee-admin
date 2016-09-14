@@ -179,4 +179,42 @@
   </div>
   <!-- /Style, color, material -->
 
+  <!-- Tags & Categories -->
+  <div ng-if="$state.current.name == 'products.tags'"
+    class="full-width"
+    style="width: 970px; height: 24px; border-bottom: 1px solid #eceff1;">
+    &nbsp;
+    <div class="inline-block">
+      <div class="inline-block" uib-dropdown>
+        <div class="btn btn-xs btn-default" uib-dropdown-toggle> Add Tag <i class="fa fa-fw fa-caret-down"></i></div>
+        <ul uib-dropdown-menu>
+          <li ng-repeat="subtag in category.subtags">
+            <a href ng-bind="subtag"></a>
+          </li>
+        </ul>
+      </div>
+      <div class="btn btn-xs btn-default"><i class="fa fa-copy"></i></div>
+      <div class="btn btn-xs btn-default"><i class="fa fa-paste"></i></div>
+      <div class="btn btn-xs btn-default">Save</div>
+    </div>
+    &nbsp;
+    <div ng-repeat="tag in sku.tags"
+      class="badge"
+      style="margin-right: 5px;"
+      ng-if="tag != 'Home, garden & living'">
+      <span ng-bind="tag"></span>&nbsp;<span ng-click="removeTag(tag)"><i class="fa fa-fw fa-times hover-pointer"></i></span>
+    </div>
+    
+    <div class="pull-right" uib-dropdown>
+      <div class="btn btn-xs btn-default" uib-dropdown-toggle> {{ category.title }} <i class="fa fa-fw fa-caret-down"></i></div>
+      <ul uib-dropdown-menu>
+        <li ng-repeat="cat in categories">
+          <a href ng-bind="cat.title"></a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /Tags & Categories -->
+
 </div>

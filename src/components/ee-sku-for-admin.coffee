@@ -1,6 +1,6 @@
 angular.module 'ee-sku-for-admin', []
 
-angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $state, eeAuth, eeBack, eeProduct, eeModal) ->
+angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $state, eeAuth, eeBack, eeProduct, eeModal, categories) ->
   templateUrl: 'components/ee-sku-for-admin.html'
   restrict: 'EA'
   replace: true
@@ -11,8 +11,12 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $stat
     materials:  '='
     content:    '='
     externalId: '='
+    categoryId: '='
   link: (scope, ele, attrs) ->
     scope.$state = $state
+    scope.categories = categories
+    for cat in categories
+      if cat.id is scope.categoryId then scope.category = cat
 
     scope.sku.updating = false
     scope.showEdit = false

@@ -22,6 +22,9 @@ angular.module('products').config ($stateProvider) ->
     .state 'products.pricing',
       url:    '/pricing'
       views:  views
+    .state 'products.tags',
+      url:    '/tags'
+      views:  views
     .state 'products.text',
       url:    '/text'
       views:  views
