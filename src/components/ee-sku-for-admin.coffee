@@ -15,8 +15,11 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $stat
   link: (scope, ele, attrs) ->
     scope.$state = $state
     scope.categories = categories
-    for cat in categories
-      if cat.id is scope.categoryId then scope.category = cat
+
+    resetCategory = () ->
+      for cat in categories
+        if cat.id is scope.categoryId then scope.category = cat
+    resetCategory()
 
     scope.sku.updating = false
     scope.showEdit = false
@@ -69,11 +72,18 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $stat
       scope.sku[a] = scope.sku[b]
       scope.sku[b] = c
 
-    scope.copySku = () -> $rootScope.$broadcast 'copy:sku', scope.sku
-    scope.$on 'copy:sku', (e, data) -> scope.copiedSku = data
+    scope.copySku = () -> $rootScope.$broadcast 'copy:sku', { sku: scope.sku, categoryId: scope.categoryId }
+    scope.$on 'copy:sku', (e, data) -> scope.copiedData = data
     scope.pasteSkuDimensions = () ->
-      if scope.copiedSku
-        scope.sku[attr] = scope.copiedSku[attr] for attr in ['length', 'width', 'height', 'weight']
+      if scope.copiedData
+        scope.sku[attr] = scope.copiedData.sku[attr] for attr in ['length', 'width', 'height', 'weight']
+
+    scope.pasteSkuTags = () ->
+      if scope.copiedData
+        scope.sku[attr] = scope.copiedData.sku[attr] for attr in ['tags']
+        if scope.copiedData.categoryId > 0
+          scope.categoryId = parseInt(scope.copiedData.categoryId)
+          resetCategory()
 
     scope.guessDimensions = () ->
       matchL = /\d[\d\.\- ]+.{0,3}([ "(]*[LlDd][^b])/g
@@ -96,6 +106,10 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $stat
 
     scope.setTaxonomyDropdownLWH    = (opt) -> scope.taxonomy.current.lwh = opt
     scope.setTaxonomyDropdownWeight = (opt) -> scope.taxonomy.current.weight = opt
+
+    scope.setCategoryId = (id) ->
+      scope.categoryId = parseInt(id)
+      resetCategory()
 
     scope.addTag = (tag) ->
       add = true
@@ -185,6 +199,20 @@ angular.module('ee-sku-for-admin').directive "eeSkuForAdmin", ($rootScope, $stat
         skus: [scope.sku]
       }
       eeProduct.fns.update product, [], ['style', 'color', 'material']
+      .then (prod) ->
+        for sku in prod.skus
+          if sku.id is scope.sku.id
+            scope.sku[attr] = sku[attr] for attr in Object.keys(sku)
+            scope.sku.saved = true
+
+    # TODO replace these methods with direct Sku update
+    scope.updateCategoryTags = () ->
+      product = {
+        id: scope.sku.product_id
+        skus: [scope.sku]
+      }
+      if scope.categoryId then product.category_id = parseInt(scope.categoryId)
+      eeProduct.fns.update product, [], ['tags']
       .then (prod) ->
         for sku in prod.skus
           if sku.id is scope.sku.id
