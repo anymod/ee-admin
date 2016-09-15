@@ -6,7 +6,7 @@ utils = require '../utils'
 
 fns = {}
 
-fns.editableAttrs = ['supply_price', 'supply_shipping_price', 'quantity', 'msrp', 'discontinued']
+fns.editableAttrs = ['supply_price', 'supply_shipping_price', 'quantity', 'msrp', 'discontinued', 'tags']
 
 fns.findAll = () ->
   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued, other, tags FROM "Skus"', { type: sequelize.QueryTypes.SELECT }
@@ -56,6 +56,7 @@ fns.updateAttrs = (obj) ->
       q += '"' + attr + '" = ' + obj[attr] + ", "
   q += ' "updated_at" = ' + "'" + utils.timestamp() + "' "
   q += ' WHERE "identifier" = ? '
+  console.log q
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [obj.identifier] }
 
 fns.updateSkus = (reference_skus) ->
@@ -156,6 +157,13 @@ fns.removeSkusFromPairs = (pairs) ->
 fns.removeSku = (sku_to_remove) ->
   return if !sku_to_remove?.identifier? or !sku_to_remove.supplier_id
   fns.removeByIdentifierAndSupplierId sku_to_remove.identifier, sku_to_remove.supplier_id
+
+fns.updateTags = (reference_sku) ->
+  return if !reference_sku?.id? or reference_sku.tags?.length < 1
+  arr = 'ARRAY[\'' + reference_sku.tags.join("\',\'") + '\']::VARCHAR(255)[]'
+  arr = arr.replace(/'s/g, "''s").replace(/s' /g, "s'' ")
+  q = 'UPDATE "Skus" SET tags = ' + arr + ', updated_at = ? WHERE id = ?'
+  sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [utils.timestamp(), reference_sku.id] }
 
 fns.processSkuTags = (reference_sku) ->
   return if !reference_sku?.id? or reference_sku.tags?.length > 0 or !reference_sku.other?.categories?

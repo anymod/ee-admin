@@ -171,3 +171,35 @@ else if argv.form_tag_tree
   .finally () ->
     console.log 'finished'
     process.exit()
+
+else if argv.remove_tags
+  ### coffee sku_processing/manual.coffee --remove_tags ###
+  tagsToRemove = [
+    'Home, garden & living'
+    'Outdoor & sports'
+    'Apparel, shoes & jewelry'
+    'Kids, baby & toy'
+    'Electronics & computer'
+    # 'Home Accents'
+    # 'Furniture'
+    # 'Artwork'
+    # 'Bed & Bath'
+    # 'Kitchen'
+    # 'Outdoor'
+  ]
+  skusToUpdate = []
+  sku.findAll()
+  .then (skus) ->
+    for s in skus
+      newTags = []
+      for tag in s.tags
+        newTags.push tag unless tagsToRemove.indexOf(tag) > -1
+      if newTags.length > 0 and newTags.length isnt s.tags.length
+        s.tags = newTags
+        skusToUpdate.push s
+    Promise.reduce skusToUpdate, ((total, s) -> sku.updateTags(s)), 0
+  .then () -> console.log 'Updated ' + skusToUpdate.length + ' skus'
+  .catch (err) -> console.log 'err', err
+  .finally () ->
+    console.log 'finished'
+    process.exit()
