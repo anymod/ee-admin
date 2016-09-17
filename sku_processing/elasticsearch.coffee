@@ -86,6 +86,8 @@ read_attrs =
     'discontinued'
     'hide_from_catalog'
     'tags'
+    'supply_price'
+    'supply_shipping_price'
   ]
 
 ### NESTING ###
