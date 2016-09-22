@@ -64,7 +64,7 @@ angular.module('app.core').filter 'tinyBackground', () ->
 angular.module('app.core').filter 'urlText', () ->
   (text) ->
     if !text or typeof(text) isnt 'string' then return ''
-    text.replace(/[^a-zA-Z0-9-]|^-/gi, '-').replace(/-+/g,'-').toLowerCase()
+    text.toLowerCase().replace(/é/g, 'e').replace(/[^a-z0-9-]/gi, '-').replace(/-+/g,'-')
 
 angular.module('app.core').filter 'unboldHtml', () ->
   (text) -> if typeof text isnt 'string' then return text else return text.replace(/<b>/gi, '').replace(/<\/b>/gi, '')

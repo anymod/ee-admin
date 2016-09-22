@@ -58,8 +58,24 @@
       </div>
       <!-- /Text -->
 
+      <!-- Tags -->
+      <div ng-if="$state.current.name == 'products.tags'">
+        <div>
+          <a href ng-click="setActiveProduct()" ng-bind="product.title"></a>          
+        </div>
+        <small>Old tags: <span ng-bind="product.skus[0].tags.join(' | ')"></span></small>
+        <div>
+          <span ng-repeat="tag in product.skus[0].tags1" ng-bind="tag" class="badge"></span>
+          <i class="fa fa-fw fa-chevron-right"></i>
+          <span ng-repeat="tag in product.skus[0].tags2" ng-bind="tag" class="badge"></span>
+          <i class="fa fa-fw fa-chevron-right"></i>
+          <span ng-repeat="tag in product.skus[0].tags3" ng-bind="tag" class="badge"></span>
+        </div>
+      </div>
+      <!-- /Tags -->
+
       <ee-sku-for-admin
-        ng-if="$state.current.name != 'products.text' && product.external_identity"
+        ng-if="$state.current.name != 'products.text' && $state.current.name != 'products.tags' && product.external_identity"
         ng-repeat="sku in product.skus | orderBy:'price'"
         sku="sku"
         external-id="product.external_identity.split('.')[1]"

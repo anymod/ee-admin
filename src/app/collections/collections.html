@@ -1,6 +1,6 @@
 <div class="container vert-20">
   <div class="margin-10" ng-hide="collections.ee.Collections.collections.length <= 0">
-    <uib-pagination
+    <div uib-pagination
       total-items="collections.ee.Collections.count"
       items-per-page="collections.ee.Collections.inputs.perPage"
       ng-model="collections.ee.Collections.inputs.page"
@@ -10,7 +10,7 @@
       boundary-links="true"
       rotate="false"
       ng-change="collections.fns.runQuery()">
-    </uib-pagination>
+    </div>
   </div>
   <div class="row">
     <div class="col col-sm-4" ng-repeat="collection in collections.ee.Collections.collections">

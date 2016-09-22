@@ -58,7 +58,7 @@
         <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
           Category&nbsp;&nbsp;<span class="caret"></span>
         </button>
-        <ul class="uib-dropdown-menu">
+        <ul class="uib-dropdown-menu" uib-dropdown-menu>
           <li ng-repeat="category in products.ee.Products.search.inputs.categoryArray">
             <a href
               ng-click="products.fns.setCategory(category, 'search')"
@@ -77,7 +77,7 @@
         <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
           Price range&nbsp;&nbsp;<span class="caret"></span>
         </button>
-        <ul class="uib-dropdown-menu">
+        <ul class="uib-dropdown-menu" uib-dropdown-menu>
           <li ng-repeat="range in products.ee.Products.search.inputs.rangeArray">
             <a href ng-click="products.fns.setRange(range, 'search')" ng-bind="range | rangeToText"></a>
           </li>
@@ -100,36 +100,39 @@
     </div>
     <!-- /Filter -->
 
-    <div class="btn btn-default" ng-click="products.showTagMap = true">Show Tag Map</div>
-
-    <div ng-show="products.showTagMap"
-      class="position-fixed pad-7 white-background"
+    <div ng-show="products.data.activeProduct.id > 0"
+      class="position-fixed pad-7 white-background tag-navbar"
       style="top: 100px; left: 0; right: 0; z-index: 200;">
       <uib-tabset active="products.active">
         <uib-tab ng-repeat="(category, branch) in products.tagTree"
           heading="{{ category }}"
+          classes="{{ products.data.activeProduct.skus[0].tags1.indexOf((category | urlText)) > -1 ? 'tagged' : '' }}"
           index="$index">
+          <!-- <uib-tab-heading ng-bind="category" ng-class="{ active:  }"></uib-tab-heading> -->
           <div ng-repeat="(tag2, tags3) in branch"
             class="inline-block pad-5 vertical-align-top">
-            <div class="panel panel-primary">
-              <div class="panel-heading hover-pointer" style="padding: 2px 5px;" ng-bind="tag2"></div>
+            <div class="panel" ng-class="products.data.activeProduct.skus[0].tags2.indexOf((tag2 | urlText)) > -1 ? 'panel-primary' : 'panel-default'">
+              <div class="panel-heading hover-pointer" style="padding: 2px 5px;" ng-bind="tag2 | urlText"></div>
               <table class="table">
                 <tr ng-repeat="tag3 in tags3" class="hover-pointer">
-                  <td style="padding: 2px 5px;" class="bg-light-blue blue-border no-side-border"><small ng-bind="tag3"></small></td>
+                  <td style="padding: 2px 5px;"
+                    ng-class="{ 'bg-light-blue blue-border no-side-border': products.data.activeProduct.skus[0].tags3.indexOf((tag3 | urlText)) > -1 }">
+                    <small ng-bind="tag3 | urlText"></small>
+                  </td>
                 </tr>
               </table>
             </div>
           </div>
         </uib-tab>
       </uib-tabset>
-      <div class="btn btn-link pull-right" ng-click="products.showTagMap = false">close</div>
+      <div class="btn btn-link pull-right" ng-click="products.fns.setActiveProduct({})">close</div>
       <!-- <pre>{{ products.tagTree }}</pre> -->
     </div>
 
 
 
     <div class="margin-10 text-center" ng-hide="products.ee.Products.search.products.length <= 0">
-      <uib-pagination
+      <div uib-pagination
         total-items="products.ee.Products.search.count"
         items-per-page="products.ee.Products.search.inputs.perPage"
         ng-model="products.ee.Products.search.inputs.page"
@@ -139,10 +142,9 @@
         boundary-links="true"
         rotate="false"
         ng-change="products.fns.runSection('search')">
-      </uib-pagination>
+      </div>
     </div>
   </div>
-
 
   <div ng-hide="products.ee.Products.search.reading || products.ee.loading" class="margin-0-auto">
     <div class="alert alert-info max-width-600 margin-0-auto pad-5" ng-hide="products.compact">
@@ -194,7 +196,7 @@
   </div>
 
   <div ng-hide="products.ee.Products.search.reading || products.ee.Products.search.count <= products.ee.Products.search.inputs.perPage" class="pad-20 vert-20">
-    <uib-pagination
+    <div uib-pagination
       total-items="products.ee.Products.search.count"
       items-per-page="products.ee.Products.search.inputs.perPage"
       ng-model="products.ee.Products.search.inputs.page"
@@ -204,7 +206,7 @@
       boundary-links="true"
       rotate="false"
       ng-change="products.fns.runSection('search')">
-    </uib-pagination>
+    </div>
   </div>
 </div>
 <!-- /Products -->
@@ -245,12 +247,12 @@
     </div>
     <div class="vert-20 text-left">
       <uib-accordion>
-        <uib-accordion-group
+        <div uib-accordion-group
           ng-repeat="section in products.ee.Processing.sections"
           heading="{{ section }} info"
           ng-if="products.ee.Processing.status[section].message">
           <pre><small>{{ products.ee.Processing.status[section] | json }}</small></pre>
-        </uib-accordion-group>
+        </div>
       </uib-accordion>
     </div>
     <br>

@@ -54,6 +54,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       inputs:   angular.copy _inputDefaults
       reading:  false
       lastCollectionAddedTo: null
+    activeProduct: {}
 
   ## PRIVATE FUNCTIONS
   _clearSection = (section) ->
@@ -111,6 +112,8 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     eeModal.fns.openProductModal product, type
     return
 
+  _setActiveProduct = (product) -> _data.activeProduct = product
+
   ## MESSAGING
   # $rootScope.$on 'reset:products', () -> _data.search.products = []
   #
@@ -150,3 +153,4 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       _data[section].inputs.filter  = if filter is _data[section].inputs.filter then null else filter
       _runSection section
     addProductModal: _addProductModal
+    setActiveProduct: _setActiveProduct

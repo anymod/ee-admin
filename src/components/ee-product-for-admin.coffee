@@ -1,6 +1,6 @@
 angular.module 'ee-product-for-admin', []
 
-angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, eeAuth, eeBack, eeModal, eeProduct) ->
+angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, eeAuth, eeBack, eeModal, eeProduct, eeProducts) ->
   templateUrl: 'components/ee-product-for-admin.html'
   restrict: 'EA'
   scope:
@@ -92,5 +92,7 @@ angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, e
 
     scope.updateText = () ->
       eeProduct.fns.update scope.product, ['title', 'content'], ['selection_text', 'length', 'width', 'height', 'weight']
+
+    scope.setActiveProduct = () -> eeProducts.fns.setActiveProduct scope.product
 
     return

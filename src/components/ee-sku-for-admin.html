@@ -146,7 +146,7 @@
     <!-- style -->
     <div class="dropdown inline-block" uib-dropdown>
       <input type="text" style="width: 180px;" ng-model="sku.style" placeholder="Styles" uib-dropdown-toggle>
-      <ul class="uib-dropdown-menu">
+      <ul class="uib-dropdown-menu" uib-dropdown-menu>
         <li ng-repeat="attr in styles">
           <a href ng-click="addVal('style', attr.value)" ng-bind="attr.value"></a>
         </li>
@@ -156,7 +156,7 @@
     <!-- color -->
     <div class="dropdown inline-block" uib-dropdown>
       <input type="text" style="width: 120px;" ng-model="sku.color" placeholder="Colors" uib-dropdown-toggle>
-      <ul class="uib-dropdown-menu">
+      <ul class="uib-dropdown-menu" uib-dropdown-menu>
         <li ng-repeat="attr in colors">
           <a href ng-click="addVal('color', attr.value)" ng-bind="attr.value"></a>
         </li>
@@ -166,7 +166,7 @@
     <!-- material -->
     <div class="dropdown inline-block" uib-dropdown>
       <input type="text" style="width: 190px;" ng-model="sku.material" placeholder="Materials" uib-dropdown-toggle>
-      <ul class="uib-dropdown-menu">
+      <ul class="uib-dropdown-menu" uib-dropdown-menu>
         <li ng-repeat="attr in materials">
           <a href ng-click="addVal('material', attr.value)" ng-bind="attr.value"></a>
         </li>
