@@ -3,6 +3,7 @@ Promise   = require 'bluebird'
 sequelize = require '../config/sequelize/setup'
 
 utils = require '../utils'
+mappings = require './doba.mappings'
 
 fns = {}
 
@@ -172,5 +173,20 @@ fns.processSkuTags = (reference_sku) ->
   q = 'UPDATE "Skus" SET tags = ' + arr + ', updated_at = ? WHERE id = ?'
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [utils.timestamp(), reference_sku.id] }
 
+fns.processTagMap = (reference_sku) ->
+  return if !reference_sku?.id? or reference_sku.tags?.length < 1 # or reference_sku.tags.indexOf('Home decor') < 0
+  tags1 = []
+  tags2 = []
+  for subtag in reference_sku.tags
+    mapping = mappings.tags1And2[subtag]
+    if mapping
+      tags1.push _.map(mapping.tags1, (t) -> utils.tagText(t))
+      tags2.push _.map(mapping.tags2, (t) -> utils.tagText(t))
+  tags1 = _.uniq(_.flatten(tags1))
+  tags2 = _.uniq(_.flatten(tags2))
+  arr1 = 'ARRAY[\'' + tags1.join("\',\'") + '\']::VARCHAR(255)[]'
+  arr2 = 'ARRAY[\'' + tags2.join("\',\'") + '\']::VARCHAR(255)[]'
+  q = 'UPDATE "Skus" SET tags1 = ' + arr1 + ', tags2 = ' + arr2 + ', updated_at = ? WHERE id = ?'
+  sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [utils.timestamp(), reference_sku.id] }
 
 module.exports = fns

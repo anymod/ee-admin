@@ -203,3 +203,16 @@ else if argv.remove_tags
   .finally () ->
     console.log 'finished'
     process.exit()
+
+else if argv.map_tags
+  ### coffee sku_processing/manual.coffee --map_tags ###
+  skus = []
+  sku.findAll()
+  .then (res) ->
+    skus = res
+    Promise.reduce skus, ((total, s) -> sku.processTagMap(s)), 0
+  .then () -> console.log 'Updated ' + skus.length + ' skus'
+  .catch (err) -> console.log 'err', err
+  .finally () ->
+    console.log 'finished'
+    process.exit()

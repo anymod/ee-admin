@@ -100,6 +100,34 @@
     </div>
     <!-- /Filter -->
 
+    <div class="btn btn-default" ng-click="products.showTagMap = true">Show Tag Map</div>
+
+    <div ng-show="products.showTagMap"
+      class="position-fixed pad-7 white-background"
+      style="top: 100px; left: 0; right: 0; z-index: 200;">
+      <uib-tabset active="products.active">
+        <uib-tab ng-repeat="(category, branch) in products.tagTree"
+          heading="{{ category }}"
+          index="$index">
+          <div ng-repeat="(tag2, tags3) in branch"
+            class="inline-block pad-5 vertical-align-top">
+            <div class="panel panel-primary">
+              <div class="panel-heading hover-pointer" style="padding: 2px 5px;" ng-bind="tag2"></div>
+              <table class="table">
+                <tr ng-repeat="tag3 in tags3" class="hover-pointer">
+                  <td style="padding: 2px 5px;" class="bg-light-blue blue-border no-side-border"><small ng-bind="tag3"></small></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+      <div class="btn btn-link pull-right" ng-click="products.showTagMap = false">close</div>
+      <!-- <pre>{{ products.tagTree }}</pre> -->
+    </div>
+
+
+
     <div class="margin-10 text-center" ng-hide="products.ee.Products.search.products.length <= 0">
       <uib-pagination
         total-items="products.ee.Products.search.count"
@@ -114,6 +142,7 @@
       </uib-pagination>
     </div>
   </div>
+
 
   <div ng-hide="products.ee.Products.search.reading || products.ee.loading" class="margin-0-auto">
     <div class="alert alert-info max-width-600 margin-0-auto pad-5" ng-hide="products.compact">
