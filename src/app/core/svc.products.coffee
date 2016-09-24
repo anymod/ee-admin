@@ -118,7 +118,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     if e.keyCode is 39 or e.keyCode is 40 then $rootScope.$apply _nextActiveProduct()
 
   _setActiveProduct = (product) ->
-    return unless product?.skus?.length > 0
+    return _data.activeProduct = {} unless product?.skus?.length > 0
     product.shown = product.skus.map((sku) -> sku.discontinued || sku.hide_from_catalog).indexOf(false) > -1
     angular.element(document).off('keydown', _handleKeydown)
     if product?.id then angular.element(document).on('keydown', _handleKeydown)
