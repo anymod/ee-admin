@@ -116,8 +116,9 @@
           <div class="media-body">
             <div ng-bind="products.data.activeProduct.title"></div>
             <small>Old tags: <span ng-bind="products.data.activeProduct.skus[0].tags.join(' | ')"></span></small>
-            <div ng-if="!products.data.activeProduct.shown">
-              <h4><span class="label label-danger">Not shown</span></h4>
+            <div class="vert-5">
+              <a href="http://www.wayfair.com/keyword.php?keyword={{ products.data.activeProduct.title | pluses }}" target="_blank" class="btn btn-xs btn-default">Wayfair</a>
+              <h4 ng-if="!products.data.activeProduct.shown" class="inline-block margin-0">&nbsp;<span class="label label-danger">Not shown</span></h4>
             </div>
             <div>
               <span ng-repeat="tag in products.data.activeProduct.skus[0].tags1" class="badge hover-pointer"
