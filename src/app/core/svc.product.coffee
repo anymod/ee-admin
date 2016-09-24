@@ -24,8 +24,8 @@ angular.module('app.core').factory 'eeProduct', ($q, eeAuth, eeBack) ->
   _update = (product, attrs, sku_attrs) ->
     product.saved = false
     product.updating = true
-    _filterAttrs product, attrs, sku_attrs
-    eeBack.fns.productPUT product, eeAuth.fns.getToken()
+    filtered = _filterAttrs angular.copy(product), attrs, sku_attrs
+    eeBack.fns.productPUT filtered, eeAuth.fns.getToken()
     .then (prod) ->
       product.title   = prod.title
       product.content = prod.content

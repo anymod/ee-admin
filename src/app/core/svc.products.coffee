@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth, eeModal, categories) ->
+angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBack, eeAuth, eeModal, eeProduct, categories, tagTree) ->
 
   ## SETUP
   _inputDefaults =
@@ -55,6 +55,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       reading:  false
       lastCollectionAddedTo: null
     activeProduct: {}
+    activeTagTab: 0
 
   ## PRIVATE FUNCTIONS
   _clearSection = (section) ->
@@ -112,7 +113,81 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
     eeModal.fns.openProductModal product, type
     return
 
-  _setActiveProduct = (product) -> _data.activeProduct = product
+  _handleKeydown = (e) ->
+    if e.keyCode is 37 or e.keyCode is 38 then $rootScope.$apply _prevActiveProduct()
+    if e.keyCode is 39 or e.keyCode is 40 then $rootScope.$apply _nextActiveProduct()
+
+  _setActiveProduct = (product) ->
+    return unless product?.skus?.length > 0
+    product.shown = product.skus.map((sku) -> sku.discontinued || sku.hide_from_catalog).indexOf(false) > -1
+    angular.element(document).off('keydown', _handleKeydown)
+    if product?.id then angular.element(document).on('keydown', _handleKeydown)
+    _data.activeProduct = product
+    for tag, i in Object.keys tagTree
+      if _activeProductHasTag(tag, 1) then return _data.activeTagTab = i
+
+  _saveActiveProductTags = () ->
+    return unless _data.activeProduct?.skus?.length > 0
+    _data.activeProduct.saved = false
+    for sku in _data.activeProduct?.skus
+      sku[attr] = _data.activeProduct.skus[0][attr] for attr in ['tags1', 'tags2', 'tags3']
+    eeProduct.fns.update _data.activeProduct, [], ['tags1', 'tags2', 'tags3']
+    .then (prod) -> _data.activeProduct.saved = true
+    .catch (err) -> _data.activeProduct.alert = err
+
+  _activeProductIndex = () ->
+    for product,i in _data.search.products
+      if product.id is _data.activeProduct.id then return i
+    null
+
+  _prevActiveProduct = () ->
+    return false unless _data.activeProduct?.id
+    index = _activeProductIndex() || 0
+    _setActiveProduct _data.search.products[Math.max(index - 1, 0)]
+
+  _nextActiveProduct = () ->
+    return false unless _data.activeProduct?.id
+    index = _activeProductIndex() || 0
+    _setActiveProduct _data.search.products[Math.min(index + 1, _data.search.products.length)]
+
+  _activeProductHasTag = (tag, level) ->
+    return false unless _data.activeProduct?.skus?.length > 0
+    _data.activeProduct.skus[0]['tags' + level]?.indexOf($filter('urlText')(tag)) > -1
+
+  _addTagToActiveProduct = (tag, level) ->
+    return unless tag and level
+    newTags = []
+    _data.activeProduct.skus[0]?['tags' + level].push tag
+    for t in _data.activeProduct.skus[0]?['tags' + level]
+      if newTags.indexOf(t) < 0 then newTags.push t
+    _data.activeProduct.skus[0]?['tags' + level] = newTags
+
+  _removeTagFromActiveProduct = (tag, level, opts) ->
+    return unless tag and level
+    opts ||= {}
+    newTags = []
+    tag = $filter('urlText')(tag)
+    for t in _data.activeProduct.skus[0]?['tags' + level]
+      if t isnt tag then newTags.push t
+    _data.activeProduct.skus[0]?['tags' + level] = newTags
+    if opts.save then _saveActiveProductTags()
+
+  _toggleTagForActiveProduct = (tag, level) ->
+    return unless tag and level
+    if _activeProductHasTag tag, level then _removeTagFromActiveProduct tag, level else _addTagToActiveProduct tag, level
+
+  _toggleTagsForActiveProduct = (tagset, opts) ->
+    return unless tagset.tag1 and tagset.tag2 and _data.activeProduct?.skus?.length > 0
+    opts ||= {}
+    tag1 = $filter('urlText')(tagset.tag1)
+    tag2 = $filter('urlText')(tagset.tag2)
+    tag3 = $filter('urlText')(tagset.tag3)
+    _addTagToActiveProduct tag1, 1
+    if !tag3 then return _toggleTagForActiveProduct tag2, 2
+    _addTagToActiveProduct tag2, 2
+    _toggleTagForActiveProduct tag3, 3
+    if opts.save then _saveActiveProductTags()
+
 
   ## MESSAGING
   # $rootScope.$on 'reset:products', () -> _data.search.products = []
@@ -154,3 +229,5 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, eeBack, eeAuth
       _runSection section
     addProductModal: _addProductModal
     setActiveProduct: _setActiveProduct
+    toggleTagsForActiveProduct: _toggleTagsForActiveProduct
+    removeTagFromActiveProduct: _removeTagFromActiveProduct

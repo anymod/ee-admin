@@ -77,7 +77,6 @@ angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, e
       if !!scope.product.length   then product.length   = scope.product.length
       if !!scope.product.width    then product.width    = scope.product.width
       if !!scope.product.height   then product.height   = scope.product.height
-      console.log 'product', product
       eeBack.fns.productPUT product, eeAuth.fns.getToken()
       .then (prod) ->
         scope.product = prod
@@ -93,6 +92,6 @@ angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, e
     scope.updateText = () ->
       eeProduct.fns.update scope.product, ['title', 'content'], ['selection_text', 'length', 'width', 'height', 'weight']
 
-    scope.setActiveProduct = () -> eeProducts.fns.setActiveProduct scope.product
+    scope.setAsActiveProduct = () -> eeProducts.fns.setActiveProduct scope.product
 
     return

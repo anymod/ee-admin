@@ -36,7 +36,7 @@
       <div ng-repeat="activity in track.data.track.guides.concat(track.data.track.activities)"
         class="track-activity"
         ng-init="guide = track.data.track.guides.indexOf(activity) > -1">
-        <uib-accordion-group>
+        <div uib-accordion-group>
           <uib-accordion-heading>
             <div class="row">
               <div class="col col-sm-8">
@@ -107,11 +107,11 @@
               Add a<span ng-if="activity.steps.length > 0">nother</span> step
             </div>
           </div>
-        </uib-accordion-group>
+        </div>
       </div>
       <!-- Ongoing steps -->
       <div class="position-relative">
-        <uib-accordion-group>
+        <div uib-accordion-group>
           <uib-accordion-heading>
             <div class="row">
               <div class="col col-sm-8">
@@ -154,7 +154,7 @@
               Add a<span ng-if="activity.steps.length > 0">nother</span> step
             </div>
           </div>
-        </uib-accordion-group>
+        </div>
       </div>
       <!-- /Ongoing steps -->
     </uib-accordion>

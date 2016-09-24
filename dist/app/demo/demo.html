@@ -29,7 +29,7 @@
   </div> -->
 
   <div class="full-width text-center margin-0">
-    <uib-pagination total-items="users.data.inputs.count"
+    <div uib-pagination total-items="users.data.inputs.count"
       items-per-page="users.data.inputs.perPage"
       ng-model="users.data.inputs.page"
       max-size="5"
@@ -38,7 +38,7 @@
       boundary-links="true"
       rotate="false"
       ng-change="users.fns.update()">
-    </uib-pagination>
+    </div>
   </div>
 
   <div class="vert-20 text-left">
@@ -76,7 +76,7 @@
   </div>
 
   <div class="full-width text-center margin-0">
-    <uib-pagination
+    <div uib-pagination
       total-items="users.data.inputs.count"
       items-per-page="users.data.inputs.perPage"
       ng-model="users.data.inputs.page"
@@ -86,7 +86,7 @@
       boundary-links="true"
       rotate="false"
       ng-change="users.fns.update()">
-    </uib-pagination>
+    </div>
   </div>
 
 </div>

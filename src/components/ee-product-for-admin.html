@@ -5,7 +5,7 @@
     <div class="media-left overflow-visible">
 
       <a href="https://www.doba.com/members/my-inventory/product/details/{{ product.external_identity.split('.')[1] }}" target="_blank">
-        <img class="media-object" ng-src="{{ product.image | thumbnail }}">
+        <img class="media-object" ng-src="{{ (product.image | thumbnail) || 'https://placeholdit.imgix.net/~text?txtsize=20&bg=ffffff&txtclr=ffcccc&txt=no+image&w=70&h=70' }}">
       </a>
       <!-- <small class="text-muted">{{ product.id }}</small> -->
 
@@ -61,7 +61,7 @@
       <!-- Tags -->
       <div ng-if="$state.current.name == 'products.tags'">
         <div>
-          <a href ng-click="setActiveProduct()" ng-bind="product.title"></a>          
+          <a href ng-click="setAsActiveProduct()" ng-bind="product.title"></a>
         </div>
         <small>Old tags: <span ng-bind="product.skus[0].tags.join(' | ')"></span></small>
         <div>
