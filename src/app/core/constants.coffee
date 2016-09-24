@@ -187,11 +187,11 @@ tagTree =
       'Comforters & Duvet Fills'
       'Pillows'
     ]
-    # 'Bathroom Fixtures':[
-    #   'Bathroom Vanities'
-    #   'Bathroom Faucets'
-    #   'Shower Heads'
-    # ]
+    'Bathroom Fixtures':[
+      'Bathroom Vanities'
+      'Bathroom Faucets'
+      'Shower Heads'
+    ]
     'Bath Accessories':[
       'Bath Accessory Sets'
       'Bathroom Mirrors'
@@ -278,42 +278,42 @@ tagTree =
       'Spice Racks'
       'Kitchen Canisters'
     ]
-  # 'Storage':
-  #   'Bathroom Storage': [
-  #     'Shower Caddies'
-  #     'Over the Toilet Storage'
-  #     'Linen Storage'
-  #   ]
-  #   'General Storage': [
-  #     'Shelving'
-  #     'Decorative Storage Baskets & Boxes'
-  #   ]
-  #   'Kitchen Storage': [
-  #     'Cabinet Organization'
-  #     'Pantry Cabinets'
-  #   ]
-  #   'Bedroom Storage': [
-  #     'Under Bed Storage'
-  #     'Jewelry Boxes'
-  #   ]
-  #   'Garage Storage': [
-  #     'Storage Cabinets'
-  #     'Shelving Units'
-  #   ]
-  #   'Closet Storage': [
-  #     'Closet Organizers & Systems'
-  #     'Shoe Storage & Racks'
-  #   ]
-  #   'Entry & Mudroom Storage': [
-  #     'Storage Benches'
-  #     'Coat Racks'
-  #   ]
-  #   'Cleaning & Floor Care': [
-  #     'Vacuums & Steamers'
-  #   ]
-  #   'Laundry Room Storage': [
-  #     'Hampers & Baskets'
-  #   ]
+  'Storage':
+    'Bathroom Storage': [
+      'Shower Caddies'
+      'Over the Toilet Storage'
+      'Linen Storage'
+    ]
+    'General Storage': [
+      'Shelving'
+      'Decorative Storage Baskets & Boxes'
+    ]
+    'Kitchen Storage': [
+      'Cabinet Organization'
+      'Pantry Cabinets'
+    ]
+    'Bedroom Storage': [
+      'Under Bed Storage'
+      'Jewelry Boxes'
+    ]
+    'Garage Storage': [
+      'Storage Cabinets'
+      'Shelving Units'
+    ]
+    'Closet Storage': [
+      'Closet Organizers & Systems'
+      'Shoe Storage & Racks'
+    ]
+    'Entry & Mudroom Storage': [
+      'Storage Benches'
+      'Coat Racks'
+    ]
+    'Cleaning & Floor Care': [
+      'Vacuums & Steamers'
+    ]
+    'Laundry Room Storage': [
+      'Hampers & Baskets'
+    ]
   'Outdoor':
     'Patio Furniture': [
       'Conversation Sets'
