@@ -60,6 +60,11 @@
 
       <!-- Tags -->
       <div ng-if="$state.current.name == 'products.tags'">
+        <div class="pull-right margin-5">
+          <div ng-if="product.saved" class="inline-block pad-5"><i class="fa fa-fw fa-check text-success"></i></div>
+          <div class="btn btn-default" ng-click="copyTags()"><i class="fa fa-fw fa-copy"></i></div>&nbsp;
+          <div class="btn btn-default" ng-click="pasteTags()"><i class="fa fa-fw fa-paste"></i></div>
+        </div>
         <div>
           <a href ng-click="setAsActiveProduct()" ng-bind="product.title"></a>
         </div>

@@ -109,7 +109,8 @@
           <small class="text-muted" ng-bind="products.data.activeSaved"></small>
           <div class="btn btn-default" ng-click="products.fns.setActiveProduct({})">close</div>
         </div>
-        <div class="media" ng-if="products.data.activeProduct.skus.length > 0">
+        <div class="media" ng-if="products.data.activeProduct.skus.length > 0"
+          ng-class="{ 'opacity-05': products.data.activeProduct.updating }">
           <div class="media-left">
             <img class="media-object" style="width: 120px;" ng-src="{{ (products.data.activeProduct.image | cloudinaryResizeTo:100:100) || 'https://placeholdit.imgix.net/~text?txtsize=20&bg=ffffff&txtclr=ffcccc&txt=no+image&w=100&h=100' }}">
           </div>
@@ -119,21 +120,22 @@
             <div class="vert-5">
               <a href="http://www.wayfair.com/keyword.php?keyword={{ products.data.activeProduct.title | pluses }}" target="_blank" class="btn btn-xs btn-default">Wayfair</a>
               <h4 ng-if="!products.data.activeProduct.shown" class="inline-block margin-0">&nbsp;<span class="label label-danger">Not shown</span></h4>
+              <div ng-if="products.data.activeProduct.saved" class="inline-block pad-2"><i class="fa fa-fw fa-check text-success"></i></div>
             </div>
-            <div>
+            <div class="vert-5 margin-bottom-0">
               <span ng-repeat="tag in products.data.activeProduct.skus[0].tags1" class="badge hover-pointer"
                 ng-click="products.fns.removeTagFromActiveProduct(tag, 1, { save: true })">
-                <span ng-bind="tag"></span> <i class="fa fa-fw fa-times"></i>
+                <h5 class="margin-0"><span ng-bind="tag"></span> <i class="fa fa-fw fa-times"></i></h5>
               </span>
               <i class="fa fa-fw fa-chevron-right"></i>
               <span ng-repeat="tag in products.data.activeProduct.skus[0].tags2" class="badge hover-pointer"
                 ng-click="products.fns.removeTagFromActiveProduct(tag, 2, { save: true })">
-                <span ng-bind="tag"></span> <i class="fa fa-fw fa-times"></i>
+                <h5 class="margin-0"><span ng-bind="tag"></span> <i class="fa fa-fw fa-times"></i></h5>
               </span>
               <i class="fa fa-fw fa-chevron-right"></i>
               <span ng-repeat="tag in products.data.activeProduct.skus[0].tags3" class="badge hover-pointer"
                 ng-click="products.fns.removeTagFromActiveProduct(tag, 3, { save: true })">
-                <span ng-bind="tag"></span> <i class="fa fa-fw fa-times"></i>
+                <h5 class="margin-0"><span ng-bind="tag"></span> <i class="fa fa-fw fa-times"></i></h5>
               </span>
             </div>
           </div>
@@ -147,14 +149,14 @@
           <div ng-repeat="(tag2, tags3) in branch"
             class="inline-block pad-5 vertical-align-top">
             <div class="panel" ng-class="products.data.activeProduct.skus[0].tags2.indexOf((tag2 | urlText)) > -1 ? 'panel-primary' : 'panel-default'">
-              <div class="panel-heading hover-pointer" style="padding: 2px 5px;"
+              <div class="panel-heading hover-pointer"
                 ng-click="products.fns.toggleTagsForActiveProduct({ tag1: tag1, tag2: tag2 }, { save: true })"
                 ng-bind="tag2">
               </div>
               <table class="table">
                 <tr ng-repeat="tag3 in tags3" class="hover-pointer"
                   ng-click="products.fns.toggleTagsForActiveProduct({ tag1: tag1, tag2: tag2, tag3: tag3 }, { save: true })">
-                  <td style="padding: 2px 5px;"
+                  <td
                     ng-class="{ 'bg-light-blue blue-border no-side-border': products.data.activeProduct.skus[0].tags3.indexOf((tag3 | urlText)) > -1 }">
                     <small ng-bind="tag3"></small>
                   </td>
@@ -164,6 +166,10 @@
           </div>
         </uib-tab>
       </uib-tabset>
+      <div class="position-fixed pad-20" style="bottom: 0; left: 0; right: 0;">
+        <div class="btn btn-default" ng-click="products.fns.prevActiveProduct()"><i class="fa fa-long-arrow-left"></i> Prev</div>
+        <div class="btn btn-default pull-right" ng-click="products.fns.nextActiveProduct()">Next <i class="fa fa-long-arrow-right"></i></div>
+      </div>
     </div>
 
 

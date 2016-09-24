@@ -126,14 +126,15 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     for tag, i in Object.keys tagTree
       if _activeProductHasTag(tag, 1) then return _data.activeTagTab = i
 
-  _saveActiveProductTags = () ->
-    return unless _data.activeProduct?.skus?.length > 0
-    _data.activeProduct.saved = false
-    for sku in _data.activeProduct?.skus
-      sku[attr] = _data.activeProduct.skus[0][attr] for attr in ['tags1', 'tags2', 'tags3']
-    eeProduct.fns.update _data.activeProduct, [], ['tags1', 'tags2', 'tags3']
-    .then (prod) -> _data.activeProduct.saved = true
-    .catch (err) -> _data.activeProduct.alert = err
+  _saveActiveProductTags = (prod) ->
+    p = prod || _data.activeProduct
+    return unless p?.skus?.length > 0
+    p.saved = false
+    for sku in p?.skus
+      sku[attr] = p.skus[0][attr] for attr in ['tags1', 'tags2', 'tags3']
+    eeProduct.fns.update p, [], ['tags1', 'tags2', 'tags3']
+    .then (prod) -> p.saved = true
+    .catch (err) -> p.alert = err
 
   _activeProductIndex = () ->
     for product,i in _data.search.products
@@ -229,5 +230,8 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
       _runSection section
     addProductModal: _addProductModal
     setActiveProduct: _setActiveProduct
+    nextActiveProduct: _nextActiveProduct
+    prevActiveProduct: _prevActiveProduct
+    saveActiveProductTags: _saveActiveProductTags
     toggleTagsForActiveProduct: _toggleTagsForActiveProduct
     removeTagFromActiveProduct: _removeTagFromActiveProduct

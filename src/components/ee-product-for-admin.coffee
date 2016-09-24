@@ -1,6 +1,6 @@
 angular.module 'ee-product-for-admin', []
 
-angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, eeAuth, eeBack, eeModal, eeProduct, eeProducts) ->
+angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($rootScope, $state, eeAuth, eeBack, eeModal, eeProduct, eeProducts) ->
   templateUrl: 'components/ee-product-for-admin.html'
   restrict: 'EA'
   scope:
@@ -93,5 +93,16 @@ angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($state, e
       eeProduct.fns.update scope.product, ['title', 'content'], ['selection_text', 'length', 'width', 'height', 'weight']
 
     scope.setAsActiveProduct = () -> eeProducts.fns.setActiveProduct scope.product
+
+    scope.copyTags = () ->
+      tagsObj = {}
+      tagsObj[attr] = scope.product.skus[0][attr] for attr in ['tags1', 'tags2', 'tags3']
+      $rootScope.$broadcast 'copy:product:tags', tagsObj
+    scope.$on 'copy:product:tags', (e, tags) -> scope.copiedTags = tags
+    scope.pasteTags = () ->
+      if scope.copiedTags
+        for sku in scope.product.skus
+          sku[attr] = scope.copiedTags[attr] for attr in ['tags1', 'tags2', 'tags3']
+      eeProducts.fns.saveActiveProductTags scope.product
 
     return
