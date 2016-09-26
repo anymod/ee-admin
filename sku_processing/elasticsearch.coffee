@@ -47,6 +47,9 @@ index_attrs =
     supply_shipping_price: type: 'integer'
     hide_from_catalog: type: 'boolean'
     tags:             type: 'string'
+    tags1:            type: 'string'
+    tags2:            type: 'string'
+    tags3:            type: 'string'
 
 # indexable_attrs =
 #   sku: [
@@ -86,6 +89,9 @@ read_attrs =
     'discontinued'
     'hide_from_catalog'
     'tags'
+    'tags1'
+    'tags2'
+    'tags3'
     'supply_price'
     'supply_shipping_price'
   ]
