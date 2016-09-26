@@ -4,6 +4,7 @@ Promise   = require 'bluebird'
 sequelize = require '../config/sequelize/setup'
 argv      = require('yargs').argv
 
+product = require './product'
 sku     = require './sku'
 pricing = require './pricing'
 es      = require './elasticsearch'
@@ -211,6 +212,25 @@ else if argv.map_tags
   .then (res) ->
     skus = res
     Promise.reduce skus, ((total, s) -> sku.processTagMap(s)), 0
+  .then () -> console.log 'Updated ' + skus.length + ' skus'
+  .catch (err) -> console.log 'err', err
+  .finally () ->
+    console.log 'finished'
+    process.exit()
+
+else if argv.process_artwork_tags
+  ### coffee sku_processing/manual.coffee --process_artwork_tags ###
+  products = []
+  skus = []
+  sequelize.query 'SELECT id FROM "Products" WHERE category_id = 1', { type: sequelize.QueryTypes.SELECT }
+  .then (res) ->
+    products = res
+    ids = _.map products, 'id'
+    sequelize.query 'SELECT id, tags, tags1, tags2, tags3 FROM "Skus" WHERE product_id IN (' + ids.join(',') + ')', { type: sequelize.QueryTypes.SELECT }
+  .then (res) ->
+    skus = res
+    _.map skus, (s) -> s.tags3 = ['wall-art']
+    Promise.reduce skus, ((total, s) -> sku.updateTags(s)), 0
   .then () -> console.log 'Updated ' + skus.length + ' skus'
   .catch (err) -> console.log 'err', err
   .finally () ->

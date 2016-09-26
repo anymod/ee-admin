@@ -160,10 +160,17 @@ fns.removeSku = (sku_to_remove) ->
   fns.removeByIdentifierAndSupplierId sku_to_remove.identifier, sku_to_remove.supplier_id
 
 fns.updateTags = (reference_sku) ->
-  return if !reference_sku?.id? or reference_sku.tags?.length < 1
-  arr = 'ARRAY[\'' + reference_sku.tags.join("\',\'") + '\']::VARCHAR(255)[]'
-  arr = arr.replace(/'s/g, "''s").replace(/s' /g, "s'' ")
-  q = 'UPDATE "Skus" SET tags = ' + arr + ', updated_at = ? WHERE id = ?'
+  return if !reference_sku?.id? or reference_sku.tags?.length < 1 or reference_sku.tags1?.length < 1
+  reference_sku.tags2 ||= []
+  reference_sku.tags3 ||= []
+  for i in [1..3]
+    reference_sku['tags' + i] = _.map(reference_sku['tags' + i], (t) -> utils.tagText(t))
+  arr   = 'ARRAY[\'' + reference_sku.tags.join("\',\'") + '\']::VARCHAR(255)[]'
+  arr   = arr.replace(/'s/g, "''s").replace(/s' /g, "s'' ")
+  arr1  = 'ARRAY[\'' + reference_sku.tags1.join("\',\'") + '\']::VARCHAR(255)[]'
+  arr2  = 'ARRAY[\'' + reference_sku.tags2.join("\',\'") + '\']::VARCHAR(255)[]'
+  arr3  = 'ARRAY[\'' + reference_sku.tags3.join("\',\'") + '\']::VARCHAR(255)[]'
+  q = 'UPDATE "Skus" SET tags = ' + arr + ', tags1 = ' + arr1 + ', tags2 = ' + arr2 + ', tags3 = ' + arr3 + ', updated_at = ? WHERE id = ?'
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [utils.timestamp(), reference_sku.id] }
 
 fns.processSkuTags = (reference_sku) ->
