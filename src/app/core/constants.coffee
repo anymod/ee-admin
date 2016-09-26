@@ -328,6 +328,7 @@ tagTree =
       'Outdoor Fountains'
       'Outdoor Rugs'
       'Outdoor Pillows & Cushions'
+      'Bird Baths, Houses & Feeders'
     ]
     'Outdoor Heating': [
       'Patio Heaters'
