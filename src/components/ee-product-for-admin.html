@@ -62,6 +62,7 @@
       <div ng-if="$state.current.name == 'products.tags'">
         <div class="pull-right margin-5">
           <div ng-if="product.saved" class="inline-block pad-5"><i class="fa fa-fw fa-check text-success"></i></div>
+          <h4 ng-if="!product.shown" class="inline-block margin-0">&nbsp;<span class="label label-danger">Not shown</span></h4>&nbsp;
           <div class="btn btn-default" ng-click="copyTags()"><i class="fa fa-fw fa-copy"></i></div>&nbsp;
           <div class="btn btn-default" ng-click="pasteTags()"><i class="fa fa-fw fa-paste"></i></div>
         </div>

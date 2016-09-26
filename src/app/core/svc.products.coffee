@@ -82,6 +82,8 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     queryPromise
     .then (res) ->
       { rows, count, took } = res
+      for row in rows
+        row.shown = row.skus.map((sku) -> sku.discontinued || sku.hide_from_catalog).indexOf(false) > -1
       _data[section].products = rows
       _data[section].count = count
       _data[section].took = took
