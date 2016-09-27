@@ -70,7 +70,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     if _data[section].inputs.range.min    then query.min_price      = _data[section].inputs.range.min
     if _data[section].inputs.range.max    then query.max_price      = _data[section].inputs.range.max
     if _data[section].inputs.order.order  then query.order          = _data[section].inputs.order.order
-    if _data[section].inputs.supplier_id  then query.supplier_id    = _data[section].inputs.supplier_id
+    if _data[section].inputs.product_ids  then query.product_ids    = _data[section].inputs.product_ids
     if _data[section].inputs.category     then query.category_ids   = [_data[section].inputs.category.id]
     if _data[section].inputs.filter       then query[_data[section].inputs.filter] = 'true'
     query.uncustomized = 'true'

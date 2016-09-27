@@ -27,9 +27,9 @@
       <!-- Search ids -->
       <div class="inline-block vertical-align-bottom" style="width: 300px;">
         <form ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
-          <input type="text" ng-model="products.ee.Products.search.inputs.supplier_id"
+          <input type="text" ng-model="products.ee.Products.search.inputs.product_ids"
             class="form-control"
-            placeholder="Search by product id, sku id, or supplier id"/>
+            placeholder="Search by product ids"/>
         </form>
       </div>
       <!-- /Search ids -->
@@ -195,7 +195,7 @@
     </div>
 
     <div class="text-left vert-10">
-      <div class="vert-5" style="width: 1060px; height: 32px;">
+      <div class="vert-5" style="width: 1000px; height: 32px;">
         <div class="inline-block pull-left" style="width: 76px; height: 32px;"></div>
         <!-- Pricing header -->
         <div ng-if="$state.current.name == 'products.pricing'"

@@ -67,7 +67,7 @@ subtags =
 tagTree =
   'Furniture':
     'Living Room': [
-      'Custom Upholstry'
+      # 'Custom Upholstry'
       'Sofas & Sectionals'
       'TV Stands'
       'Chairs & Recliners'
@@ -77,13 +77,13 @@ tagTree =
       'Chaise Lounges'
     ]
     'Bedroom': [
-      'Beds'
-      'Headboards'
+      # 'Beds'
+      # 'Headboards'
       'Dressers'
       'Nightstands'
-      'Bedroom Sets'
-      'Mattresses'
-      'Armoires'
+      # 'Bedroom Sets'
+      # 'Mattresses'
+      # 'Armoires'
     ]
     'Kitchen & Dining': [
       'Bar Stools'
