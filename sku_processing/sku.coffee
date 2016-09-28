@@ -22,6 +22,13 @@ fns.findByIdentifierAndSupplierId = (identifier, supplier_id) ->
   if supplier_id then supplier_id = parseInt(supplier_id)
   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued FROM "Skus" where identifier = ? AND supplier_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [identifier, supplier_id] }
 
+fns.countTagAtLevel = (tag, level) ->
+  # console.log 'tag, level', tag, level
+  throw 'Missing tag or level' unless tag and level
+  q = 'SELECT count(*) FROM "Skus" where tags' + level + ' @> \'{' + tag + '}\''
+  sequelize.query q, { type: sequelize.QueryTypes.SELECT }
+  .then (res) -> parseInt(res[0].count)
+
 fns.createFrom = (data, info) ->
   data ||= {}
   info ||= {}

@@ -47,6 +47,6 @@ fns.dollarsToCents = (dollars) ->
   parseInt(dollars * 100)
 
 fns.tagText = (txt) ->
-  txt.replace(/é/, 'e').toLowerCase().replace(/[^a-z- ]/g, '').replace(/ +/g, '-')
+  txt.replace(/é/, 'e').toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ +/g, '-')
 
 module.exports = fns
