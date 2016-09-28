@@ -61,7 +61,7 @@ formTagTree = () ->
       tagText += '\t'.repeat(level - 1) + plaintextTag.replace(/é/g, 'e') + '\t'.repeat(3) + count + '\n'
   Promise.reduce flatTags, ((total, flatTag) -> appendCount(flatTag.tag, flatTag.level)), 0
   .then (res) ->
-    fs.writeFileSync 'tree.xls', tagText
+    fs.writeFileSync 'tagTree.xls', tagText
 
 if argv.sku_dimensions
   ### coffee sku_processing/manual.coffee --sku_dimensions ###

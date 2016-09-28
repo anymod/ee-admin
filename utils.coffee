@@ -46,7 +46,7 @@ fns.dollarsToCents = (dollars) ->
   dollars = parseFloat dollars
   parseInt(dollars * 100)
 
-fns.tagText = (txt) ->
-  txt.replace(/é/, 'e').toLowerCase().replace(/[^a-z0-9- ]/g, '').replace(/ +/g, '-')
+fns.tagText = (text) ->
+  text.toLowerCase().replace(/é/g, 'e').replace(/[^a-z0-9-]/gi, '-').replace(/-+/g,'-')
 
 module.exports = fns

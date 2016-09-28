@@ -25,7 +25,7 @@ fns.findByIdentifierAndSupplierId = (identifier, supplier_id) ->
 fns.countTagAtLevel = (tag, level) ->
   # console.log 'tag, level', tag, level
   throw 'Missing tag or level' unless tag and level
-  q = 'SELECT count(*) FROM "Skus" where tags' + level + ' @> \'{' + tag + '}\''
+  q = 'SELECT count(*) FROM "Skus" WHERE tags' + level + ' @> \'{' + tag + '}\' AND discontinued = false AND hide_from_catalog = false AND quantity > 0'
   sequelize.query q, { type: sequelize.QueryTypes.SELECT }
   .then (res) -> parseInt(res[0].count)
 
