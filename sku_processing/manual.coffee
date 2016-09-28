@@ -47,19 +47,18 @@ updateIfDimensioned = (sku) ->
 formTagTree = () ->
   # write tag tree to tree.txt
   tagText = ''
-  tagTree = _.clone wayfair.tagTree
   flatTags = []
-  for tag1 in Object.keys tagTree
+  for tag1 in Object.keys wayfair.tagTree
     flatTags.push { tag: tag1, level: 1 }
-    for tag2 in Object.keys(tagTree[tag1])
+    for tag2 in Object.keys(wayfair.tagTree[tag1])
       flatTags.push { tag: tag2, level: 2 }
-      for tag3 in tagTree[tag1][tag2]
+      for tag3 in wayfair.tagTree[tag1][tag2]
         flatTags.push { tag: tag3, level: 3 }
   appendCount = (plaintextTag, level) ->
     urlTag = utils.tagText plaintextTag
     sku.countTagAtLevel urlTag, level
     .then (count) ->
-      tagText += '\t'.repeat(level - 1) + plaintextTag + '\t'.repeat(3) + count + '\n'
+      tagText += '\t'.repeat(level - 1) + plaintextTag.replace(/é/g, 'e') + '\t'.repeat(3) + count + '\n'
   Promise.reduce flatTags, ((total, flatTag) -> appendCount(flatTag.tag, flatTag.level)), 0
   .then (res) ->
     fs.writeFileSync 'tree.xls', tagText
