@@ -1,7 +1,7 @@
 tagTree =
   'Furniture':
     'Living Room': [
-      # 'Custom Upholstry'
+      'Custom Upholstry'
       'Sofas & Sectionals'
       'TV Stands'
       'Chairs & Recliners'
@@ -11,13 +11,13 @@ tagTree =
       'Chaise Lounges'
     ]
     'Bedroom': [
-      # 'Beds'
-      # 'Headboards'
+      'Beds'
+      'Headboards'
       'Dressers'
       'Nightstands'
-      # 'Bedroom Sets'
-      # 'Mattresses'
-      # 'Armoires'
+      'Bedroom Sets'
+      'Mattresses'
+      'Armoires'
     ]
     'Kitchen & Dining': [
       'Bar Stools'
@@ -52,12 +52,12 @@ tagTree =
       'Storage Benches'
       'Console Tables'
     ]
-    # 'Pet Furniture': [
-    #   'Dog Beds'
-    #   'Dog Crates'
-    #   'Cat Trees'
-    #   'Chicken Coops'
-    # ]
+    'Pet Furniture': [
+      'Dog Beds'
+      'Dog Crates'
+      'Cat Trees'
+      'Chicken Coops'
+    ]
     'Game Room': []
   'Décor':
     'Home Accents': [
@@ -75,11 +75,11 @@ tagTree =
       'Clocks'
       'Wallpaper'
     ]
-    # 'Window Treatments': [
-    #   'Curtains & Drapes'
-    #   'Blinds & Shades'
-    #   'Valances'
-    # ]
+    'Window Treatments': [
+      'Curtains & Drapes'
+      'Blinds & Shades'
+      'Valances'
+    ]
     'Mirrors': [
       'Wall Mirrors'
       'Floor Mirrors'
@@ -158,27 +158,27 @@ tagTree =
       'Lamp Shades'
       'Light Bulbs'
     ]
-    # 'Wall Lights': [
-    #   'Wall Sconces'
-    #   'Vanity Lighting'
-    # ]
-    # 'Ceiling Fans': []
+    'Wall Lights': [
+      'Wall Sconces'
+      'Vanity Lighting'
+    ]
+    'Ceiling Fans': []
   'Kitchen':
-    # 'Cookware': [
-    #   'Cookware Sets'
-    #   'Frying Pans'
-    #   'Dutch Ovens'
-    #   'Pots'
-    #   'Cast Iron Skillets'
-    #   'Tea Kettles'
-    # ]
-    # 'Small Appliances': [
-    #   'Blenders'
-    #   'Microwaves'
-    #   'Coffee Makers'
-    #   'Espresso Machines'
-    #   'Food Processors'
-    # ]
+    'Cookware': [
+      'Cookware Sets'
+      'Frying Pans'
+      'Dutch Ovens'
+      'Pots'
+      'Cast Iron Skillets'
+      'Tea Kettles'
+    ]
+    'Small Appliances': [
+      'Blenders'
+      'Microwaves'
+      'Coffee Makers'
+      'Espresso Machines'
+      'Food Processors'
+    ]
     'Tableware': [
       'Dinnerware'
       'Drinkware'
@@ -198,14 +198,14 @@ tagTree =
       'Wine Glasses'
       'Barware'
     ]
-    # 'Bakeware': [
-    #   'Baking Sheets'
-    #   'Cake Pans'
-    # ]
-    # 'Kitchen Appliances': [
-    #   'Refrigerators'
-    #   'Ranges'
-    # ]
+    'Bakeware': [
+      'Baking Sheets'
+      'Cake Pans'
+    ]
+    'Kitchen Appliances': [
+      'Refrigerators'
+      'Ranges'
+    ]
     'Storage & Organization': [
       'Food Storage'
       'Bakers Racks'
@@ -269,116 +269,116 @@ tagTree =
       'Firepits'
       'Outdoor Fireplaces'
     ]
-    # 'Outdoor Storage': [
-    #   'Storage Sheds'
-    #   'Deck Boxes'
-    # ]
-    # 'Backyard Play': [
-    #   'Swing Sets'
-    #   'Trampolines'
-    # ]
+    'Outdoor Storage': [
+      'Storage Sheds'
+      'Deck Boxes'
+    ]
+    'Backyard Play': [
+      'Swing Sets'
+      'Trampolines'
+    ]
     'Lawn & Garden': [
       'Planters'
       'Greenhouses'
       'Composters'
     ]
-    # 'Outdoor Shade & Structures': [
-    #   'Patio Umbrellas'
-    #   'Gazebos & Pergolas'
-    # ]
-    # 'Outdoor Cooking': [
-    #   'Grills'
-    #   'Smokers'
-    #   'Pizza Ovens'
-    # ]
-    # 'Hot Tubs & Saunas': []
+    'Outdoor Shade & Structures': [
+      'Patio Umbrellas'
+      'Gazebos & Pergolas'
+    ]
+    'Outdoor Cooking': [
+      'Grills'
+      'Smokers'
+      'Pizza Ovens'
+    ]
+    'Hot Tubs & Saunas': []
     'Outdoor Lighting': []
-  # 'Home Improvement':
-  #   'Bathroom Fixtures': [
-  #     'Bathroom Vanities'
-  #     'Bathroom Sinks'
-  #     'Bathroom Faucets'
-  #     'Bathtubs'
-  #     'Showers'
-  #     'Shower Heads'
-  #     'Toilets'
-  #   ]
-  #   'Flooring': [
-  #     'Floor & Wall Tile'
-  #     'Backsplash Tile'
-  #     'Hardwood Flooring'
-  #     'Vinyl Flooring'
-  #     'Laminate Flooring'
-  #     'Cork Flooring'
-  #     'Bamboo Flooring'
-  #     'Carpet Tiles'
-  #   ]
-  #   'Appliances': [
-  #     'Refrigerators'
-  #     'Ranges'
-  #     'Washing Machines'
-  #   ]
-  #   'Heating & Cooling': [
-  #     'Fireplaces'
-  #     'Space Heaters'
-  #     'Air Conditioners'
-  #   ]
-  #   'Kitchen Fixtures': [
-  #     'Kitchen Sinks'
-  #     'Kitchen Faucets'
-  #   ]
-  # 'Baby & Kids':
-  #   'Nursery Shop': [
-  #     'Cribs'
-  #     'Changing Tables'
-  #     'Gliders'
-  #     'Bassinets'
-  #     'Nursery Décor'
-  #   ]
-  #   'Kids Furniture': [
-  #     'Kids Beds'
-  #     'Kids Bedroom Sets'
-  #     'Bunk & Loft Beds'
-  #     'Kids Dressers & Chests'
-  #     'Toddler Beds'
-  #   ]
-  #   'Kids Bed & Bath': [
-  #     'Crib Bedding'
-  #     'Kids Bedding'
-  #     'Teen Bedding'
-  #   ]
-  #   'Playroom': [
-  #     'Kids Table & Chair Sets'
-  #     'Backyard Play'
-  #     'Play Tents'
-  #     'Play Kitchens'
-  #   ]
-  #   'Kids Décor': [
-  #     'Kids Wall Art'
-  #   ]
-  #   'Kids Rugs': []
-  #   'Kids Lighting': []
-  #   'Kids Storage': [
-  #     'Kids Bookcases'
-  #     'Toy Boxes'
-  #   ]
-  # 'Seasonal':
-  #   'Halloween': [
-  #     'Décor'
-  #     'Outdoor Decorations'
-  #     'Inflatables'
-  #     'Doors Mats'
-  #     'Outdoor Lighting'
-  #     'Tabletop'
-  #     'Kitchen & Bakeware'
-  #   ]
-  #   'Outdoor': [
-  #     'Outdoor Cooking'
-  #     'Patio Furniture Covers'
-  #     'Firepits'
-  #     'Patio Heaters'
-  #     'Lawn & Garden'
-  #   ]
+  'Home Improvement':
+    'Bathroom Fixtures': [
+      'Bathroom Vanities'
+      'Bathroom Sinks'
+      'Bathroom Faucets'
+      'Bathtubs'
+      'Showers'
+      'Shower Heads'
+      'Toilets'
+    ]
+    'Flooring': [
+      'Floor & Wall Tile'
+      'Backsplash Tile'
+      'Hardwood Flooring'
+      'Vinyl Flooring'
+      'Laminate Flooring'
+      'Cork Flooring'
+      'Bamboo Flooring'
+      'Carpet Tiles'
+    ]
+    'Appliances': [
+      'Refrigerators'
+      'Ranges'
+      'Washing Machines'
+    ]
+    'Heating & Cooling': [
+      'Fireplaces'
+      'Space Heaters'
+      'Air Conditioners'
+    ]
+    'Kitchen Fixtures': [
+      'Kitchen Sinks'
+      'Kitchen Faucets'
+    ]
+  'Baby & Kids':
+    'Nursery Shop': [
+      'Cribs'
+      'Changing Tables'
+      'Gliders'
+      'Bassinets'
+      'Nursery Décor'
+    ]
+    'Kids Furniture': [
+      'Kids Beds'
+      'Kids Bedroom Sets'
+      'Bunk & Loft Beds'
+      'Kids Dressers & Chests'
+      'Toddler Beds'
+    ]
+    'Kids Bed & Bath': [
+      'Crib Bedding'
+      'Kids Bedding'
+      'Teen Bedding'
+    ]
+    'Playroom': [
+      'Kids Table & Chair Sets'
+      'Backyard Play'
+      'Play Tents'
+      'Play Kitchens'
+    ]
+    'Kids Décor': [
+      'Kids Wall Art'
+    ]
+    'Kids Rugs': []
+    'Kids Lighting': []
+    'Kids Storage': [
+      'Kids Bookcases'
+      'Toy Boxes'
+    ]
+  'Seasonal':
+    'Halloween': [
+      'Décor'
+      'Outdoor Decorations'
+      'Inflatables'
+      'Doors Mats'
+      'Outdoor Lighting'
+      'Tabletop'
+      'Kitchen & Bakeware'
+    ]
+    'Outdoor': [
+      'Outdoor Cooking'
+      'Patio Furniture Covers'
+      'Firepits'
+      'Patio Heaters'
+      'Lawn & Garden'
+    ]
 
 findParent = (plaintextTag) ->
   for tag1 in Object.keys(tagTree)

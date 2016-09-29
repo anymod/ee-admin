@@ -1,5 +1,6 @@
 Furniture			1106
 	Living Room			256
+		Custom Upholstry			0
 		Sofas & Sectionals			33
 		TV Stands			8
 		Chairs & Recliners			37
@@ -8,8 +9,13 @@ Furniture			1106
 		Slipcovers			0
 		Chaise Lounges			0
 	Bedroom			23
+		Beds			0
+		Headboards			0
 		Dressers			6
 		Nightstands			10
+		Bedroom Sets			0
+		Mattresses			0
+		Armoires			0
 	Kitchen & Dining			293
 		Bar Stools			123
 		Dining Tables			60
@@ -38,6 +44,11 @@ Furniture			1106
 		Plant Stands & Tables			0
 		Storage Benches			13
 		Console Tables			45
+	Pet Furniture			0
+		Dog Beds			0
+		Dog Crates			0
+		Cat Trees			0
+		Chicken Coops			0
 	Game Room			23
 Decor			1918
 	Home Accents			635
@@ -53,6 +64,10 @@ Decor			1918
 		Tapestries			0
 		Clocks			9
 		Wallpaper			0
+	Window Treatments			0
+		Curtains & Drapes			0
+		Blinds & Shades			0
+		Valances			0
 	Mirrors			108
 		Wall Mirrors			107
 		Floor Mirrors			1
@@ -118,7 +133,24 @@ Lighting			195
 	Bulbs & Shades			1
 		Lamp Shades			1
 		Light Bulbs			0
+	Wall Lights			0
+		Wall Sconces			0
+		Vanity Lighting			0
+	Ceiling Fans			0
 Kitchen			298
+	Cookware			0
+		Cookware Sets			0
+		Frying Pans			0
+		Dutch Ovens			0
+		Pots			0
+		Cast Iron Skillets			0
+		Tea Kettles			0
+	Small Appliances			0
+		Blenders			0
+		Microwaves			0
+		Coffee Makers			0
+		Espresso Machines			0
+		Food Processors			0
 	Tableware			224
 		Dinnerware			34
 		Drinkware			11
@@ -135,6 +167,12 @@ Kitchen			298
 		Wine Refrigerators			0
 		Wine Glasses			0
 		Barware			27
+	Bakeware			0
+		Baking Sheets			0
+		Cake Pans			0
+	Kitchen Appliances			0
+		Refrigerators			0
+		Ranges			0
 	Storage & Organization			27
 		Food Storage			0
 		Bakers Racks			0
@@ -185,8 +223,95 @@ Outdoor			315
 		Patio Heaters			1
 		Firepits			17
 		Outdoor Fireplaces			1
+	Outdoor Storage			0
+		Storage Sheds			0
+		Deck Boxes			0
+	Backyard Play			0
+		Swing Sets			0
+		Trampolines			0
 	Lawn & Garden			134
 		Planters			130
 		Greenhouses			0
 		Composters			0
+	Outdoor Shade & Structures			0
+		Patio Umbrellas			0
+		Gazebos & Pergolas			0
+	Outdoor Cooking			0
+		Grills			0
+		Smokers			0
+		Pizza Ovens			0
+	Hot Tubs & Saunas			0
 	Outdoor Lighting			12
+Home Improvement			0
+	Bathroom Fixtures			0
+		Bathroom Vanities			0
+		Bathroom Sinks			0
+		Bathroom Faucets			0
+		Bathtubs			0
+		Showers			0
+		Shower Heads			0
+		Toilets			0
+	Flooring			0
+		Floor & Wall Tile			0
+		Backsplash Tile			0
+		Hardwood Flooring			0
+		Vinyl Flooring			0
+		Laminate Flooring			0
+		Cork Flooring			0
+		Bamboo Flooring			0
+		Carpet Tiles			0
+	Appliances			0
+		Refrigerators			0
+		Ranges			0
+		Washing Machines			0
+	Heating & Cooling			0
+		Fireplaces			0
+		Space Heaters			0
+		Air Conditioners			0
+	Kitchen Fixtures			0
+		Kitchen Sinks			0
+		Kitchen Faucets			0
+Baby & Kids			0
+	Nursery Shop			0
+		Cribs			0
+		Changing Tables			0
+		Gliders			0
+		Bassinets			0
+		Nursery Decor			0
+	Kids Furniture			0
+		Kids Beds			0
+		Kids Bedroom Sets			0
+		Bunk & Loft Beds			0
+		Kids Dressers & Chests			0
+		Toddler Beds			0
+	Kids Bed & Bath			0
+		Crib Bedding			0
+		Kids Bedding			0
+		Teen Bedding			0
+	Playroom			0
+		Kids Table & Chair Sets			0
+		Backyard Play			0
+		Play Tents			0
+		Play Kitchens			0
+	Kids Decor			0
+		Kids Wall Art			0
+	Kids Rugs			0
+	Kids Lighting			0
+	Kids Storage			0
+		Kids Bookcases			0
+		Toy Boxes			0
+Seasonal			0
+	Halloween			0
+		Decor			0
+		Outdoor Decorations			0
+		Inflatables			0
+		Doors Mats			0
+		Outdoor Lighting			0
+		Tabletop			0
+		Kitchen & Bakeware			0
+	Outdoor			0
+		Outdoor Cooking			0
+		Patio Furniture Covers			0
+		Firepits			17
+		Patio Heaters			1
+		Lawn & Garden			0
