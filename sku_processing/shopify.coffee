@@ -66,8 +66,8 @@ setSkuRowsFor = (prod, rowTemplate) ->
   .then (skus) ->
     for s in skus
       vals = [
-        s.tags1?.join('||')
-        s.tags2?.concat(s.tags3).join('||')
+        s.tags1?.join(',')
+        s.tags2?.concat(s.tags3).join(',')
         (if s.discontinued or s.hide_from_catalog then 'FALSE' else 'TRUE')
         (if skus.length > 1 then 'Title' else null)
         (if skus.length > 1 then s.selection_text else null)
