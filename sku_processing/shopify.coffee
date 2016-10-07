@@ -101,6 +101,6 @@ if argv.export
   .then () ->
     csv.stringify output, (err, stringified) ->
       if err then throw err
-      fs.writeFileSync 'csv/shopify.csv', stringified
+      fs.writeFileSync 'csv/shopify-' + utils.fileTimestamp() + '.csv', stringified
       process.exit()
   .catch (err) -> console.log 'err', err

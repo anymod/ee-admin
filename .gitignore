@@ -5,6 +5,7 @@ bower_components
 src/**/*.js
 src/**/*.css
 src/**/*.map
+csv
 
 *.log
 
