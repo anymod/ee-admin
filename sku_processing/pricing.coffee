@@ -50,12 +50,14 @@ fns.getBaselinePrice = (supply_price, supply_shipping_price, shipping_price) ->
   shipping_price = fns.shippingPriceGuess(supply_price, supply_shipping_price) unless shipping_price?
   supply_price + supply_shipping_price - shipping_price
 
-fns.getPrice = (baseline_price) ->
-  marginGuess = earningsTable[getEarningsTableRow(baseline_price)]
+fns.getPrice = (baseline_price, suffix, earningsArr) ->
+  suffix ||= 99
+  earningsArr ||= earningsTable
+  marginGuess = earningsArr[getEarningsTableRow(baseline_price)]
   priceGuess = baseline_price / (1 - marginGuess)
-  margin = earningsTable[getEarningsTableRow(priceGuess)]
+  margin = earningsArr[getEarningsTableRow(priceGuess)]
   unroundedPrice = parseInt(baseline_price / (1 - margin))
-  unroundedPrice - (unroundedPrice % 100) + 99
+  unroundedPrice - (unroundedPrice % 100) + suffix
 
 fns.getValues = (supply_price, supply_shipping_price) ->
   # baseline_price, price, shipping_price

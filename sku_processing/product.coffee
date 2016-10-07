@@ -9,6 +9,9 @@ utils   = require '../utils'
 
 fns = {}
 
+fns.findAll = () ->
+  sequelize.query 'SELECT id, title, content, image, additional_images FROM "Products"', { type: sequelize.QueryTypes.SELECT }
+
 fns.createFrom = (data, info) ->
   data ||= {}
   info ||= {}

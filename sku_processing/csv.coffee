@@ -1,22 +1,22 @@
 _         = require 'lodash'
 Promise   = require 'bluebird'
-parse     = require 'csv-parse'
+csv       = require 'csv'
 
 utils     = require '../utils'
 mappings  = require './doba.mappings'
 
-csv = {}
+fns = {}
 
 # getRows = (path) ->
 #   new Promise (resolve, reject) ->
 #     fs.readFile path, 'utf-8', (err, data) ->
 #       if err then reject err
-#       parse data, {}, (err, rows) ->
+#       csv.parse data, {}, (err, rows) ->
 #         if err then reject err
 #         rows.shift()
 #         resolve rows
 
-csv.parseDobaFile = (data, category_id) ->
+fns.parseDobaFile = (data, category_id) ->
   throw 'parseDobaFile missing category_id' unless category_id?
   # Read csv and return array of objects:
   # {
@@ -45,7 +45,7 @@ csv.parseDobaFile = (data, category_id) ->
   #   }
   # }
   new Promise (resolve, reject) ->
-    parse data, {}, (err, rows) ->
+    csv.parse data, {}, (err, rows) ->
       if err then reject err
       columns = rows.shift()
       sku_attrs = [
@@ -114,7 +114,7 @@ csv.parseDobaFile = (data, category_id) ->
         parsed_rows.push { sku: sku, product: product }
       resolve parsed_rows
 
-csv.parseSkuPricingFile = (data) ->
+fns.parseSkuPricingFile = (data) ->
   # Read csv and return array of objects:
   # {
   #   identifier
@@ -126,7 +126,7 @@ csv.parseSkuPricingFile = (data) ->
   #   discontinued
   # }
   new Promise (resolve, reject) ->
-    parse data, {}, (err, rows) ->
+    csv.parse data, {}, (err, rows) ->
       if err then reject err
       columns = rows.shift()
       attrs = ['item_sku', 'supplier_id', 'ship_cost', 'price', 'qty_avail', 'msrp', 'stock']
@@ -142,14 +142,14 @@ csv.parseSkuPricingFile = (data) ->
         parsed_rows.push parsed_row
       resolve parsed_rows
 
-csv.parseSkuSelectionTextFile = (data) ->
+fns.parseSkuSelectionTextFile = (data) ->
   # Read csv and return array of objects:
   # {
   #   id (sku)
   #   selection_text
   # }
   new Promise (resolve, reject) ->
-    parse data, {}, (err, rows) ->
+    csv.parse data, {}, (err, rows) ->
       if err then reject err
       columns = rows.shift()
       parsed_rows = []
@@ -160,7 +160,7 @@ csv.parseSkuSelectionTextFile = (data) ->
         parsed_rows.push parsed_row
       resolve parsed_rows
 
-csv.parseProductTitleAndContentFile = (data) ->
+fns.parseProductTitleAndContentFile = (data) ->
   # Read csv and return array of objects:
   # {
   #   id (product)
@@ -168,7 +168,7 @@ csv.parseProductTitleAndContentFile = (data) ->
   #   content
   # }
   new Promise (resolve, reject) ->
-    parse data, {}, (err, rows) ->
+    csv.parse data, {}, (err, rows) ->
       if err then reject err
       columns = rows.shift()
       parsed_rows = []
@@ -180,4 +180,4 @@ csv.parseProductTitleAndContentFile = (data) ->
         parsed_rows.push parsed_row
       resolve parsed_rows
 
-module.exports = csv
+module.exports = fns
