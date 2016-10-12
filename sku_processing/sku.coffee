@@ -10,7 +10,7 @@ fns = {}
 fns.editableAttrs = ['supply_price', 'supply_shipping_price', 'quantity', 'msrp', 'discontinued', 'tags']
 
 fns.findAll = () ->
-  sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued, other, tags FROM "Skus"', { type: sequelize.QueryTypes.SELECT }
+  sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued, other, tags1, tags2, tags3 FROM "Skus"', { type: sequelize.QueryTypes.SELECT }
 
 fns.findAllWithoutTags = () ->
   sequelize.query 'SELECT id, identifier, supplier_id, supply_price, supply_shipping_price, quantity, msrp, auto_pricing, discontinued, other, tags FROM "Skus" WHERE tags = \'{}\' OR tags is null', { type: sequelize.QueryTypes.SELECT }
@@ -185,6 +185,17 @@ fns.processSkuTags = (reference_sku) ->
   tags = reference_sku.other.categories.replace(/'/g, "''").split(/\|\|/g)
   arr = 'ARRAY[\'' + tags.join("\',\'") + '\']::VARCHAR(255)[]'
   q = 'UPDATE "Skus" SET tags = ' + arr + ', updated_at = ? WHERE id = ?'
+  sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [utils.timestamp(), reference_sku.id] }
+
+fns.flattenAllTagLevels = (reference_sku) ->
+  return unless reference_sku?.id? and reference_sku.tags1 and reference_sku.tags2 and reference_sku.tags3
+  tags1 = _.compact(_.uniq(_.flatten(reference_sku.tags1)))
+  tags2 = _.compact(_.uniq(_.flatten(reference_sku.tags2)))
+  tags3 = _.compact(_.uniq(_.flatten(reference_sku.tags3)))
+  arr1 = 'ARRAY[\'' + tags1.join("\',\'") + '\']::VARCHAR(255)[]'
+  arr2 = 'ARRAY[\'' + tags2.join("\',\'") + '\']::VARCHAR(255)[]'
+  arr3 = 'ARRAY[\'' + tags3.join("\',\'") + '\']::VARCHAR(255)[]'
+  q = 'UPDATE "Skus" SET tags1 = ' + arr1 + ', tags2 = ' + arr2 + ', tags3 = ' + arr3 + ', updated_at = ? WHERE id = ?'
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [utils.timestamp(), reference_sku.id] }
 
 fns.processTagMap = (reference_sku) ->

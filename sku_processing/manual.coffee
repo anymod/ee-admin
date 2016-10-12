@@ -138,6 +138,19 @@ else if argv.map_tags
     console.log 'finished'
     process.exit()
 
+else if argv.flatten_levels
+  ### coffee sku_processing/manual.coffee --flatten_levels ###
+  skus = []
+  sku.findAll()
+  .then (res) ->
+    skus = res
+    Promise.reduce skus, ((total, s) -> sku.flattenAllTagLevels(s)), 0
+  .then () -> console.log 'Updated ' + skus.length + ' skus'
+  .catch (err) -> console.log 'err', err
+  .finally () ->
+    console.log 'finished'
+    process.exit()
+
 # else if argv.process_artwork_tags
 #   ### coffee sku_processing/manual.coffee --process_artwork_tags ###
 #   products = []
