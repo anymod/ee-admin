@@ -38,6 +38,9 @@ fns.findOrCreate = (data, info) ->
 fns.findAllWithDobaImage = () ->
   sequelize.query 'SELECT id, image, additional_images FROM "Products" WHERE image ilike \'%images.doba.com%\'', { type: sequelize.QueryTypes.SELECT }
 
+fns.findAllWithUppercaseTitle = () ->
+  sequelize.query 'SELECT id, title FROM "Products" WHERE upper(title) = title', { type: sequelize.QueryTypes.SELECT }
+
 fns.overwriteImagesFor = (reference_product) ->
   return if !reference_product or !reference_product.id or !reference_product.image
   q = 'UPDATE "Products" SET image = ?, additional_images = ARRAY[]::VARCHAR(255)[], updated_at = ? WHERE id = ?'
@@ -57,6 +60,13 @@ fns.updateProductSpelling = (reference_product, info) ->
   return if !reference_product or !reference_product.id or !reference_product.title
   q = 'UPDATE "Products" SET title = ?, content = ?, updated_at = ? WHERE id = ?'
   sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [reference_product.title, reference_product.content, utils.timestamp(), reference_product.id] }
+
+fns.updateTitleToTitlecase = (reference_product) ->
+  return if !reference_product or !reference_product.id or !reference_product.title
+  title = _.map(reference_product.title.split(' '), (word) -> _.capitalize(word)).join(' ')
+  console.log title
+  q = 'UPDATE "Products" SET title = ?, updated_at = ? WHERE id = ?'
+  sequelize.query q, { type: sequelize.QueryTypes.UPDATE, replacements: [title, utils.timestamp(), reference_product.id] }
 
 fns.findOrUpdateProductAndSku = (pair, info) ->
   throw 'Invalid pair' unless pair?.sku?.identifier? and pair?.sku?.supplier_id? and pair?.product?.external_identity?

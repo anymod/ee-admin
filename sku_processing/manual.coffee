@@ -151,6 +151,20 @@ else if argv.flatten_levels
     console.log 'finished'
     process.exit()
 
+else if argv.titlecase_all_uppercase_titles
+  ### coffee sku_processing/manual.coffee --titlecase_all_uppercase_titles ###
+  products = []
+  product.findAllWithUppercaseTitle()
+  .then (prods) ->
+    products = prods
+    Promise.reduce products, ((total, prod) -> product.updateTitleToTitlecase(prod)), 0
+  .then () -> console.log 'Updated ' + products.length + ' products'
+  .catch (err) -> console.log 'err', err
+  .finally () ->
+    console.log 'finished'
+    process.exit()
+
+
 # else if argv.process_artwork_tags
 #   ### coffee sku_processing/manual.coffee --process_artwork_tags ###
 #   products = []
