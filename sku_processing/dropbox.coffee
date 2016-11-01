@@ -22,6 +22,7 @@ archivedPathFor = (file_path) ->
   '/archive (do not edit)/' + utils.timestampedFilename(file_path, '_at_')
 
 dropbox.categoryMappings =
+  other:        0
   artwork:      1
   bed_bath:     2
   furniture:    3
