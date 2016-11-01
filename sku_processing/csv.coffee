@@ -17,7 +17,8 @@ fns = {}
 #         resolve rows
 
 fns.parseDobaFile = (data, category_id) ->
-  throw 'parseDobaFile missing category_id' unless category_id?
+  # throw 'parseDobaFile missing category_id' unless category_id?
+  category_id ||= 0
   # Read csv and return array of objects:
   # {
   #   sku: {

@@ -8,6 +8,7 @@ src/**/*.map
 csv/**/*.csv
 
 *.log
+*.dump
 
 *.key
 *.crt
