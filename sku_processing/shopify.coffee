@@ -39,6 +39,16 @@ header = [
   'Image Src'
 ]
 
+getMeasurementText = (s) ->
+  if !s.length and !s.width and !s.height then return ''
+  str = ''
+  if s.length then str += s.length + '"L'
+  if s.length and s.width then str += ' x '
+  if s.width  then str += s.width + '"W'
+  if s.width and s.height then str += ' x '
+  if s.height then str += s.height + '"H'
+  str
+
 processProduct = (prod, output) ->
   return unless prod?.id
   return if prod.hide_from_catalog
@@ -71,8 +81,8 @@ setSkuRowsFor = (prod, rowTemplate) ->
         (if s.discontinued or s.hide_from_catalog then 'FALSE' else 'TRUE')
         'Title'
         (if skus.length > 1 then s.selection_text else 'Default Title')
-        null
-        null
+        'Size'
+        getMeasurementText(s)
         null
         null
         s.id
