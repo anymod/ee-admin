@@ -40,7 +40,7 @@ header = [
 ]
 
 getMeasurementText = (s) ->
-  if !s.length and !s.width and !s.height then return ''
+  if !s.length and !s.width and !s.height then return null
   str = ''
   if s.length then str += s.length + '"L'
   if s.length and s.width then str += ' x '
@@ -81,7 +81,7 @@ setSkuRowsFor = (prod, rowTemplate) ->
         (if s.discontinued or s.hide_from_catalog then 'FALSE' else 'TRUE')
         'Title'
         (if skus.length > 1 then s.selection_text else 'Default Title')
-        'Size'
+        if getMeasurementText(s) then 'Size' else null
         getMeasurementText(s)
         null
         null
