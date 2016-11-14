@@ -32,10 +32,10 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
       { order: 'td',  html: 'Z-A' },
       { order: 'shipd', html: '% Shipping <i class="fa fa-sort-amount-desc"></i>' },
       { order: 'shipa', html: '% Shipping <i class="fa fa-sort-amount-asc"></i>' },
-      # { order: 'discd', html: '% off <i class="fa fa-sort-amount-desc"></i>' },
-      # { order: 'disca', html: '% off <i class="fa fa-sort-amount-asc"></i>' },
-      { order: 'eeprofd', html: '% ee profit <i class="fa fa-sort-amount-desc"></i>' },
-      { order: 'eeprofa', html: '% ee profit <i class="fa fa-sort-amount-asc"></i>' },
+      # { order: 'eeprofd', html: '% ee profit <i class="fa fa-sort-amount-desc"></i>' },
+      # { order: 'eeprofa', html: '% ee profit <i class="fa fa-sort-amount-asc"></i>' },
+      { order: 'pctoffd', html: '% off msrp <i class="fa fa-sort-amount-desc"></i>' },
+      { order: 'pctoffa', html: '% off msrp <i class="fa fa-sort-amount-asc"></i>' },
       # { order: 'sellprofd', html: 'Seller profit $$-$' },
       # { order: 'sellprofa', html: 'Seller profit $-$$' }
     ]
