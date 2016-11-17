@@ -71,6 +71,9 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     if _data[section].inputs.range.max    then query.max_price      = _data[section].inputs.range.max
     if _data[section].inputs.order.order  then query.order          = _data[section].inputs.order.order
     if _data[section].inputs.product_ids  then query.product_ids    = _data[section].inputs.product_ids
+    if _data[section].inputs.tags1        then query.tags1          = _data[section].inputs.tags1
+    if _data[section].inputs.tags2        then query.tags2          = _data[section].inputs.tags2
+    if _data[section].inputs.tags3        then query.tags3          = _data[section].inputs.tags3
     if _data[section].inputs.category     then query.category_ids   = [_data[section].inputs.category.id]
     if _data[section].inputs.filter       then query[_data[section].inputs.filter] = 'true'
     query.uncustomized = 'true'
@@ -99,6 +102,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     _runQuery section, promise
 
   _searchWithTerm = (term) ->
+    console.log('search', term)
     _data.search.inputs.order = {}
     _data.search.inputs.search = term
     _data.search.inputs.page = 1
@@ -128,7 +132,7 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     for tag, i in Object.keys tagTree
       if _activeProductHasTag(tag, 1) then return _data.activeTagTab = i
 
-  _saveActiveProductTags = (prod) ->
+  _saveProductTags = (prod) ->
     p = prod || _data.activeProduct
     return unless p?.skus?.length > 0
     p.saved = false
@@ -137,6 +141,8 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     eeProduct.fns.update p, [], ['tags1', 'tags2', 'tags3']
     .then (prod) -> p.saved = true
     .catch (err) -> p.alert = err
+
+  _saveActiveProductTags = (prod) -> _saveProductTags _data.activeProduct
 
   _activeProductIndex = () ->
     for product,i in _data.search.products
@@ -153,31 +159,41 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     index = _activeProductIndex() || 0
     _setActiveProduct _data.search.products[Math.min(index + 1, _data.search.products.length)]
 
-  _activeProductHasTag = (tag, level) ->
-    return false unless _data.activeProduct?.skus?.length > 0
-    _data.activeProduct.skus[0]['tags' + level]?.indexOf($filter('urlText')(tag)) > -1
+  _productHasTag = (tag, level, product) ->
+    return false unless product?.skus?.length > 0
+    product.skus[0]['tags' + level]?.indexOf($filter('urlText')(tag)) > -1
 
-  _addTagToActiveProduct = (tag, level) ->
+  _activeProductHasTag = (tag, level) -> _productHasTag tag, level, _data.activeProduct
+
+  _addTagToProduct = (tag, level, product) ->
     return unless tag and level
     newTags = []
-    _data.activeProduct.skus[0]?['tags' + level].push tag
-    for t in _data.activeProduct.skus[0]?['tags' + level]
+    product.skus[0]?['tags' + level].push tag
+    for t in product.skus[0]?['tags' + level]
       if newTags.indexOf(t) < 0 then newTags.push t
-    _data.activeProduct.skus[0]?['tags' + level] = newTags
+    product.skus[0]?['tags' + level] = newTags
 
-  _removeTagFromActiveProduct = (tag, level, opts) ->
+  _removeTagFromProduct = (tag, level, product, opts) ->
     return unless tag and level
     opts ||= {}
     newTags = []
     tag = $filter('urlText')(tag)
-    for t in _data.activeProduct.skus[0]?['tags' + level]
+    for t in product.skus[0]?['tags' + level]
       if t isnt tag then newTags.push t
-    _data.activeProduct.skus[0]?['tags' + level] = newTags
-    if opts.save then _saveActiveProductTags()
+    product.skus[0]?['tags' + level] = newTags
+    if opts.save then _saveProductTags product
 
-  _toggleTagForActiveProduct = (tag, level) ->
+  _addTagToActiveProduct = (tag, level) ->
+    _addTagToProduct tag, level, _data.activeProduct
+
+  _removeTagFromActiveProduct = (tag, level, opts) ->
+    _removeTagFromProduct tag, level, _data.activeProduct, opts
+
+  _toggleTagForProduct = (tag, level, product) ->
     return unless tag and level
-    if _activeProductHasTag tag, level then _removeTagFromActiveProduct tag, level else _addTagToActiveProduct tag, level
+    if _productHasTag tag, level, product then _removeTagFromProduct tag, level, product else _addTagToProduct tag, level, product
+
+  _toggleTagForActiveProduct = (tag, level) -> _toggleTagForProduct tag, level, _data.activeProduct
 
   _toggleTagsForActiveProduct = (tagset, opts) ->
     return unless tagset.tag1 and tagset.tag2 and _data.activeProduct?.skus?.length > 0
@@ -234,6 +250,8 @@ angular.module('app.core').factory 'eeProducts', ($rootScope, $q, $filter, eeBac
     setActiveProduct: _setActiveProduct
     nextActiveProduct: _nextActiveProduct
     prevActiveProduct: _prevActiveProduct
+    toggleTagForProduct: _toggleTagForProduct
     saveActiveProductTags: _saveActiveProductTags
     toggleTagsForActiveProduct: _toggleTagsForActiveProduct
     removeTagFromActiveProduct: _removeTagFromActiveProduct
+    saveProductTags: _saveProductTags

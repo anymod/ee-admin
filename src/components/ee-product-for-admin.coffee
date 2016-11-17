@@ -105,4 +105,8 @@ angular.module('ee-product-for-admin').directive "eeProductForAdmin", ($rootScop
           sku[attr] = scope.copiedTags[attr] for attr in ['tags1', 'tags2', 'tags3']
       eeProducts.fns.saveActiveProductTags scope.product
 
+    scope.toggleHoustylishTag = () ->
+      eeProducts.fns.toggleTagForProduct 'houstylish', 1, scope.product
+      eeProducts.fns.saveProductTags scope.product
+
     return

@@ -10,7 +10,7 @@
     <div class="full-width vert-5">
       <small class="inline-block vert-7" style="width: 38px;">Search</small>
       <!-- Search products -->
-      <div class="inline-block vertical-align-bottom" style="width: 400px;">
+      <div class="inline-block vertical-align-bottom" style="width: 250px;">
         <form ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
           <div ng-class="{ 'input-group': products.ee.Products.search.inputs.searchLabel }">
             <input type="text" ng-model="products.ee.Products.search.inputs.search" class="form-control" placeholder="Search product titles">
@@ -25,11 +25,31 @@
       </div>
       <!-- /Search products -->
       <!-- Search ids -->
-      <div class="inline-block vertical-align-bottom" style="width: 300px;">
+      <div class="inline-block vertical-align-bottom" style="width: 250px;">
         <form ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
           <input type="text" ng-model="products.ee.Products.search.inputs.product_ids"
             class="form-control"
             placeholder="Search by product ids"/>
+          <input type="submit" class="hidden"/>
+        </form>
+      </div>
+      <!-- /Search ids -->
+      <!-- Search tags -->
+      <div class="inline-block vertical-align-bottom" style="width: 450px;">
+        <form ng-submit="products.fns.search(products.ee.Products.search.inputs.search)">
+          <input type="text" ng-model="products.ee.Products.search.inputs.tags1"
+            class="form-control inline-block"
+            style="width: 140px;"
+            placeholder="Search tag level 1"/>
+          <input type="text" ng-model="products.ee.Products.search.inputs.tags2"
+            class="form-control inline-block"
+            style="width: 140px;"
+            placeholder="Search tag level 2"/>
+          <input type="text" ng-model="products.ee.Products.search.inputs.tags3"
+            class="form-control inline-block"
+            style="width: 140px;"
+            placeholder="Search tag level 3"/>
+          <input type="submit" class="hidden"/>
         </form>
       </div>
       <!-- /Search ids -->

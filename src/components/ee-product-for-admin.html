@@ -69,13 +69,20 @@
         <div>
           <a href ng-click="setAsActiveProduct()" ng-bind="product.title"></a>
         </div>
-        <small>Old tags: <span ng-bind="product.skus[0].tags.join(' | ')"></span></small>
         <div>
           <span ng-repeat="tag in product.skus[0].tags1" ng-bind="tag" class="badge"></span>
           <i class="fa fa-fw fa-chevron-right"></i>
           <span ng-repeat="tag in product.skus[0].tags2" ng-bind="tag" class="badge"></span>
           <i class="fa fa-fw fa-chevron-right"></i>
           <span ng-repeat="tag in product.skus[0].tags3" ng-bind="tag" class="badge"></span>
+        </div>
+        <div>
+          <div class="btn btn-xs vert-5 margin-bottom-0"
+            ng-class="product.skus[0].tags1.indexOf('houstylish') > 0 ? 'btn-primary' : 'btn-default'"
+            ng-click="toggleHoustylishTag()">
+            HouStylish
+          </div>
+          <small>Product <span ng-bind="product.id"></span> | Sku <span ng-bind="product.skus[0].id"></span></small>
         </div>
       </div>
       <!-- /Tags -->
