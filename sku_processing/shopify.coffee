@@ -75,10 +75,11 @@ setSkuRowsFor = (prod, rowTemplate) ->
   sku.findAllByProductId prod.id
   .then (skus) ->
     for s in skus
+      hasHoustylishTag = s.tags1.indexOf('houstylish') > -1
       vals = [
-        if s.tags1 then _.compact(s.tags1).join(',') else null
+        if s.tags1 then _.without(_.compact(s.tags1), 'houstylish').join(',') else null
         if s.tags2 then _.compact(s.tags2).concat(_.compact(s.tags3)).join(',') else null
-        (if s.discontinued or s.hide_from_catalog then 'FALSE' else 'TRUE')
+        (if s.discontinued or s.hide_from_catalog or !hasHoustylishTag then 'FALSE' else 'TRUE')
         'Title'
         (if skus.length > 1 then s.selection_text else 'Default Title')
         if getMeasurementText(s) then 'Size' else null
